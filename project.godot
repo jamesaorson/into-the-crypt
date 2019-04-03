@@ -16,7 +16,12 @@ _global_script_class_icons={
 [application]
 
 config/name="IntoTheCrypt"
+run/main_scene="res://ui/main_menu/main_menu.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/fullscreen=true
 
 [rendering]
 
