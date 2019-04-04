@@ -10,5 +10,5 @@ script = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, 4.37114e-008, -7.57103e-008, 0, 0.866025, 0.5, 8.74228e-008, 0.5, -0.866025, 0, 3.37973, -4.68586 )
+transform = Transform( -1, -8.21505e-008, 2.99003e-008, 0, 0.34202, 0.939693, -8.74228e-008, 0.939693, -0.34202, 0, 17.9153, -11.0499 )
 
