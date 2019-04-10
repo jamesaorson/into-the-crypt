@@ -1,5 +1,7 @@
 extends Button
 
+var cryptScene = preload("res://crypt/crypt.tscn")
+
 func _ready():
 	set_process(true)
 
@@ -19,4 +21,4 @@ func quit_game():
 	get_tree().quit()
 
 func start_game():
-	get_tree().change_scene("res://crypt/crypt.tscn")
+	get_tree().change_scene_to(cryptScene)

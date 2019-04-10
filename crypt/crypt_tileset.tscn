@@ -20,7 +20,6 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 50, 50 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Gold"]
-editor/display_folded = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Gold/StaticBody2D"]
 position = Vector2( 20, 20 )

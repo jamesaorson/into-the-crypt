@@ -27,16 +27,12 @@ func get_input():
 	var speed = SPRINTING_SPEED if isSprinting else WALKING_SPEED
 	
 	if Input.is_action_pressed(self.UP.inputName):
-		print("up")
 		velocity += self.UP.vector * Input.get_action_strength(self.UP.inputName) * speed
 	if Input.is_action_pressed(self.DOWN.inputName):
-		print("down")
 		velocity += self.DOWN.vector * Input.get_action_strength(self.DOWN.inputName) * speed
 	if Input.is_action_pressed(self.LEFT.inputName):
-		print("left")
 		velocity += self.LEFT.vector * Input.get_action_strength(self.LEFT.inputName) * speed
 	if Input.is_action_pressed(self.RIGHT.inputName):
-		print("right")
 		velocity += self.RIGHT.vector * Input.get_action_strength(self.RIGHT.inputName) * speed
 
 	velocity *= friction
