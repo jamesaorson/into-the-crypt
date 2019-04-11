@@ -1,31 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://crypt/crypt.gd" type="Script" id=1]
-[ext_resource path="res://player/playerKinematicBody.gd" type="Script" id=2]
-[ext_resource path="res://player/player.tres" type="SpriteFrames" id=3]
-[ext_resource path="res://crypt/crypt.tres" type="TileSet" id=4]
-[ext_resource path="res://crypt/room.gd" type="Script" id=5]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=[
+"crypt",
+]]
 script = ExtResource( 1 )
-
-[node name="PlayerKinematicBody2D" type="KinematicBody2D" parent="."]
-editor/display_folded = true
-position = Vector2( 100, 100 )
-collision_mask = 6
-script = ExtResource( 2 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerKinematicBody2D"]
-polygon = PoolVector2Array( -20.7713, 31.606, -20.7713, -28.394, 19.2287, -28.394, 19.2287, 31.606 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="PlayerKinematicBody2D"]
-frames = ExtResource( 3 )
-
-[node name="CryptTileMap" type="TileMap" parent="."]
-z_index = -1
-tile_set = ExtResource( 4 )
-cell_size = Vector2( 50, 50 )
-collision_layer = 2
-format = 1
-script = ExtResource( 5 )
 
