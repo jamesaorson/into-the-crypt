@@ -21,7 +21,7 @@ var doorPosition = map_to_world(DOOR_TILEMAP_POSITION)
 var playerStartPosition = map_to_world(PLAYER_START_POSITION)
 var room = []
 
-func _init():
+func generate_room():
 	print("Room generation...")
 	randomize()
 	for y in range(ROOM_HEIGHT):
@@ -47,28 +47,32 @@ func _init():
 				else:
 					self.room[y][x] = WALL_TILE
 	draw_room()
-
-func _ready():
 	create_player()
 	create_door()
 
 func create_door():
-	var doors = get_tree().get_nodes_in_group("door")
-	if len(doors) == 0:
+	var door = null
+	var doorNodes = get_tree().get_nodes_in_group("door")
+	if len(doorNodes) != 0:
+		door = doorNodes[0]
+	else:
 		print("Creating door at: ", world_to_map(self.doorPosition), " ", self.doorPosition)
-		var door = doorScene.instance()
-		door.position.x = self.doorPosition.x
-		door.position.y = self.doorPosition.y
+		door = doorScene.instance()
 		get_tree().root.add_child(door)
+	door.position.x = self.doorPosition.x
+	door.position.y = self.doorPosition.y
 
 func create_player():
-	var players = get_tree().get_nodes_in_group("player")
-	if len(players) == 0:
+	var player = null
+	var playerNodes = get_tree().get_nodes_in_group("player")
+	if len(playerNodes) != 0:
+		player = playerNodes[0]
+	else:
 		print("Creating player at: ", world_to_map(self.playerStartPosition), " ", self.playerStartPosition)
-		var player = playerScene.instance()
-		player.position.x = self.playerStartPosition.x
-		player.position.y = self.playerStartPosition.y
+		player = playerScene.instance()
 		get_tree().root.add_child(player)
+	player.position.x = self.playerStartPosition.x
+	player.position.y = self.playerStartPosition.y
 
 func draw_room():
 	for y in range(len(room)):
