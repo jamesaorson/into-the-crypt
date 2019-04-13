@@ -1,25 +1,39 @@
 extends Node
 
-onready var roomScene = load("res://crypt/room/room.tscn")
+onready var cryptGenerator = load("res://crypt/crypt_generator/crypt_generator.tscn")
+
+###################
+# Godot Functions #
+###################
+
+var shouldGenerate = false
+
+func _process(delta):
+	if Input.is_action_pressed("pause"):
+		quit_to_main_menu()
+	if Input.is_action_pressed("reset"):
+		create_crypt()
 
 func _ready():
 	set_process(true)
-	create_room()
+	create_crypt()
 
-func _process(delta):		
-	if Input.is_action_pressed("pause"):
-		quit_game()
+####################
+# Helper Functions #
+####################
 
-func create_room():
-	var room = null
-	var roomNodes = get_tree().get_nodes_in_group("room")
-	if len(roomNodes) != 0:
-		room = roomNodes[0]
+func create_crypt():
+	var cryptGeneratorNode = null
+	var cryptGeneratorNodes = get_tree().get_nodes_in_group("crypt_generator")
+	if len(cryptGeneratorNodes) != 0:
+		cryptGeneratorNode = cryptGeneratorNodes[0]
 	else:
-		print("Creating room...")
-		room = roomScene.instance()
-		get_tree().root.add_child(room)
-	room.generate_room()
+		cryptGeneratorNode = cryptGenerator.instance()
+		get_tree().root.add_child(cryptGeneratorNode)
+	cryptGeneratorNode.generate_crypt()
 
-func quit_game():
-	get_tree().quit()
+func quit_to_main_menu():
+	var cryptGeneratorNodes = get_tree().get_nodes_in_group("crypt_generator")
+	for cryptGeneratorNode in cryptGeneratorNodes:
+		cryptGeneratorNode.destroy()
+	get_tree().change_scene("res://ui/main_menu/main_menu.tscn")
