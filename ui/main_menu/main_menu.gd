@@ -1,7 +1,26 @@
 extends Button
 
+###################
+# Signal handlers #
+###################
+
 func _on_quit_button_pressed():
-	get_tree().quit()
+	quit_game()
 
 func _on_start_button_pressed():
-	get_tree().change_scene("res://world/world.tscn")
+	start_game()
+
+####################
+# Helper Functions #
+####################
+
+func quit_game():
+	get_tree().quit()
+
+func start_game():
+	var levelSeedSpinBoxNode = get_node("/root/main_menu_control/start_button/level_seed_spin_box")
+	if levelSeedSpinBoxNode.value >= 0:
+		crypt_globals.cryptSeed = levelSeedSpinBoxNode.value
+	else:
+		crypt_globals.cryptSeed = null
+	get_tree().change_scene("res://crypt/crypt.tscn")
