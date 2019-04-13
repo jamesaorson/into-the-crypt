@@ -5,37 +5,37 @@ onready var playerScene = load("res://player/player.tscn")
 const FLOOR_TILE = 0
 const WALL_TILE = 1
 
-const ROOM_HEIGHT = 18
-const ROOM_WIDTH = 32
+const CRYPT_HEIGHT = 18
+const CRYPT_WIDTH = 32
 
 const PLAYER_START_POSITION = Vector2(3, 3)
 const PLAYER_HEIGHT = 3
 const PLAYER_WIDTH = 2
 
 var playerStartPosition = map_to_world(PLAYER_START_POSITION)
-var room = []
+var crypt = []
 
-func generate_room():
-	print("Room generation...")
+func generate_crypt():
+	print("Generating crypt...")
 	randomize()
-	for y in range(ROOM_HEIGHT):
-		self.room.append([])
-		self.room[y].resize(ROOM_WIDTH)
-		for x in range(ROOM_WIDTH):
+	for y in range(CRYPT_HEIGHT):
+		self.crypt.append([])
+		self.crypt[y].resize(CRYPT_WIDTH)
+		for x in range(CRYPT_WIDTH):
 			if (x >= PLAYER_START_POSITION.x and 
 			    x < PLAYER_START_POSITION.x + PLAYER_WIDTH and 
 				y >= PLAYER_START_POSITION.y and
 				y < PLAYER_START_POSITION.y + PLAYER_HEIGHT):
-				self.room[y][x] = FLOOR_TILE
-			elif x == 0 or x == ROOM_WIDTH - 1 or y == 0 or y == ROOM_HEIGHT - 1:
-				self.room[y][x] = WALL_TILE
+				self.crypt[y][x] = FLOOR_TILE
+			elif x == 0 or x == CRYPT_WIDTH - 1 or y == 0 or y == CRYPT_HEIGHT - 1:
+				self.crypt[y][x] = WALL_TILE
 			else:
 				var tileChoice = rand_range(1, 10)
 				if tileChoice > 2:
-					self.room[y][x] = FLOOR_TILE
+					self.crypt[y][x] = FLOOR_TILE
 				else:
-					self.room[y][x] = WALL_TILE
-	draw_room()
+					self.crypt[y][x] = WALL_TILE
+	draw_crypt()
 	create_player()
 
 func create_player():
@@ -50,7 +50,7 @@ func create_player():
 	player.position.x = self.playerStartPosition.x
 	player.position.y = self.playerStartPosition.y
 
-func draw_room():
-	for y in range(len(room)):
-		for x in range(len(room[y])):
-			set_cell(x, y, room[y][x])
+func draw_crypt():
+	for y in range(len(self.crypt)):
+		for x in range(len(self.crypt[y])):
+			set_cell(x, y, self.crypt[y][x])
