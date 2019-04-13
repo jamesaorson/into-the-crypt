@@ -6,10 +6,12 @@ onready var cryptGenerator = load("res://crypt/crypt_generator/crypt_generator.t
 # Godot Functions #
 ###################
 
+var shouldGenerate = false
+
 func _process(delta):
 	if Input.is_action_pressed("pause"):
-		quit_game()
-	elif Input.is_action_pressed("reset"):
+		quit_to_main_menu()
+	if Input.is_action_pressed("reset"):
 		create_crypt()
 
 func _ready():
@@ -28,9 +30,10 @@ func create_crypt():
 	else:
 		cryptGeneratorNode = cryptGenerator.instance()
 		get_tree().root.add_child(cryptGeneratorNode)
-	randomize()
-	var cryptSeed = randi()
-	cryptGeneratorNode.generate_crypt(cryptSeed)
+	cryptGeneratorNode.generate_crypt()
 
-func quit_game():
-	get_tree().quit()
+func quit_to_main_menu():
+	var cryptGeneratorNodes = get_tree().get_nodes_in_group("crypt_generator")
+	for cryptGeneratorNode in cryptGeneratorNodes:
+		cryptGeneratorNode.destroy()
+	get_tree().change_scene("res://ui/main_menu/main_menu.tscn")

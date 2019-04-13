@@ -19,6 +19,10 @@ config/name="IntoTheCrypt"
 run/main_scene="res://ui/main_menu/main_menu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+crypt_globals="*res://crypt/crypt_globals.gd"
+
 [display]
 
 window/size/fullscreen=true

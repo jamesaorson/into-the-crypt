@@ -273,7 +273,6 @@ const RIGHT_VERTICAL_HALLWAYS = [
 
 var playerStartPosition = map_to_world(PLAYER_START_POSITION)
 var crypt = []
-var cryptSeed = -1
 
 ####################
 # Helper Functions #
@@ -289,17 +288,25 @@ func create_player():
 		get_tree().root.add_child(player)
 	player.position.x = self.playerStartPosition.x
 	player.position.y = self.playerStartPosition.y
-	player.set_crypt_seed_text(self.cryptSeed)
+	player.set_crypt_seed_text()
+
+func destroy():
+	var playerNodes = get_tree().get_nodes_in_group("player")
+	for playerNode in playerNodes:
+		playerNode.destroy()
+	queue_free()
 
 func draw_crypt():
 	for y in range(len(self.crypt)):
 		for x in range(len(self.crypt[y])):
 			set_cell(x, y, self.crypt[y][x])
 
-func generate_crypt(cryptSeed):
-	self.cryptSeed = cryptSeed
-	print("Generating crypt with seed ", self.cryptSeed)
-	seed(self.cryptSeed)
+func generate_crypt():
+	if crypt_globals.cryptSeed == null:
+		randomize()
+		crypt_globals.cryptSeed = randi()
+	print("Generating crypt with seed ", crypt_globals.cryptSeed)
+	seed(crypt_globals.cryptSeed)
 	clear()
 	CRYPT_HEIGHT = CRYPT_SECTION_SIZE * floor(rand_range(CRYPT_MIN_HEIGHT, CRYPT_MAX_HEIGHT))
 	CRYPT_WIDTH = CRYPT_SECTION_SIZE * floor(rand_range(CRYPT_MIN_WIDTH, CRYPT_MAX_WIDTH))

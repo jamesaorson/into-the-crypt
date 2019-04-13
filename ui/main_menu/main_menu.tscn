@@ -3,11 +3,11 @@
 [ext_resource path="res://ui/main_menu/main_menu.gd" type="Script" id=1]
 
 [node name="main_menu_control" type="Control"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="start_button" type="Button" parent="."]
+editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -18,6 +18,22 @@ margin_right = 20.5
 margin_bottom = 10.0
 text = "Start"
 script = ExtResource( 1 )
+
+[node name="level_seed_spin_box" type="SpinBox" parent="start_button"]
+margin_left = 50.0
+margin_top = -2.0
+margin_right = 124.0
+margin_bottom = 22.0
+min_value = -1.0
+max_value = 2.14748e+009
+value = -1.0
+
+[node name="seed_label" type="Label" parent="start_button/level_seed_spin_box"]
+margin_left = 80.0
+margin_top = 6.0
+margin_right = 325.0
+margin_bottom = 23.0
+text = "Crypt Seed: -1 will generate a random crypt"
 
 [node name="quit_button" type="Button" parent="."]
 anchor_left = 0.5
@@ -30,8 +46,6 @@ margin_right = 20.0
 margin_bottom = 50.0
 text = "Quit"
 script = ExtResource( 1 )
-
-[node name="Spatial" type="Spatial" parent="."]
 
 [connection signal="pressed" from="start_button" to="start_button" method="_on_start_button_pressed"]
 [connection signal="pressed" from="quit_button" to="quit_button" method="_on_quit_button_pressed"]

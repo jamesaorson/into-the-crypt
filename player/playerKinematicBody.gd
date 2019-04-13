@@ -19,6 +19,9 @@ func _physics_process(delta):
 	get_input()
 	move_and_slide(velocity * delta)
 
+func destroy():
+	queue_free()
+
 func get_input():
 	if Input.is_action_just_pressed("sprint"):
 		isSprinting = true
@@ -37,9 +40,8 @@ func get_input():
 
 	velocity *= friction
 
-func set_crypt_seed_text(cryptSeed):
-	var cryptSeedString = "Crypt Seed: " + str(cryptSeed)
-	print(cryptSeedString)
+func set_crypt_seed_text():
+	var cryptSeedString = "Crypt Seed: " + str(crypt_globals.cryptSeed)
 	var labelNode = get_node("/root/PlayerKinematicBody2D/CryptSeedLayer/CryptSeedLabel")
 	labelNode.text = cryptSeedString
 	labelNode.update()
