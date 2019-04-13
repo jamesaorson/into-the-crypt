@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://player/playerKinematicBody.gd" type="Script" id=1]
 [ext_resource path="res://player/player.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://assets/player/light.png" type="Texture" id=3]
 
 [node name="PlayerKinematicBody2D" type="KinematicBody2D" groups=[
 "player",
 ]]
+scale = Vector2( 0.5, 0.5 )
 collision_mask = 6
 script = ExtResource( 1 )
 
@@ -17,8 +19,19 @@ frames = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+zoom = Vector2( 0.5, 0.5 )
 drag_margin_left = 0.1
 drag_margin_top = 0.1
 drag_margin_right = 0.1
 drag_margin_bottom = 0.1
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 3 )
+shadow_enabled = true
+
+[node name="CryptSeedLayer" type="CanvasLayer" parent="."]
+
+[node name="CryptSeedLabel" type="Label" parent="CryptSeedLayer"]
+margin_right = 40.0
+margin_bottom = 14.0
 
