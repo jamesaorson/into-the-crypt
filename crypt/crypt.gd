@@ -2,6 +2,10 @@ extends Node
 
 onready var cryptGenerator = load("res://crypt/crypt_generator/crypt_generator.tscn")
 
+###################
+# Godot Functions #
+###################
+
 func _ready():
 	set_process(true)
 	create_crypt()
@@ -9,6 +13,10 @@ func _ready():
 func _process(delta):
 	if Input.is_action_pressed("pause"):
 		quit_game()
+
+####################
+# Helper Functions #
+####################
 
 func create_crypt():
 	var cryptGeneratorNode = null

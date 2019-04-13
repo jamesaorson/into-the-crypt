@@ -15,6 +15,27 @@ const PLAYER_WIDTH = 2
 var playerStartPosition = map_to_world(PLAYER_START_POSITION)
 var crypt = []
 
+####################
+# Helper Functions #
+####################
+
+func create_player():
+	var player = null
+	var playerNodes = get_tree().get_nodes_in_group("player")
+	if len(playerNodes) != 0:
+		player = playerNodes[0]
+	else:
+		print("Creating player at: ", world_to_map(self.playerStartPosition), " ", self.playerStartPosition)
+		player = playerScene.instance()
+		get_tree().root.add_child(player)
+	player.position.x = self.playerStartPosition.x
+	player.position.y = self.playerStartPosition.y
+
+func draw_crypt():
+	for y in range(len(self.crypt)):
+		for x in range(len(self.crypt[y])):
+			set_cell(x, y, self.crypt[y][x])
+
 func generate_crypt():
 	print("Generating crypt...")
 	randomize()
@@ -37,20 +58,3 @@ func generate_crypt():
 					self.crypt[y][x] = WALL_TILE
 	draw_crypt()
 	create_player()
-
-func create_player():
-	var player = null
-	var playerNodes = get_tree().get_nodes_in_group("player")
-	if len(playerNodes) != 0:
-		player = playerNodes[0]
-	else:
-		print("Creating player at: ", world_to_map(self.playerStartPosition), " ", self.playerStartPosition)
-		player = playerScene.instance()
-		get_tree().root.add_child(player)
-	player.position.x = self.playerStartPosition.x
-	player.position.y = self.playerStartPosition.y
-
-func draw_crypt():
-	for y in range(len(self.crypt)):
-		for x in range(len(self.crypt[y])):
-			set_cell(x, y, self.crypt[y][x])
