@@ -9,9 +9,9 @@ onready var cryptGenerator = load("res://crypt/crypt_generator/crypt_generator.t
 var shouldGenerate = false
 
 func _process(delta):
-	if Input.is_action_pressed("pause"):
+	if Input.is_action_pressed("pause_0") or Input.is_action_pressed("pause_1"):
 		quit_to_main_menu()
-	if Input.is_action_pressed("reset"):
+	if Input.is_action_pressed("reset_0") or Input.is_action_pressed("reset_1"):
 		create_crypt()
 
 func _ready():
