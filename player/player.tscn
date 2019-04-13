@@ -15,3 +15,10 @@ polygon = PoolVector2Array( -20.7713, 31.606, -20.7713, -28.394, 19.2287, -28.39
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 2 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
+
