@@ -36,3 +36,10 @@ func get_input():
 		velocity += self.RIGHT.vector * Input.get_action_strength(self.RIGHT.inputName) * speed
 
 	velocity *= friction
+
+func set_crypt_seed_text(cryptSeed):
+	var cryptSeedString = "Crypt Seed: " + str(cryptSeed)
+	print(cryptSeedString)
+	var labelNode = get_node("/root/PlayerKinematicBody2D/CryptSeedLayer/CryptSeedLabel")
+	labelNode.text = cryptSeedString
+	labelNode.update()
