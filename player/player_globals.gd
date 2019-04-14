@@ -5,7 +5,7 @@ const DOWN = { vector = -UP.vector, inputName = "player_move_down_" }
 const LEFT = { vector = Vector2(-1, 0), inputName = "player_move_left_" }
 const RIGHT = { vector = -LEFT.vector, inputName = "player_move_right_" }
 
-var numberOfPlayers = 2
+var numberOfPlayers = 1
 
 var players = [
 	{
