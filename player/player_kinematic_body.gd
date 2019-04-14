@@ -19,7 +19,7 @@ func _physics_process(delta):
 
 func _process(delta):
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
-	if player.timeElapsed > 0:
+	if player.timeElapsed > 0 and player.lightNode != null:
 		player.lightNode.update_size(player.timeElapsed)
 
 func create_light(playerIndex):
