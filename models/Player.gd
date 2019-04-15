@@ -10,6 +10,10 @@ var timeElapsed
 var lightNode
 var debugInfo
 
+###################
+# Godot Functions #
+###################
+
 func _init(instance = null,
 		   position = Vector2(), 
 		   width = 0, 

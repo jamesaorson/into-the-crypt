@@ -9,6 +9,10 @@ var timeElapsed
 var lightNode
 var debugInfo
 
+###################
+# Godot Functions #
+###################
+
 func _init(instance = null,
 		   position = Vector2(), 
 		   width = 0, 
@@ -32,8 +36,24 @@ func _init(instance = null,
 	self.health = health
 	self.debugInfo = debugInfo
 
-func heal(amountToHeal):
-	self.health = min(self.maxHealth, self.health + amountToHeal)
+####################
+# Helper Functions #
+####################
 
 func damage(amountToDamage):
 	self.health -= amountToDamage 
+
+func heal(amountToHeal):
+	self.health = min(self.maxHealth, self.health + amountToHeal)
+
+func kill():
+	if self.instance != null and crypt_globals.enemies.has(get_instance_id()):
+		crypt_globals.enemies.erase(get_instance_id())
+		self.instance.queue_free()
+
+func try_kill():
+	if self.health <= 0:
+		self.kill()
+
+func update():
+	self.try_kill()

@@ -13,6 +13,10 @@ var walkingSpeed
 var sprintingSpeed
 var isSprinting
 
+###################
+# Godot Functions #
+###################
+
 func _init(instance = null,
 		   position = Vector2(), 
 		   width = 0, 

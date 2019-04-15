@@ -7,8 +7,8 @@ var enemyModel = null
 ###################
 
 func _process(delta):
-	if enemyModel != null and enemyModel.health <= 0:
-		queue_free()
+	if enemyModel != null:
+		enemyModel.update()
 
 func _on_EnemyKinematicBody2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == 1 and event.is_pressed() and !event.is_echo():
