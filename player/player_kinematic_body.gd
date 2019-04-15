@@ -24,8 +24,8 @@ func _physics_process(delta):
 
 func _process(delta):
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
-	if player.timeElapsed > 0 and player.lightNode != null:
-		player.lightNode.update_size(player.timeElapsed)
+	if player.lightNode != null:
+		player.lightNode.update_size(delta)
 
 func create_light(playerIndex):
 	var playerLight = player_globals.players[playerIndex].lightNode
@@ -33,7 +33,6 @@ func create_light(playerIndex):
 		playerLight = playerLightScene.instance()
 		add_child(playerLight)
 		player_globals.players[playerIndex].lightNode = playerLight
-		print("Creating light: ", playerIndex)
 
 func create_debug_info():
 	var debugInfo = player_globals.players[0].debugInfo
@@ -52,16 +51,23 @@ func get_input():
 		player.isSprinting = false
 	var speed = player.sprintingSpeed if player.isSprinting else player.walkingSpeed
 	
+	var movementMade = false
 	if Input.is_action_pressed(UP.inputName):
+		movementMade = true
 		player.velocity += UP.vector * Input.get_action_strength(UP.inputName) * speed
 	if Input.is_action_pressed(DOWN.inputName):
+		movementMade = true
 		player.velocity += DOWN.vector * Input.get_action_strength(DOWN.inputName) * speed
 	if Input.is_action_pressed(LEFT.inputName):
+		movementMade = true
 		player.velocity += LEFT.vector * Input.get_action_strength(LEFT.inputName) * speed
 	if Input.is_action_pressed(RIGHT.inputName):
+		movementMade = true
 		player.velocity += RIGHT.vector * Input.get_action_strength(RIGHT.inputName) * speed
 
-	player.velocity *= player.friction
+	player.velocity = player.velocity.clamped(player.maxVelocity * speed)
+	if not movementMade:
+		player.velocity *= player_globals.friction
 
 func set_player_index(newPlayerIndex):
 	var tempTimeStart = player.timeStart

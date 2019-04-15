@@ -1,3 +1,3 @@
 extends Node
 
-var timeScale = 0.2
+var timeScale = 0.01
