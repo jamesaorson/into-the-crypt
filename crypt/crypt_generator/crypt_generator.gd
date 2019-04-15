@@ -1,6 +1,10 @@
 extends TileMap
 
+var Enemy = load("res://models/Enemy.gd")
+var Player = load("res://models/Player.gd")
+
 onready var playerScene = load("res://player/player.tscn")
+onready var enemyScene = load("res://enemy/enemy.tscn")
 
 const FLOOR_TILE = crypt_generator_globals.FLOOR_TILE
 const WALL_TILE = crypt_generator_globals.WALL_TILE
@@ -32,8 +36,7 @@ func create_player(playerIndex):
 			player = playerScene.instance()
 			player_globals.players[playerIndex].instance = player
 			player.set_player_index(playerIndex)
-			get_tree().root.add_child(player)
-		print("Made it")
+			add_child(player)
 		player.set_player_index(playerIndex)
 		var playerPosition = Vector2(player_globals.players[playerIndex].position.x, player_globals.players[playerIndex].position.y)
 		playerPosition.x += 2 * CRYPT_SECTION_SIZE
@@ -43,6 +46,20 @@ func create_player(playerIndex):
 		player.position.y = playerPosition.y
 		player_globals.players[playerIndex].timeStart = OS.get_unix_time()
 
+func create_enemy(position):
+	var enemy = null
+	enemy = enemyScene.instance()
+	get_tree().root.add_child(enemy)
+	var enemyPosition = map_to_world(Vector2(position.x, position.y))
+	enemy.position.x = enemyPosition.x
+	enemy.position.y = enemyPosition.y
+	
+	var enemyModel = Enemy.new(enemy, position, 2, 3)
+	enemyModel.maxHealth = 2
+	enemyModel.health = 2
+	crypt_globals.enemies[enemyModel.get_instance_id()] = enemyModel
+	enemy.enemyModel = enemyModel
+
 func destroy():
 	var playerNodes = get_tree().get_nodes_in_group("player")
 	for playerNode in playerNodes:
@@ -51,6 +68,12 @@ func destroy():
 		player.instance = null
 		player.debugInfo = null
 		player.lightNode = null
+
+	var enemyNodes = get_tree().get_nodes_in_group("enemy")
+	for enemyNode in enemyNodes:
+		enemyNode.destroy()
+	crypt_globals.enemies.clear()
+
 	queue_free()
 
 func draw_crypt():
@@ -82,6 +105,7 @@ func generate_crypt():
 	draw_crypt()
 	for playerIndex in range(player_globals.numberOfPlayers, 0, -1):
 		create_player(playerIndex - 1)
+	create_enemy(Vector2(3.5 * CRYPT_SECTION_SIZE, 2.5 * CRYPT_SECTION_SIZE))
 
 func initalize_crypt_object():
 	crypt_globals.crypt = []

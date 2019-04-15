@@ -8,15 +8,16 @@ var player = player_globals.players[self.playerIndex]
 
 var PLAYER_SPRINT = "sprint_" + str(self.playerIndex)
 
+var PLAYER_PRIMARY_ATTACK = "primary_attack_" + str(self.playerIndex)
+
 const UP = player_globals.UP
 const DOWN = player_globals.DOWN
 const LEFT = player_globals.LEFT
 const RIGHT = player_globals.RIGHT
 
-func _ready():
-	set_physics_process(true)
-	create_light(self.playerIndex)
-	create_debug_info()
+###################
+# Godot Functions #
+###################
 
 func _physics_process(delta):
 	get_input()
@@ -26,6 +27,15 @@ func _process(delta):
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
 	if player.lightNode != null:
 		player.lightNode.update_size(delta)
+
+func _ready():
+	set_physics_process(true)
+	create_light(self.playerIndex)
+	create_debug_info()
+
+####################
+# Helper Functions #
+####################
 
 func create_light(playerIndex):
 	var playerLight = player_globals.players[playerIndex].lightNode

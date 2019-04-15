@@ -16,6 +16,10 @@ const CRYPT_MIN_WIDTH = 10
 var HORIZONTAL_HALLWAYS = []
 var VERTICAL_HALLWAYS = []
 
+###################
+# Godot Functions #
+###################
+
 func _init():
 	var binaryLength = (CRYPT_SECTION_SIZE - 2) * 2
 	var numberOfVariations = pow(2, binaryLength)

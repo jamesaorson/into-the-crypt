@@ -2,6 +2,7 @@ extends Object
 
 class_name Actor
 
+var id
 var instance
 var position
 var width

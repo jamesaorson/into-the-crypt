@@ -2,10 +2,12 @@ extends Actor
 
 class_name Enemy
 
-var friction = 0.9
-var timeStart = null
-var timeElapsed = null
-var lightNode = null
+var maxHealth
+var health
+var timeStart
+var timeElapsed
+var lightNode
+var debugInfo
 
 func _init(instance = null,
 		   position = Vector2(), 
@@ -16,10 +18,22 @@ func _init(instance = null,
 		   walkingSpeed = 0, 
 		   sprintingSpeed = 0, 
 		   isSprinting = false,
+		   maxHealth = 1,
+		   health = 1,
 		   timeStart = null,
 		   timeElapsed = null,
-		   lightNode = null):
+		   lightNode = null,
+		   debugInfo = null):
 	._init(instance, position, width, height, velocity, walkingSpeed, sprintingSpeed, isSprinting)
 	self.timeStart = timeStart
 	self.timeElapsed = timeElapsed
 	self.lightNode = lightNode
+	self.maxHealth = maxHealth
+	self.health = health
+	self.debugInfo = debugInfo
+
+func heal(amountToHeal):
+	self.health = min(self.maxHealth, self.health + amountToHeal)
+
+func damage(amountToDamage):
+	self.health -= amountToDamage 
