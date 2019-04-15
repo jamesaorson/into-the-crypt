@@ -8,6 +8,11 @@ var player = player_globals.players[self.playerIndex]
 
 var PLAYER_SPRINT = "sprint_" + str(self.playerIndex)
 
+const UP = player_globals.UP
+const DOWN = player_globals.DOWN
+const LEFT = player_globals.LEFT
+const RIGHT = player_globals.RIGHT
+
 func _ready():
 	set_physics_process(true)
 	create_light(self.playerIndex)
@@ -47,14 +52,14 @@ func get_input():
 		player.isSprinting = false
 	var speed = player.sprintingSpeed if player.isSprinting else player.walkingSpeed
 	
-	if Input.is_action_pressed(player.up.inputName):
-		player.velocity += player.up.vector * Input.get_action_strength(player.up.inputName) * speed
-	if Input.is_action_pressed(player.down.inputName):
-		player.velocity += player.down.vector * Input.get_action_strength(player.down.inputName) * speed
-	if Input.is_action_pressed(player.left.inputName):
-		player.velocity += player.left.vector * Input.get_action_strength(player.left.inputName) * speed
-	if Input.is_action_pressed(player.right.inputName):
-		player.velocity += player.right.vector * Input.get_action_strength(player.right.inputName) * speed
+	if Input.is_action_pressed(UP.inputName):
+		player.velocity += UP.vector * Input.get_action_strength(UP.inputName) * speed
+	if Input.is_action_pressed(DOWN.inputName):
+		player.velocity += DOWN.vector * Input.get_action_strength(DOWN.inputName) * speed
+	if Input.is_action_pressed(LEFT.inputName):
+		player.velocity += LEFT.vector * Input.get_action_strength(LEFT.inputName) * speed
+	if Input.is_action_pressed(RIGHT.inputName):
+		player.velocity += RIGHT.vector * Input.get_action_strength(RIGHT.inputName) * speed
 
 	player.velocity *= player.friction
 

@@ -33,13 +33,14 @@ func create_player(playerIndex):
 			player_globals.players[playerIndex].instance = player
 			player.set_player_index(playerIndex)
 			get_tree().root.add_child(player)
+		print("Made it")
 		player.set_player_index(playerIndex)
-		var playerStartPosition = Vector2(player_globals.players[playerIndex].startPosition.x, player_globals.players[playerIndex].startPosition.y)
-		playerStartPosition.x += 2 * CRYPT_SECTION_SIZE
-		playerStartPosition.y += 2 * CRYPT_SECTION_SIZE
-		playerStartPosition = map_to_world(playerStartPosition)
-		player.position.x = playerStartPosition.x
-		player.position.y = playerStartPosition.y
+		var playerPosition = Vector2(player_globals.players[playerIndex].position.x, player_globals.players[playerIndex].position.y)
+		playerPosition.x += 2 * CRYPT_SECTION_SIZE
+		playerPosition.y += 2 * CRYPT_SECTION_SIZE
+		playerPosition = map_to_world(playerPosition)
+		player.position.x = playerPosition.x
+		player.position.y = playerPosition.y
 		player_globals.players[playerIndex].timeStart = OS.get_unix_time()
 
 func destroy():

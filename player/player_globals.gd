@@ -1,51 +1,37 @@
 extends Node
 
-const UP = { vector = Vector2(0, -1), inputName = "player_move_up_" }
-const DOWN = { vector = -UP.vector, inputName = "player_move_down_" }
-const LEFT = { vector = Vector2(-1, 0), inputName = "player_move_left_" }
-const RIGHT = { vector = -LEFT.vector, inputName = "player_move_right_" }
+var Player = load("res://models/Player.gd")
+
+const UP = { vector = Vector2(0, -1), inputName = "player_move_up_0" }
+const DOWN = { vector = -UP.vector, inputName = "player_move_down_0" }
+const LEFT = { vector = Vector2(-1, 0), inputName = "player_move_left_0" }
+const RIGHT = { vector = -LEFT.vector, inputName = "player_move_right_0" }
 
 var numberOfPlayers = 1
 
 var players = [
-	{
-		playerIndex = 0,
-		instance = null,
-		startPosition = Vector2(3, 2),
-		width = 2,
-		height = 3,
-		velocity = Vector2(),
-		walkingSpeed = 1000,
-		sprintingSpeed = 3000,
-		friction = 0.9,
-		isSprinting = false,
-		timeStart = null,
-		timeElapsed = null,
-		debugInfo = null,
-		lightNode = null,
-		up = { vector = UP.vector, inputName = UP.inputName + "0" },
-		down = { vector = DOWN.vector, inputName = DOWN.inputName + "0" },
-		left = { vector = LEFT.vector, inputName = LEFT.inputName + "0" },
-		right = { vector = RIGHT.vector, inputName = RIGHT.inputName + "0" }
-	},
-	{
-		playerIndex = 1,
-		instance = null,
-		startPosition = Vector2(6, 2),
-		width = 2,
-		height = 3,
-		velocity = Vector2(),
-		walkingSpeed = 1000,
-		sprintingSpeed = 3000,
-		friction = 0.9,
-		isSprinting = false,
-		timeStart = null,
-		timeElapsed = null,
-		debugInfo = null,
-		lightNode = null,
-		up = { vector = UP.vector, inputName = UP.inputName + "1" },
-		down = { vector = DOWN.vector, inputName = DOWN.inputName + "1" },
-		left = { vector = LEFT.vector, inputName = LEFT.inputName + "1" },
-		right = { vector = RIGHT.vector, inputName = RIGHT.inputName + "1" }
-	}
+	Player.new(
+		null,
+		Vector2(3, 2),
+		2,
+		3,
+		Vector2(),
+		1000,
+		3000,
+		false,
+		0,
+		0.9
+	),
+	Player.new(
+		null,
+		Vector2(6, 2),
+		2,
+		3,
+		Vector2(),
+		1000,
+		3000,
+		false,
+		1,
+		0.9
+	)
 ]

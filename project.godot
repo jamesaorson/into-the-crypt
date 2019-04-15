@@ -8,9 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Object",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://models/Actor.gd"
+}, {
+"base": "Actor",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://models/Enemy.gd"
+}, {
+"base": "Actor",
+"class": "Player",
+"language": "GDScript",
+"path": "res://models/Player.gd"
+} ]
 _global_script_class_icons={
-
+"Actor": "",
+"Enemy": "",
+"Player": ""
 }
 
 [application]
