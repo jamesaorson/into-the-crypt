@@ -29,7 +29,7 @@ func create_crypt():
 		cryptGeneratorNode = cryptGeneratorNodes[0]
 	else:
 		cryptGeneratorNode = cryptGenerator.instance()
-		get_tree().root.add_child(cryptGeneratorNode)
+		add_child(cryptGeneratorNode)
 	cryptGeneratorNode.generate_crypt()
 
 func quit_to_main_menu():

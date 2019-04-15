@@ -3,18 +3,22 @@ extends Node
 const FLOOR_TILE = 0
 const WALL_TILE = 1
 
-const CRYPT_SECTION_SIZE = 6
+const CRYPT_SECTION_SIZE = 8
 
 var CRYPT_HEIGHT
-const CRYPT_MAX_HEIGHT = 50
-const CRYPT_MIN_HEIGHT = 25
+const CRYPT_MAX_HEIGHT = 30
+const CRYPT_MIN_HEIGHT = 10
 
 var CRYPT_WIDTH
-const CRYPT_MAX_WIDTH = 50
-const CRYPT_MIN_WIDTH = 25
+const CRYPT_MAX_WIDTH = 30
+const CRYPT_MIN_WIDTH = 10
 
 var HORIZONTAL_HALLWAYS = []
 var VERTICAL_HALLWAYS = []
+
+###################
+# Godot Functions #
+###################
 
 func _init():
 	var binaryLength = (CRYPT_SECTION_SIZE - 2) * 2
@@ -50,7 +54,7 @@ func _init():
 					
 		VERTICAL_HALLWAYS.append([])
 		VERTICAL_HALLWAYS[variation].resize(CRYPT_SECTION_SIZE)
-		
+
 		var verticalVariation = VERTICAL_HALLWAYS[variation]
 		for row in range(CRYPT_SECTION_SIZE):
 			verticalVariation[row] = []
