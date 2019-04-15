@@ -35,8 +35,8 @@ func create_player(playerIndex):
 			get_tree().root.add_child(player)
 		player.set_player_index(playerIndex)
 		var playerStartPosition = Vector2(player_globals.players[playerIndex].startPosition.x, player_globals.players[playerIndex].startPosition.y)
-		playerStartPosition.x += 1.25 * CRYPT_SECTION_SIZE
-		playerStartPosition.y += 1.25 * CRYPT_SECTION_SIZE
+		playerStartPosition.x += 2 * CRYPT_SECTION_SIZE
+		playerStartPosition.y += 2 * CRYPT_SECTION_SIZE
 		playerStartPosition = map_to_world(playerStartPosition)
 		player.position.x = playerStartPosition.x
 		player.position.y = playerStartPosition.y
@@ -53,15 +53,10 @@ func destroy():
 	queue_free()
 
 func draw_crypt():
+	clear()
 	for y in range(len(crypt_globals.crypt)):
 		for x in range(len(crypt_globals.crypt[y])):
-			if (y < CRYPT_SECTION_SIZE or
-				x < CRYPT_SECTION_SIZE or
-				y >= CRYPT_HEIGHT - CRYPT_SECTION_SIZE
-				or x >= CRYPT_WIDTH - CRYPT_SECTION_SIZE):
-				set_cell(x, y, WALL_TILE)
-			else:
-				set_cell(x, y, crypt_globals.crypt[y][x])
+			set_cell(x, y, crypt_globals.crypt[y][x])
 
 func generate_crypt():
 	if crypt_globals.cryptSeed == null:
@@ -69,14 +64,13 @@ func generate_crypt():
 		crypt_globals.cryptSeed = randi()
 	print("Generating crypt with seed ", crypt_globals.cryptSeed)
 	seed(crypt_globals.cryptSeed)
-	clear()
 	crypt_generator_globals.CRYPT_HEIGHT = CRYPT_SECTION_SIZE * floor(rand_range(CRYPT_MIN_HEIGHT, CRYPT_MAX_HEIGHT))
 	CRYPT_HEIGHT = crypt_generator_globals.CRYPT_HEIGHT
 	crypt_generator_globals.CRYPT_WIDTH = CRYPT_SECTION_SIZE * floor(rand_range(CRYPT_MIN_WIDTH, CRYPT_MAX_WIDTH))
 	CRYPT_WIDTH = crypt_generator_globals.CRYPT_WIDTH
 	initalize_crypt_object()
-	for y in range(0, CRYPT_HEIGHT, CRYPT_SECTION_SIZE):
-		for x in range(0, CRYPT_WIDTH, CRYPT_SECTION_SIZE):
+	for y in range(CRYPT_SECTION_SIZE * 2, CRYPT_HEIGHT - (2 * CRYPT_SECTION_SIZE), CRYPT_SECTION_SIZE):
+		for x in range(CRYPT_SECTION_SIZE * 2, CRYPT_WIDTH - ( 2 * CRYPT_SECTION_SIZE), CRYPT_SECTION_SIZE):
 			var cryptSection = null
 			var choice = rand_range(1, 10)
 			if choice > 6:
@@ -90,12 +84,14 @@ func generate_crypt():
 
 func initalize_crypt_object():
 	crypt_globals.crypt = []
-	for y in range(CRYPT_HEIGHT + (2 * CRYPT_SECTION_SIZE)):
+	for y in range(CRYPT_HEIGHT):
 		crypt_globals.crypt.append([])
-		crypt_globals.crypt[y].resize(CRYPT_WIDTH + (2 * CRYPT_SECTION_SIZE))
+		crypt_globals.crypt[y].resize(CRYPT_WIDTH)
+		for x in range(CRYPT_WIDTH):
+			crypt_globals.crypt[y][x] = WALL_TILE
 
 func set_crypt_section(originPosition, cryptSection):
 	for y in range(len(cryptSection)):
 		var cryptRow = cryptSection[y]
 		for x in range(len(cryptRow)):
-			crypt_globals.crypt[y + originPosition.y + 1][x + originPosition.x + 1] = cryptRow[x]
+			crypt_globals.crypt[y + originPosition.y][x + originPosition.x] = cryptRow[x]
