@@ -134,6 +134,13 @@ primary_attack_1={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="player_weapon"
+2d_physics/layer_3="enemy"
+2d_physics/layer_20="wall"
+
 [rendering]
 
 environment/default_clear_color=Color( 0.0392157, 0.0392157, 0.0392157, 1 )

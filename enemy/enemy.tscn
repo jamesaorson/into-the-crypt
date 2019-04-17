@@ -6,7 +6,8 @@
 [node name="EnemyKinematicBody2D" type="KinematicBody2D" groups=[
 "enemy",
 ]]
-input_pickable = true
+collision_layer = 4
+collision_mask = 3
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -16,4 +17,3 @@ animation = "idle"
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 18, 30, 18, 24, 15, 12, 15, -10, 8, -15, 8, -30, -8, -30, -8, -15, -15, -10, -15, 12, -18, 24, -18, 30 )
 
-[connection signal="input_event" from="." to="." method="_on_EnemyKinematicBody2D_input_event"]
