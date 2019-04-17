@@ -9,6 +9,7 @@ var timeStart
 var timeElapsed
 var lightNode
 var debugInfo
+var weapon
 
 ###################
 # Godot Functions #
@@ -29,7 +30,8 @@ func _init(instance = null,
 		   timeStart = null,
 		   timeElapsed = null,
 		   lightNode = null,
-		   debugInfo = null):
+		   debugInfo = null,
+		   weapon = null):
 	._init(instance, position, width, height, velocity, maxVelocity, walkingSpeed, sprintingSpeed, isSprinting)
 	self.playerIndex = playerIndex
 	self.maxHealth = maxHealth
@@ -38,3 +40,4 @@ func _init(instance = null,
 	self.timeElapsed = timeElapsed
 	self.lightNode = lightNode
 	self.debugInfo = debugInfo
+	self.weapon = weapon

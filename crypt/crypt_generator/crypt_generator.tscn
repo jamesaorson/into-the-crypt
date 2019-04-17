@@ -10,10 +10,9 @@ z_index = -1
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 50, 50 )
 cell_quadrant_size = 1
-collision_layer = 2
+collision_layer = 524288
 format = 1
 script = ExtResource( 2 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
-
