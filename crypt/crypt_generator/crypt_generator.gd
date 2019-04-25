@@ -6,8 +6,8 @@ var Player = load("res://models/Player.gd")
 onready var playerScene = load("res://player/player.tscn")
 onready var enemyScene = load("res://enemy/enemy.tscn")
 
-const FLOOR_TILE = crypt_generator_globals.FLOOR_TILE
-const WALL_TILE = crypt_generator_globals.WALL_TILE
+const FLOOR_TILES = crypt_generator_globals.FLOOR_TILES
+const WALL_TILES = crypt_generator_globals.WALL_TILES
 
 const CRYPT_SECTION_SIZE = crypt_generator_globals.CRYPT_SECTION_SIZE
 
@@ -113,10 +113,15 @@ func initalize_crypt_object():
 		crypt_globals.crypt.append([])
 		crypt_globals.crypt[y].resize(CRYPT_WIDTH)
 		for x in range(CRYPT_WIDTH):
-			crypt_globals.crypt[y][x] = WALL_TILE
+			crypt_globals.crypt[y][x] = WALL_TILES[randi() % len(WALL_TILES)]
 
 func set_crypt_section(originPosition, cryptSection):
 	for y in range(len(cryptSection)):
 		var cryptRow = cryptSection[y]
 		for x in range(len(cryptRow)):
-			crypt_globals.crypt[y + originPosition.y][x + originPosition.x] = cryptRow[x]
+			var tile = cryptRow[x]
+			if cryptRow[x] == crypt_generator_globals.FLOOR:
+				tile = FLOOR_TILES[randi() % len(FLOOR_TILES)]
+			elif cryptRow[x] == crypt_generator_globals.WALL:
+				tile = WALL_TILES[randi() % len(WALL_TILES)]
+			crypt_globals.crypt[y + originPosition.y][x + originPosition.x] = tile
