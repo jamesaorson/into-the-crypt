@@ -59,4 +59,3 @@ points = PoolVector2Array( 0, 0, 50, 0, 50, 50, 0, 50 )
 4/navigation_offset = Vector2( 0, 0 )
 4/shapes = [  ]
 4/z_index = 0
-

@@ -4,6 +4,7 @@ onready var playerLightScene = load("res://player/player_light/player_light.tscn
 onready var debugInfoScene = load("res://player/debug_info/debug_info.tscn")
 
 onready var weaponSocketNode = $WeaponNode2D
+var weapon = null
 
 var playerIndex = 0
 var player = player_globals.players[self.playerIndex]
@@ -66,9 +67,9 @@ func create_weapon(weaponName):
 	if weaponScene == null:
 		print("Something went wrong when making the weapon: ", weaponName)
 		return
-	var weapon = weaponScene.instance()
-	player_globals.players[playerIndex].weapon = weapon
-	self.weaponSocketNode.add_child(weapon)
+	self.weapon = weaponScene.instance()
+	player_globals.players[playerIndex].weapon = self.weapon
+	self.weaponSocketNode.add_child(self.weapon)
 
 func destroy():
 	if player_globals.players[playerIndex].weapon != null:
@@ -96,9 +97,17 @@ func get_input():
 	if Input.is_action_pressed(LEFT.inputName):
 		movementMade = true
 		player.velocity += LEFT.vector * Input.get_action_strength(LEFT.inputName) * speed
+		if $AnimatedSprite.flip_h:
+			$AnimatedSprite.set_flip_h(false)
+			self.weapon.flip_h()
+			$WeaponNode2D.position.x = -$WeaponNode2D.position.x
 	if Input.is_action_pressed(RIGHT.inputName):
 		movementMade = true
 		player.velocity += RIGHT.vector * Input.get_action_strength(RIGHT.inputName) * speed
+		if not $AnimatedSprite.flip_h:
+			$AnimatedSprite.set_flip_h(true)
+			self.weapon.flip_h()
+			$WeaponNode2D.position.x = -$WeaponNode2D.position.x
 
 	player.velocity = player.velocity.clamped(player.maxVelocity * speed)
 	if not movementMade:

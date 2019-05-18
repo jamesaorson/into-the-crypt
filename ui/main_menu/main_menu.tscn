@@ -46,6 +46,5 @@ margin_right = 20.0
 margin_bottom = 50.0
 text = "Quit"
 script = ExtResource( 1 )
-
 [connection signal="pressed" from="start_button" to="start_button" method="_on_start_button_pressed"]
 [connection signal="pressed" from="quit_button" to="quit_button" method="_on_quit_button_pressed"]

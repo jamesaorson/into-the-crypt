@@ -1,33 +1,34 @@
 extends Area2D
 
+var Weapon = load("res://models/Weapon.gd")
+
 onready var animationPlayer = $AnimationPlayer
 export var canAttack = false
-var currentAttack = 0
 
 var damage = 1
+var numberOfAttacksInCombo = 2
+var direction = "right"
 
-var nextAnimation
+onready var weapon
+
+func _ready():
+	self.weapon = Weapon.new(self.animationPlayer, 1, self.damage, self.numberOfAttacksInCombo)
 
 func attack():
-	if canAttack:
+	if self.canAttack:
 		self.canAttack = false
-		var animation = "attack" + str(self.currentAttack)
-		if self.animationPlayer.current_animation == "idle":
-			self.animationPlayer.play(animation)
-		else:
-			self.animationPlayer.queue(animation)
-		self.currentAttack = (self.currentAttack + 1) % 2
+		self.weapon.attack(self.direction)
 
-func _on_SwordNode2D_body_entered(body):
-	body.damage(damage)
+func flip_h():
+	$Sprite.set_flip_h($Sprite.flip_h)
+	if self.direction == "right":
+		self.direction = "left"
+	else:
+		self.direction = "right"
+	self.weapon.update_direction(direction)
+
+func _on_Area2D_body_entered(body):
+	self.weapon.make_contact(body)
 
 func _on_AnimationPlayer_animation_finished(animationName):
-	match animationName:
-		"attack0":
-			if self.animationPlayer.current_animation.empty():
-				self.currentAttack = 0
-				self.animationPlayer.queue("idle")
-		"attack1":
-			if self.animationPlayer.current_animation.empty():
-				self.currentAttack = 0
-				self.animationPlayer.queue("idle")
+	self.weapon.animation_finished(animationName, self.direction)
