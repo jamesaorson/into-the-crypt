@@ -3,6 +3,9 @@ extends KinematicBody2D
 onready var playerLightScene = load("res://player/player_light/player_light.tscn")
 onready var debugInfoScene = load("res://player/debug_info/debug_info.tscn")
 
+onready var weaponSocketNode = $WeaponNode2D
+var weapon = null
+
 var playerIndex = 0
 var player = player_globals.players[self.playerIndex]
 
@@ -32,17 +35,11 @@ func _ready():
 	set_physics_process(true)
 	create_light(self.playerIndex)
 	create_debug_info()
+	create_weapon("sword")
 
 ####################
 # Helper Functions #
 ####################
-
-func create_light(playerIndex):
-	var playerLight = player_globals.players[playerIndex].lightNode
-	if playerLight == null:
-		playerLight = playerLightScene.instance()
-		add_child(playerLight)
-		player_globals.players[playerIndex].lightNode = playerLight
 
 func create_debug_info():
 	var debugInfo = player_globals.players[0].debugInfo
@@ -51,7 +48,33 @@ func create_debug_info():
 		add_child(debugInfo)
 		player_globals.players[0].debugInfo = debugInfo
 
+func create_light(playerIndex):
+	var playerLight = player_globals.players[playerIndex].lightNode
+	if playerLight == null:
+		playerLight = playerLightScene.instance()
+		add_child(playerLight)
+		player_globals.players[playerIndex].lightNode = playerLight
+
+func create_weapon(weaponName):
+	print("sword")
+	if player_globals.players[playerIndex].weapon != null:
+		player_globals.players[playerIndex].weapon.queue_free()
+		player_globals.players[playerIndex].weapon = null
+	var weaponScene = null
+	match weaponName:
+	    "sword":
+	        weaponScene = preload("res://weapon/sword/sword.tscn")
+	if weaponScene == null:
+		print("Something went wrong when making the weapon: ", weaponName)
+		return
+	self.weapon = weaponScene.instance()
+	player_globals.players[playerIndex].weapon = self.weapon
+	self.weaponSocketNode.add_child(self.weapon)
+
 func destroy():
+	if player_globals.players[playerIndex].weapon != null:
+		player_globals.players[playerIndex].weapon.queue_free()
+		player_globals.players[playerIndex].weapon = null
 	queue_free()
 
 func get_input():
@@ -60,6 +83,9 @@ func get_input():
 	if Input.is_action_just_released(PLAYER_SPRINT):
 		player.isSprinting = false
 	var speed = player.sprintingSpeed if player.isSprinting else player.walkingSpeed
+	
+	if Input.is_action_just_pressed(PLAYER_PRIMARY_ATTACK) and player_globals.players[playerIndex].weapon != null:
+		player_globals.players[playerIndex].weapon.attack()
 	
 	var movementMade = false
 	if Input.is_action_pressed(UP.inputName):
@@ -71,9 +97,17 @@ func get_input():
 	if Input.is_action_pressed(LEFT.inputName):
 		movementMade = true
 		player.velocity += LEFT.vector * Input.get_action_strength(LEFT.inputName) * speed
+		if $AnimatedSprite.flip_h:
+			$AnimatedSprite.set_flip_h(false)
+			self.weapon.flip_h()
+			$WeaponNode2D.position.x = -$WeaponNode2D.position.x
 	if Input.is_action_pressed(RIGHT.inputName):
 		movementMade = true
 		player.velocity += RIGHT.vector * Input.get_action_strength(RIGHT.inputName) * speed
+		if not $AnimatedSprite.flip_h:
+			$AnimatedSprite.set_flip_h(true)
+			self.weapon.flip_h()
+			$WeaponNode2D.position.x = -$WeaponNode2D.position.x
 
 	player.velocity = player.velocity.clamped(player.maxVelocity * speed)
 	if not movementMade:
