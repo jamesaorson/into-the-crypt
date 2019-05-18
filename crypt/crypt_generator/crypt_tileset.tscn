@@ -1,20 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://assets/crypt/floor.png" type="Texture" id=1]
-[ext_resource path="res://assets/crypt/wall.png" type="Texture" id=2]
+[ext_resource path="res://assets/crypt/wall.png" type="Texture" id=1]
+[ext_resource path="res://assets/crypt/floor_0.png" type="Texture" id=2]
+[ext_resource path="res://assets/crypt/floor_1.png" type="Texture" id=3]
+[ext_resource path="res://assets/crypt/floor_2.png" type="Texture" id=4]
 
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( 0, 0, 50, 0, 50, 50, 0, 50 )
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Floor" type="Sprite" parent="."]
-texture = ExtResource( 1 )
-centered = false
-
 [node name="Wall" type="Sprite" parent="."]
-position = Vector2( 50, 0 )
-texture = ExtResource( 2 )
+texture = ExtResource( 1 )
 centered = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Wall"]
@@ -24,4 +21,19 @@ polygon = PoolVector2Array( 0, 0, 50, 0, 50, 50, 0, 50 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Wall"]
 occluder = SubResource( 1 )
+
+[node name="Floor_0" type="Sprite" parent="."]
+position = Vector2( 50, 0 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Floor_1" type="Sprite" parent="."]
+position = Vector2( 100, 0 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Floor_2" type="Sprite" parent="."]
+position = Vector2( 150, 0 )
+texture = ExtResource( 4 )
+centered = false
 
