@@ -6,6 +6,10 @@ var damage
 var numberOfAttacksInCombo
 var currentAnimation
 
+###################
+# Godot Functions #
+###################
+
 func _init(animationPlayer = null,
 		   currentAttack = 1,
 		   damage = 0,
@@ -16,6 +20,10 @@ func _init(animationPlayer = null,
 	self.damage = damage
 	self.numberOfAttacksInCombo = numberOfAttacksInCombo
 	self.currentAnimation = startingAnimation
+
+####################
+# Helper Functions #
+####################
 
 func animation_finished(animationName, direction):
 	if self.animationPlayer != null and self.animationPlayer.current_animation.empty():

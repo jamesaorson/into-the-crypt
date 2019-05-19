@@ -1,0 +1,91 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://village/village.gd" type="Script" id=1]
+
+[node name="Node2D" type="Node2D" groups=[
+"village",
+]]
+modulate = Color( 0.501961, 0.501961, 0.501961, 1 )
+script = ExtResource( 1 )
+
+[node name="BlacksmithHouse" type="Polygon2D" parent="."]
+editor/display_folded = true
+position = Vector2( 50, 50 )
+scale = Vector2( 2, 2 )
+color = Color( 0.501961, 0.501961, 0.501961, 1 )
+texture_scale = Vector2( 2, 2 )
+polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="BlacksmithHouse"]
+collision_layer = 524288
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BlacksmithHouse/StaticBody2D"]
+polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
+
+[node name="Label" type="Label" parent="BlacksmithHouse"]
+margin_right = 71.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Blacksmith"
+
+[node name="ItemShop" type="Polygon2D" parent="."]
+position = Vector2( 250, 50 )
+scale = Vector2( 2, 2 )
+color = Color( 0.501961, 0.501961, 0.501961, 1 )
+texture_scale = Vector2( 2, 2 )
+polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="ItemShop"]
+collision_layer = 524288
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ItemShop/StaticBody2D"]
+polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
+
+[node name="Label" type="Label" parent="ItemShop"]
+margin_right = 71.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Item
+Shop"
+
+[node name="DoctorHouse" type="Polygon2D" parent="."]
+position = Vector2( 50, 250 )
+scale = Vector2( 2, 2 )
+color = Color( 0.501961, 0.501961, 0.501961, 1 )
+texture_scale = Vector2( 2, 2 )
+polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="DoctorHouse"]
+collision_layer = 524288
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DoctorHouse/StaticBody2D"]
+polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
+
+[node name="Label" type="Label" parent="DoctorHouse"]
+margin_right = 71.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Doctor"
+
+[node name="ShadyDudeHouse" type="Polygon2D" parent="."]
+position = Vector2( 250, 250 )
+scale = Vector2( 2, 2 )
+color = Color( 0.501961, 0.501961, 0.501961, 1 )
+texture_scale = Vector2( 2, 2 )
+polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="ShadyDudeHouse"]
+collision_layer = 524288
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ShadyDudeHouse/StaticBody2D"]
+polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
+
+[node name="Label" type="Label" parent="ShadyDudeHouse"]
+margin_right = 71.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Some 
+stupid
+bitch,
+prolly
+Cal"
