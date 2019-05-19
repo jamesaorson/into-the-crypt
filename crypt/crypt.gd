@@ -17,10 +17,18 @@ func _process(delta):
 func _ready():
 	set_process(true)
 	create_crypt()
+	change_music()
 
 ####################
 # Helper Functions #
 ####################
+
+func change_music(streamPath = null, volume = -20):
+	if streamPath == null:
+		streamPath = "res://assets/audio/bgm/passive_crypt_" + str(randi() % 2) + ".ogg"
+	$AudioStreamPlayer.stream = load(streamPath)
+	$AudioStreamPlayer.volume_db = -20
+	$AudioStreamPlayer.play()
 
 func create_crypt():
 	var cryptGeneratorNode = null
