@@ -29,6 +29,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Blacksmith"
 
 [node name="ItemShop" type="Polygon2D" parent="."]
+editor/display_folded = true
 position = Vector2( 250, 50 )
 scale = Vector2( 2, 2 )
 color = Color( 0.501961, 0.501961, 0.501961, 1 )
@@ -49,6 +50,7 @@ text = "Item
 Shop"
 
 [node name="DoctorHouse" type="Polygon2D" parent="."]
+editor/display_folded = true
 position = Vector2( 50, 250 )
 scale = Vector2( 2, 2 )
 color = Color( 0.501961, 0.501961, 0.501961, 1 )
@@ -68,6 +70,7 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Doctor"
 
 [node name="ShadyDudeHouse" type="Polygon2D" parent="."]
+editor/display_folded = true
 position = Vector2( 250, 250 )
 scale = Vector2( 2, 2 )
 color = Color( 0.501961, 0.501961, 0.501961, 1 )

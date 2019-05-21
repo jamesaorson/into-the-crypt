@@ -24,7 +24,7 @@ const RIGHT = player_globals.RIGHT
 
 func _physics_process(delta):
 	get_input()
-	move_and_slide(player.velocity * delta)
+	player.velocity = move_and_slide(player.velocity)
 
 func _process(delta):
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
