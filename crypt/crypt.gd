@@ -30,6 +30,11 @@ func change_music(streamPath = null, volume = -20):
 	$AudioStreamPlayer.volume_db = -20
 	$AudioStreamPlayer.play()
 
+func cleanup():
+	var cryptGeneratorNodes = get_tree().get_nodes_in_group("crypt_generator")
+	for cryptGeneratorNode in cryptGeneratorNodes:
+		cryptGeneratorNode.destroy()
+
 func create_crypt():
 	var cryptGeneratorNode = null
 	var cryptGeneratorNodes = get_tree().get_nodes_in_group("crypt_generator")
@@ -40,8 +45,11 @@ func create_crypt():
 		add_child(cryptGeneratorNode)
 	cryptGeneratorNode.generate_crypt()
 
+func exit_to_village():
+	cleanup()
+	crypt_globals.cryptSeed = null
+	get_tree().change_scene("res://village/village.tscn")
+
 func quit_to_main_menu():
-	var cryptGeneratorNodes = get_tree().get_nodes_in_group("crypt_generator")
-	for cryptGeneratorNode in cryptGeneratorNodes:
-		cryptGeneratorNode.destroy()
+	cleanup()
 	get_tree().change_scene("res://ui/main_menu/main_menu.tscn")

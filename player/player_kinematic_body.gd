@@ -8,6 +8,8 @@ var weapon = null
 
 var playerIndex = 0
 var player = player_globals.players[self.playerIndex]
+var canEnterCrypt = false
+var canExitCrypt = false
 
 var PLAYER_SPRINT = "sprint_" + str(self.playerIndex)
 
@@ -27,6 +29,9 @@ func _physics_process(delta):
 	player.velocity = move_and_slide(player.velocity)
 
 func _process(delta):
+	$EnterCryptPrompt.visible = self.canEnterCrypt
+	$ExitCryptPrompt.visible = self.canExitCrypt
+		
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
 	if player.lightNode != null:
 		player.lightNode.update_size(delta)
@@ -36,6 +41,18 @@ func _ready():
 	create_light(self.playerIndex)
 	create_debug_info()
 	create_weapon("sword")
+
+func _on_EnterCryptArea2D_area_entered(area):
+	self.canEnterCrypt = true
+
+func _on_EnterCryptArea2D_area_exited(area):
+	self.canEnterCrypt = false
+
+func _on_ExitCryptArea2D_area_entered(area):
+	self.canExitCrypt = true
+
+func _on_ExitCryptArea2D_area_exited(area):
+	self.canExitCrypt = false
 
 ####################
 # Helper Functions #
@@ -56,7 +73,6 @@ func create_light(playerIndex):
 		player_globals.players[playerIndex].lightNode = playerLight
 
 func create_weapon(weaponName):
-	print("sword")
 	if player_globals.players[playerIndex].weapon != null:
 		player_globals.players[playerIndex].weapon.queue_free()
 		player_globals.players[playerIndex].weapon = null
@@ -78,6 +94,16 @@ func destroy():
 	queue_free()
 
 func get_input():
+	if canEnterCrypt and Input.is_action_just_pressed("ui_accept"):
+		self.canEnterCrypt = false
+		var villageNodes = get_tree().get_nodes_in_group("village")
+		if villageNodes != null and villageNodes[0] != null:
+			villageNodes[0].enter_crypt()
+	if self.canExitCrypt and Input.is_action_just_pressed("ui_accept"):
+		var cryptNodes = get_tree().get_nodes_in_group("crypt")
+		if cryptNodes != null and cryptNodes[0] != null:
+			cryptNodes[0].exit_to_village()
+	
 	if Input.is_action_just_pressed(PLAYER_SPRINT):
 		player.isSprinting = true
 	if Input.is_action_just_released(PLAYER_SPRINT):

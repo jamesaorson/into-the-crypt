@@ -17,12 +17,16 @@ func _process(delta):
 # Helper Functions #
 ####################
 
+func cleanup():
+	var villageNodes = get_tree().get_nodes_in_group("village")
+	for villageNode in villageNodes:
+		villageNode.destroy()
+
 func create_player(playerIndex):
 	if playerIndex != null:
 		var player = null
 		if player_globals.players[playerIndex].instance != null:
 			player = player_globals.players[playerIndex].instance
-			print(player_globals.players[playerIndex])
 		else:
 			player = playerScene.instance()
 			player_globals.players[playerIndex].instance = player
@@ -44,8 +48,11 @@ func destroy():
 
 	queue_free()
 
+func enter_crypt():
+	cleanup()
+	crypt_globals.cryptSeed = null
+	get_tree().change_scene("res://crypt/crypt.tscn")
+
 func quit_to_main_menu():
-	var villageNodes = get_tree().get_nodes_in_group("village")
-	for villageNode in villageNodes:
-		villageNode.destroy()
+	cleanup()
 	get_tree().change_scene("res://ui/main_menu/main_menu.tscn")

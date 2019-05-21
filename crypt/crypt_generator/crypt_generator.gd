@@ -27,6 +27,20 @@ var VERTICAL_HALLWAYS = crypt_generator_globals.VERTICAL_HALLWAYS
 # Helper Functions #
 ####################
 
+func create_enemy(position):
+	var enemy = null
+	enemy = enemyScene.instance()
+	get_tree().root.add_child(enemy)
+	var enemyPosition = map_to_world(Vector2(position.x, position.y))
+	enemy.position.x = enemyPosition.x
+	enemy.position.y = enemyPosition.y
+	
+	var enemyModel = Enemy.new(enemy, position, 2, 3)
+	enemyModel.maxHealth = 2
+	enemyModel.health = 2
+	crypt_globals.enemies[enemyModel.get_instance_id()] = enemyModel
+	enemy.enemyModel = enemyModel
+
 func create_player(playerIndex):
 	if playerIndex != null:
 		var player = null
@@ -45,20 +59,6 @@ func create_player(playerIndex):
 		player.position.x = playerPosition.x
 		player.position.y = playerPosition.y
 		player_globals.players[playerIndex].timeStart = OS.get_unix_time()
-
-func create_enemy(position):
-	var enemy = null
-	enemy = enemyScene.instance()
-	get_tree().root.add_child(enemy)
-	var enemyPosition = map_to_world(Vector2(position.x, position.y))
-	enemy.position.x = enemyPosition.x
-	enemy.position.y = enemyPosition.y
-	
-	var enemyModel = Enemy.new(enemy, position, 2, 3)
-	enemyModel.maxHealth = 2
-	enemyModel.health = 2
-	crypt_globals.enemies[enemyModel.get_instance_id()] = enemyModel
-	enemy.enemyModel = enemyModel
 
 func destroy():
 	var playerNodes = get_tree().get_nodes_in_group("player")
@@ -102,6 +102,7 @@ func generate_crypt():
 			else:
 				cryptSection = VERTICAL_HALLWAYS[randi() % len(VERTICAL_HALLWAYS)]
 			set_crypt_section(Vector2(x, y), cryptSection)
+
 	draw_crypt()
 	for playerIndex in range(player_globals.numberOfPlayers, 0, -1):
 		create_player(playerIndex - 1)
