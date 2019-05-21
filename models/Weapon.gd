@@ -6,6 +6,10 @@ var damage
 var numberOfAttacksInCombo
 var currentAnimation
 
+###################
+# Godot Functions #
+###################
+
 func _init(animationPlayer = null,
 		   currentAttack = 1,
 		   damage = 0,
@@ -17,12 +21,15 @@ func _init(animationPlayer = null,
 	self.numberOfAttacksInCombo = numberOfAttacksInCombo
 	self.currentAnimation = startingAnimation
 
+####################
+# Helper Functions #
+####################
+
 func animation_finished(animationName, direction):
 	if self.animationPlayer != null and self.animationPlayer.current_animation.empty():
 		self.currentAttack = 1
 		self.currentAnimation = "_idle"
 		self.animationPlayer.play(direction + self.currentAnimation)
-		
 
 func attack(direction):
 	if self.animationPlayer != null:
@@ -34,6 +41,5 @@ func make_contact(body):
 	body.damage(damage)
 
 func update_direction(direction):
-	print("update: " + direction)
 	if self.currentAnimation == "_idle":
 		self.animationPlayer.play(direction + self.currentAnimation)

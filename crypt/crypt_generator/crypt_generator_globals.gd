@@ -5,6 +5,7 @@ const WALL_TILES = [1]
 
 const FLOOR = 0
 const WALL = 1
+const EXIT = 2
 
 const CRYPT_SECTION_SIZE = 8
 

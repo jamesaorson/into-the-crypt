@@ -19,21 +19,9 @@ var players = [
 		3,
 		Vector2(),
 		7,
-		1000,
-		3000,
+		15,
+		50,
 		false,
 		0
-	),
-	Player.new(
-		null,
-		Vector2(6, 2),
-		2,
-		3,
-		Vector2(),
-		7,
-		1000,
-		3000,
-		false,
-		1
 	)
 ]
