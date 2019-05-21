@@ -59,6 +59,11 @@ func create_player(playerIndex):
 		player.position.x = playerPosition.x
 		player.position.y = playerPosition.y
 		player_globals.players[playerIndex].timeStart = OS.get_unix_time()
+		
+		var exitNodes = get_tree().get_nodes_in_group("crypt_exit")
+		if exitNodes != null:
+			for exitNode in exitNodes:
+				exitNode.position = player.position
 
 func destroy():
 	var playerNodes = get_tree().get_nodes_in_group("player")
