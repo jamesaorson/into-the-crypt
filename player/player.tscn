@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 18, 30 )
 
-[node name="PlayerKinematicBody2D" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
 scale = Vector2( 0.5, 0.5 )
@@ -30,10 +30,10 @@ drag_margin_bottom = 0.1
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 18, 30, 18, 24, 15, 12, 15, -10, 8, -15, 8, -30, -8, -30, -8, -15, -15, -10, -15, 12, -18, 24, -18, 30 )
 
-[node name="WeaponNode2D" type="Node2D" parent="."]
+[node name="Weapon" type="Node2D" parent="."]
 position = Vector2( 11, 10 )
 
-[node name="EnterCryptPrompt" type="Label" parent="."]
+[node name="ActionPrompt" type="Label" parent="."]
 visible = false
 margin_left = -20.0
 margin_top = -65.0
@@ -43,32 +43,22 @@ text = "Press
 \"Enter\""
 align = 1
 
-[node name="ExitCryptPrompt" type="Label" parent="."]
-visible = false
-margin_left = -20.0
-margin_top = -65.0
-margin_right = 25.0
-margin_bottom = -34.0
-text = "Press
-\"Enter\""
-align = 1
-
-[node name="EnterCryptArea2D" type="Area2D" parent="."]
+[node name="EnterCrypt" type="Area2D" parent="."]
 editor/display_folded = true
 collision_layer = 128
 collision_mask = 131072
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnterCryptArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnterCrypt"]
 shape = SubResource( 1 )
 
-[node name="ExitCryptArea2D" type="Area2D" parent="."]
+[node name="ExitCrypt" type="Area2D" parent="."]
 editor/display_folded = true
 collision_layer = 256
 collision_mask = 262144
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitCryptArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitCrypt"]
 shape = SubResource( 1 )
-[connection signal="area_entered" from="EnterCryptArea2D" to="." method="_on_EnterCryptArea2D_area_entered"]
-[connection signal="area_exited" from="EnterCryptArea2D" to="." method="_on_EnterCryptArea2D_area_exited"]
-[connection signal="area_entered" from="ExitCryptArea2D" to="." method="_on_ExitCryptArea2D_area_entered"]
-[connection signal="area_exited" from="ExitCryptArea2D" to="." method="_on_ExitCryptArea2D_area_exited"]
+[connection signal="area_entered" from="EnterCrypt" to="." method="_on_EnterCrypt_area_entered"]
+[connection signal="area_exited" from="EnterCrypt" to="." method="_on_EnterCrypt_area_exited"]
+[connection signal="area_entered" from="ExitCrypt" to="." method="_on_ExitCrypt_area_entered"]
+[connection signal="area_exited" from="ExitCrypt" to="." method="_on_ExitCrypt_area_exited"]

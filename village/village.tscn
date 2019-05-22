@@ -27,6 +27,7 @@ texture = ExtResource( 2 )
 centered = false
 
 [node name="CryptEntrance" type="Node2D" parent="."]
+editor/display_folded = true
 position = Vector2( 500, 175 )
 
 [node name="Sprite" type="Sprite" parent="CryptEntrance"]
@@ -49,7 +50,10 @@ collision_layer = 524288
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CryptEntrance/StaticBody2D"]
 shape = SubResource( 2 )
 
-[node name="BlacksmithHouse" type="Polygon2D" parent="."]
+[node name="Buildings" type="Node2D" parent="."]
+editor/display_folded = true
+
+[node name="BlacksmithHouse" type="Polygon2D" parent="Buildings"]
 editor/display_folded = true
 position = Vector2( 50, 50 )
 scale = Vector2( 2, 2 )
@@ -57,19 +61,19 @@ color = Color( 0.501961, 0.501961, 0.501961, 1 )
 texture_scale = Vector2( 2, 2 )
 polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="BlacksmithHouse"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Buildings/BlacksmithHouse"]
 collision_layer = 524288
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BlacksmithHouse/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Buildings/BlacksmithHouse/StaticBody2D"]
 polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
 
-[node name="Label" type="Label" parent="BlacksmithHouse"]
+[node name="Label" type="Label" parent="Buildings/BlacksmithHouse"]
 margin_right = 71.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Blacksmith"
 
-[node name="ItemShop" type="Polygon2D" parent="."]
+[node name="ItemShop" type="Polygon2D" parent="Buildings"]
 editor/display_folded = true
 position = Vector2( 250, 50 )
 scale = Vector2( 2, 2 )
@@ -77,20 +81,20 @@ color = Color( 0.501961, 0.501961, 0.501961, 1 )
 texture_scale = Vector2( 2, 2 )
 polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="ItemShop"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Buildings/ItemShop"]
 collision_layer = 524288
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ItemShop/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Buildings/ItemShop/StaticBody2D"]
 polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
 
-[node name="Label" type="Label" parent="ItemShop"]
+[node name="Label" type="Label" parent="Buildings/ItemShop"]
 margin_right = 71.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Item
 Shop"
 
-[node name="DoctorHouse" type="Polygon2D" parent="."]
+[node name="DoctorHouse" type="Polygon2D" parent="Buildings"]
 editor/display_folded = true
 position = Vector2( 50, 250 )
 scale = Vector2( 2, 2 )
@@ -98,19 +102,19 @@ color = Color( 0.501961, 0.501961, 0.501961, 1 )
 texture_scale = Vector2( 2, 2 )
 polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="DoctorHouse"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Buildings/DoctorHouse"]
 collision_layer = 524288
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DoctorHouse/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Buildings/DoctorHouse/StaticBody2D"]
 polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
 
-[node name="Label" type="Label" parent="DoctorHouse"]
+[node name="Label" type="Label" parent="Buildings/DoctorHouse"]
 margin_right = 71.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Doctor"
 
-[node name="ShadyDudeHouse" type="Polygon2D" parent="."]
+[node name="ShadyDudeHouse" type="Polygon2D" parent="Buildings"]
 editor/display_folded = true
 position = Vector2( 250, 250 )
 scale = Vector2( 2, 2 )
@@ -118,13 +122,13 @@ color = Color( 0.501961, 0.501961, 0.501961, 1 )
 texture_scale = Vector2( 2, 2 )
 polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="ShadyDudeHouse"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Buildings/ShadyDudeHouse"]
 collision_layer = 524288
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ShadyDudeHouse/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Buildings/ShadyDudeHouse/StaticBody2D"]
 polygon = PoolVector2Array( 0, 0, 30, 0, 30, 30, 0, 30 )
 
-[node name="Label" type="Label" parent="ShadyDudeHouse"]
+[node name="Label" type="Label" parent="Buildings/ShadyDudeHouse"]
 margin_right = 71.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
