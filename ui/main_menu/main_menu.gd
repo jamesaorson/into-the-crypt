@@ -17,6 +17,9 @@ func _on_StartInCryptButton_pressed():
 # Helper Functions #
 ####################
 
+func _ready():
+	$StartInCryptButton.visible = OS.is_debug_build()
+
 func quit_game():
 	get_tree().quit()
 

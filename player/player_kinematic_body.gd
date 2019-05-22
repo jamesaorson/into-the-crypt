@@ -35,8 +35,9 @@ func _process(delta):
 func _ready():
 	set_physics_process(true)
 	create_light(self.playerIndex)
-	create_debug_info()
 	create_weapon("sword")
+	if OS.is_debug_build():
+		create_debug_info()
 
 func _on_EnterCrypt_area_entered(area):
 	self.canEnterCrypt = true
