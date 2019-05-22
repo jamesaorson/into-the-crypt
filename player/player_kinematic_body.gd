@@ -3,7 +3,6 @@ extends KinematicBody2D
 onready var playerLightScene = load("res://player/player_light/player_light.tscn")
 onready var debugInfoScene = load("res://player/debug_info/debug_info.tscn")
 
-onready var weaponSocketNode = $WeaponNode2D
 var weapon = null
 
 var playerIndex = 0
@@ -29,9 +28,6 @@ func _physics_process(delta):
 	player.velocity = move_and_slide(player.velocity)
 
 func _process(delta):
-	$EnterCryptPrompt.visible = self.canEnterCrypt
-	$ExitCryptPrompt.visible = self.canExitCrypt
-		
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
 	if player.lightNode != null:
 		player.lightNode.update_size(delta)
@@ -39,20 +35,25 @@ func _process(delta):
 func _ready():
 	set_physics_process(true)
 	create_light(self.playerIndex)
-	create_debug_info()
 	create_weapon("sword")
+	if OS.is_debug_build():
+		create_debug_info()
 
-func _on_EnterCryptArea2D_area_entered(area):
+func _on_EnterCrypt_area_entered(area):
 	self.canEnterCrypt = true
+	$ActionPrompt.visible = self.canEnterCrypt
 
-func _on_EnterCryptArea2D_area_exited(area):
+func _on_EnterCrypt_area_exited(area):
 	self.canEnterCrypt = false
+	$ActionPrompt.visible = self.canEnterCrypt
 
-func _on_ExitCryptArea2D_area_entered(area):
+func _on_ExitCrypt_area_entered(area):
 	self.canExitCrypt = true
+	$ActionPrompt.visible = self.canExitCrypt
 
-func _on_ExitCryptArea2D_area_exited(area):
+func _on_ExitCrypt_area_exited(area):
 	self.canExitCrypt = false
+	$ActionPrompt.visible = self.canExitCrypt
 
 ####################
 # Helper Functions #
@@ -85,13 +86,18 @@ func create_weapon(weaponName):
 		return
 	self.weapon = weaponScene.instance()
 	player_globals.players[playerIndex].weapon = self.weapon
-	self.weaponSocketNode.add_child(self.weapon)
+	$Weapon.add_child(self.weapon)
 
 func destroy():
 	if player_globals.players[playerIndex].weapon != null:
 		player_globals.players[playerIndex].weapon.queue_free()
 		player_globals.players[playerIndex].weapon = null
 	queue_free()
+
+func flip_weapon(shouldBeFlipped):
+	$AnimatedSprite.set_flip_h(shouldBeFlipped)
+	self.weapon.flip_h()
+	$Weapon.position.x = -$Weapon.position.x
 
 func get_input():
 	if canEnterCrypt and Input.is_action_just_pressed("ui_accept"):
@@ -124,16 +130,12 @@ func get_input():
 		movementMade = true
 		player.velocity += LEFT.vector * Input.get_action_strength(LEFT.inputName) * speed
 		if $AnimatedSprite.flip_h:
-			$AnimatedSprite.set_flip_h(false)
-			self.weapon.flip_h()
-			$WeaponNode2D.position.x = -$WeaponNode2D.position.x
+			flip_weapon(false)
 	if Input.is_action_pressed(RIGHT.inputName):
 		movementMade = true
 		player.velocity += RIGHT.vector * Input.get_action_strength(RIGHT.inputName) * speed
 		if not $AnimatedSprite.flip_h:
-			$AnimatedSprite.set_flip_h(true)
-			self.weapon.flip_h()
-			$WeaponNode2D.position.x = -$WeaponNode2D.position.x
+			flip_weapon(true)
 
 	player.velocity = player.velocity.clamped(player.maxVelocity * speed)
 	if not movementMade:
