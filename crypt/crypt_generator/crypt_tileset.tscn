@@ -10,7 +10,6 @@
 extents = Vector2( 25, 25 )
 
 [node name="Node2D" type="Node2D"]
-editor/display_folded = true
 
 [node name="Wall" type="Sprite" parent="."]
 editor/display_folded = true
@@ -28,16 +27,16 @@ position = Vector2( 25, 25 )
 shape = SubResource( 1 )
 
 [node name="Floor_0" type="Sprite" parent="."]
-position = Vector2( 100, 0 )
+position = Vector2( 50, 0 )
 texture = ExtResource( 3 )
 centered = false
 
 [node name="Floor_1" type="Sprite" parent="."]
-position = Vector2( 150, 0 )
+position = Vector2( 100, 0 )
 texture = ExtResource( 4 )
 centered = false
 
 [node name="Floor_2" type="Sprite" parent="."]
-position = Vector2( 200, 0 )
+position = Vector2( 150, 0 )
 texture = ExtResource( 5 )
 centered = false

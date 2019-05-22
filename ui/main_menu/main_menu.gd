@@ -1,27 +1,30 @@
-extends Button
+extends Control
 
 ###################
 # Signal handlers #
 ###################
 
-func _on_quit_button_pressed():
+func _on_QuitButton_pressed():
 	quit_game()
 
-func _on_start_button_pressed():
+func _on_StartButton_pressed():
 	start_game()
 
-func _on_start_dev_button_pressed():
+func _on_StartInCryptButton_pressed():
 	start_game_dev()
 
 ####################
 # Helper Functions #
 ####################
 
+func _ready():
+	$StartInCryptButton.visible = OS.is_debug_build()
+
 func quit_game():
 	get_tree().quit()
 
 func start_game_dev():
-	var levelSeedSpinBoxNode = get_node("/root/main_menu_control/start_dev_button/level_seed_spin_box")
+	var levelSeedSpinBoxNode = $StartInCryptButton/CryptSeed
 	if levelSeedSpinBoxNode.value >= 0:
 		crypt_globals.cryptSeed = levelSeedSpinBoxNode.value
 	else:
