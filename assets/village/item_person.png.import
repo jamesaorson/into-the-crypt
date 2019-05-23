@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/item_building.png-c0cabf06350c0fbd9c73b3c9674072ba.stex"
+path="res://.import/item_person.png-a72ce8c546fea84197cd785c7c35f429.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/village/item_building.png"
-dest_files=[ "res://.import/item_building.png-c0cabf06350c0fbd9c73b3c9674072ba.stex" ]
+source_file="res://assets/village/item_person.png"
+dest_files=[ "res://.import/item_person.png-a72ce8c546fea84197cd785c7c35f429.stex" ]
 
 [params]
 
