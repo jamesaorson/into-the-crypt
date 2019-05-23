@@ -32,8 +32,8 @@ func create_player(playerIndex):
 			player_globals.players[playerIndex].instance = player
 			player.set_player_index(playerIndex)
 			add_child(player)
-		player.position.x = 0
-		player.position.y = 0
+		player.position.x = 250
+		player.position.y = 100
 		player.set_player_index(playerIndex)
 		player_globals.players[playerIndex].timeStart = OS.get_unix_time()
 
