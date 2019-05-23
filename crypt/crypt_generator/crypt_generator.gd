@@ -58,6 +58,7 @@ func create_player(playerIndex):
 		playerPosition = map_to_world(playerPosition)
 		player.position.x = playerPosition.x
 		player.position.y = playerPosition.y
+		player.scale = Vector2(0.75, 0.75)
 		player_globals.players[playerIndex].timeStart = OS.get_unix_time()
 		
 		var exitNodes = get_tree().get_nodes_in_group("crypt_exit")

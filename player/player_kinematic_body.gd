@@ -9,6 +9,9 @@ var playerIndex = 0
 var player = player_globals.players[self.playerIndex]
 var canEnterCrypt = false
 var canExitCrypt = false
+var canTalkWithVillager = false
+var villagerToTalkTo = null
+var isTalking = false
 
 const UP = player_globals.UP
 const DOWN = player_globals.DOWN
@@ -27,6 +30,7 @@ func _process(delta):
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
 	if player.lightNode != null:
 		player.lightNode.update_size(delta)
+	$ActionPrompt.visible = self.canEnterCrypt or self.canExitCrypt or self.canTalkWithVillager
 
 func _ready():
 	set_physics_process(true)
@@ -37,19 +41,25 @@ func _ready():
 
 func _on_EnterCrypt_area_entered(area):
 	self.canEnterCrypt = true
-	$ActionPrompt.visible = self.canEnterCrypt
 
 func _on_EnterCrypt_area_exited(area):
 	self.canEnterCrypt = false
-	$ActionPrompt.visible = self.canEnterCrypt
 
 func _on_ExitCrypt_area_entered(area):
 	self.canExitCrypt = true
-	$ActionPrompt.visible = self.canExitCrypt
 
 func _on_ExitCrypt_area_exited(area):
 	self.canExitCrypt = false
-	$ActionPrompt.visible = self.canExitCrypt
+
+func _on_TalkWithPlayer_area_entered(area):
+	self.canTalkWithVillager = true
+	self.villagerToTalkTo = area
+
+func _on_TalkWithPlayer_area_exited(area):
+	self.canTalkWithVillager = false
+	self.villagerToTalkTo = null
+	self.isTalking = false
+	$DialogBox.visible = false
 
 ####################
 # Helper Functions #
@@ -106,7 +116,11 @@ func get_input():
 			var cryptNodes = get_tree().get_nodes_in_group("crypt")
 			if cryptNodes != null and cryptNodes[0] != null:
 				cryptNodes[0].exit_crypt()
+		elif self.canTalkWithVillager and not self.isTalking:
+			self.isTalking = true
+			$DialogBox.talk(self, self.villagerToTalkTo)
 	
+	var movementMade = false
 	if Input.is_action_just_pressed(input_globals.SPRINT):
 		player.isSprinting = true
 	elif Input.is_action_just_released(input_globals.SPRINT):
@@ -115,8 +129,7 @@ func get_input():
 	
 	if Input.is_action_just_pressed(input_globals.PRIMARY_ATTACK) and player_globals.players[playerIndex].weapon != null:
 		player_globals.players[playerIndex].weapon.attack()
-	
-	var movementMade = false
+
 	if Input.is_action_pressed(input_globals.UP):
 		movementMade = true
 		player.velocity += UP * Input.get_action_strength(input_globals.UP) * speed

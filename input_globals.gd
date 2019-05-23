@@ -4,6 +4,7 @@ export var PAUSE = "pause_0"
 export var RESET = "reset_0"
 
 export var UI_ACCEPT = "ui_accept"
+export var UI_CANCEL = "ui_cancel"
 export var SPRINT = "sprint_0"
 export var PRIMARY_ATTACK = "primary_attack_0"
 
