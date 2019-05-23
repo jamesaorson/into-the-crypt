@@ -21,6 +21,7 @@ occluder = ExtResource( 2 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Wall"]
 editor/display_folded = true
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall/StaticBody2D"]
 position = Vector2( 25, 25 )
