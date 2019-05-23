@@ -10,10 +10,6 @@ var player = player_globals.players[self.playerIndex]
 var canEnterCrypt = false
 var canExitCrypt = false
 
-var PLAYER_SPRINT = "sprint_" + str(self.playerIndex)
-
-var PLAYER_PRIMARY_ATTACK = "primary_attack_" + str(self.playerIndex)
-
 const UP = player_globals.UP
 const DOWN = player_globals.DOWN
 const LEFT = player_globals.LEFT
@@ -100,7 +96,7 @@ func flip_weapon(shouldBeFlipped):
 	$Weapon.position.x = -$Weapon.position.x
 
 func get_input():
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed(input_globals.UI_ACCEPT):
 		if self.canEnterCrypt:
 			self.canEnterCrypt = false
 			var villageNodes = get_tree().get_nodes_in_group("village")
@@ -111,36 +107,40 @@ func get_input():
 			if cryptNodes != null and cryptNodes[0] != null:
 				cryptNodes[0].exit_crypt()
 	
-	if Input.is_action_just_pressed(PLAYER_SPRINT):
+	if Input.is_action_just_pressed(input_globals.SPRINT):
 		player.isSprinting = true
-	if Input.is_action_just_released(PLAYER_SPRINT):
+	elif Input.is_action_just_released(input_globals.SPRINT):
 		player.isSprinting = false
 	var speed = player.sprintingSpeed if player.isSprinting else player.walkingSpeed
 	
-	if Input.is_action_just_pressed(PLAYER_PRIMARY_ATTACK) and player_globals.players[playerIndex].weapon != null:
+	if Input.is_action_just_pressed(input_globals.PRIMARY_ATTACK) and player_globals.players[playerIndex].weapon != null:
 		player_globals.players[playerIndex].weapon.attack()
 	
 	var movementMade = false
-	if Input.is_action_pressed(UP.inputName):
+	if Input.is_action_pressed(input_globals.UP):
 		movementMade = true
-		player.velocity += UP.vector * Input.get_action_strength(UP.inputName) * speed
-	if Input.is_action_pressed(DOWN.inputName):
+		player.velocity += UP * Input.get_action_strength(input_globals.UP) * speed
+	if Input.is_action_pressed(input_globals.DOWN):
 		movementMade = true
-		player.velocity += DOWN.vector * Input.get_action_strength(DOWN.inputName) * speed
-	if Input.is_action_pressed(LEFT.inputName):
+		player.velocity += DOWN * Input.get_action_strength(input_globals.DOWN) * speed
+	if Input.is_action_pressed(input_globals.LEFT):
 		movementMade = true
-		player.velocity += LEFT.vector * Input.get_action_strength(LEFT.inputName) * speed
+		player.velocity += LEFT * Input.get_action_strength(input_globals.LEFT) * speed
 		if $AnimatedSprite.flip_h:
 			flip_weapon(false)
-	if Input.is_action_pressed(RIGHT.inputName):
+	if Input.is_action_pressed(input_globals.RIGHT):
 		movementMade = true
-		player.velocity += RIGHT.vector * Input.get_action_strength(RIGHT.inputName) * speed
+		player.velocity += RIGHT * Input.get_action_strength(input_globals.RIGHT) * speed
 		if not $AnimatedSprite.flip_h:
 			flip_weapon(true)
 
 	player.velocity = player.velocity.clamped(player.maxVelocity * speed)
 	if not movementMade:
 		player.velocity *= player_globals.friction
+
+func set_camera_zoom(zoomLevel):
+	if zoomLevel != null:
+		$Camera2D.zoom = zoomLevel
 
 func set_player_index(newPlayerIndex):
 	var tempTimeStart = player.timeStart
@@ -152,7 +152,6 @@ func set_player_index(newPlayerIndex):
 
 	self.playerIndex = newPlayerIndex
 	player = player_globals.players[newPlayerIndex]
-	PLAYER_SPRINT = "sprint_" + str(newPlayerIndex)
 	player.timeStart = tempTimeStart
 	player.lightNode = tempLightNode
 	player.debugInfo = tempDebugInfo
