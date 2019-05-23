@@ -2,10 +2,10 @@ extends Node
 
 var Player = load("res://models/Player.gd")
 
-const UP = { vector = Vector2(0, -1), inputName = "player_move_up_0" }
-const DOWN = { vector = -UP.vector, inputName = "player_move_down_0" }
-const LEFT = { vector = Vector2(-1, 0), inputName = "player_move_left_0" }
-const RIGHT = { vector = -LEFT.vector, inputName = "player_move_right_0" }
+const UP = Vector2(0, -1)
+const DOWN = -UP
+const LEFT = Vector2(-1, 0)
+const RIGHT = -LEFT
 
 var friction = 0.85
 

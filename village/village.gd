@@ -2,6 +2,8 @@ extends Node
 
 onready var playerScene = load("res://player/player.tscn")
 
+const ZOOM = Vector2(0.4, 0.4)
+
 ###################
 # Godot Functions #
 ###################
@@ -10,7 +12,7 @@ func _ready():
 	create_player(0)
 
 func _process(delta):
-	if Input.is_action_pressed("pause_0") or Input.is_action_pressed("pause_1"):
+	if Input.is_action_pressed(input_globals.PAUSE):
 		quit_to_main_menu()
 
 ####################
@@ -19,8 +21,8 @@ func _process(delta):
 
 func cleanup():
 	var villageNodes = get_tree().get_nodes_in_group("village")
-	for villageNode in villageNodes:
-		villageNode.destroy()
+	for node in villageNodes:
+		node.destroy()
 
 func create_player(playerIndex):
 	if playerIndex != null:
@@ -32,15 +34,16 @@ func create_player(playerIndex):
 			player_globals.players[playerIndex].instance = player
 			player.set_player_index(playerIndex)
 			add_child(player)
-		player.position.x = 0
-		player.position.y = 0
+		player.position.x = 250
+		player.position.y = 100
 		player.set_player_index(playerIndex)
+		player.set_camera_zoom(ZOOM)
 		player_globals.players[playerIndex].timeStart = OS.get_unix_time()
 
 func destroy():
 	var playerNodes = get_tree().get_nodes_in_group("player")
-	for playerNode in playerNodes:
-		playerNode.destroy()
+	for node in playerNodes:
+		node.destroy()
 	for player in player_globals.players:
 		player.instance = null
 		player.debugInfo = null

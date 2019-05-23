@@ -62,22 +62,26 @@ func create_player(playerIndex):
 		
 		var exitNodes = get_tree().get_nodes_in_group("crypt_exit")
 		if exitNodes != null:
-			for exitNode in exitNodes:
-				exitNode.position = player.position
+			for node in exitNodes:
+				node.position = player.position
 
 func destroy():
 	var playerNodes = get_tree().get_nodes_in_group("player")
-	for playerNode in playerNodes:
-		playerNode.destroy()
+	for node in playerNodes:
+		node.destroy()
 	for player in player_globals.players:
 		player.instance = null
 		player.debugInfo = null
 		player.lightNode = null
 
 	var enemyNodes = get_tree().get_nodes_in_group("enemy")
-	for enemyNode in enemyNodes:
-		enemyNode.destroy()
+	for node in enemyNodes:
+		node.destroy()
 	crypt_globals.enemies.clear()
+
+	var cryptCanvasModulateNodes = get_tree().get_nodes_in_group("crypt_canvas_modulate")
+	for node in cryptCanvasModulateNodes:
+		node.free()
 
 	queue_free()
 

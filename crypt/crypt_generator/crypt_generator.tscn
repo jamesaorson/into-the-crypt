@@ -14,5 +14,7 @@ collision_layer = 524288
 format = 1
 script = ExtResource( 2 )
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="." groups=[
+"crypt_canvas_modulate",
+]]
 color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
