@@ -11,7 +11,7 @@ func _on_StartButton_pressed():
 	start_game()
 
 func _on_StartInCryptButton_pressed():
-	start_game_dev()
+	start_game_in_crypt()
 
 ####################
 # Helper Functions #
@@ -23,7 +23,7 @@ func _ready():
 func quit_game():
 	get_tree().quit()
 
-func start_game_dev():
+func start_game_in_crypt():
 	var levelSeedSpinBoxNode = $StartInCryptButton/CryptSeed
 	if levelSeedSpinBoxNode.value >= 0:
 		crypt_globals.cryptSeed = levelSeedSpinBoxNode.value

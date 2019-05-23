@@ -45,7 +45,7 @@ func create_crypt():
 		add_child(cryptGeneratorNode)
 	cryptGeneratorNode.generate_crypt()
 
-func exit_to_village():
+func exit_crypt():
 	cleanup()
 	crypt_globals.cryptSeed = null
 	get_tree().change_scene("res://village/village.tscn")

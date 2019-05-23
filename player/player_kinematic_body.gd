@@ -100,15 +100,16 @@ func flip_weapon(shouldBeFlipped):
 	$Weapon.position.x = -$Weapon.position.x
 
 func get_input():
-	if canEnterCrypt and Input.is_action_just_pressed("ui_accept"):
-		self.canEnterCrypt = false
-		var villageNodes = get_tree().get_nodes_in_group("village")
-		if villageNodes != null and villageNodes[0] != null:
-			villageNodes[0].enter_crypt()
-	if self.canExitCrypt and Input.is_action_just_pressed("ui_accept"):
-		var cryptNodes = get_tree().get_nodes_in_group("crypt")
-		if cryptNodes != null and cryptNodes[0] != null:
-			cryptNodes[0].exit_to_village()
+	if Input.is_action_just_pressed("ui_accept"):
+		if self.canEnterCrypt:
+			self.canEnterCrypt = false
+			var villageNodes = get_tree().get_nodes_in_group("village")
+			if villageNodes != null and villageNodes[0] != null:
+				villageNodes[0].enter_crypt()
+		elif self.canExitCrypt:
+			var cryptNodes = get_tree().get_nodes_in_group("crypt")
+			if cryptNodes != null and cryptNodes[0] != null:
+				cryptNodes[0].exit_crypt()
 	
 	if Input.is_action_just_pressed(PLAYER_SPRINT):
 		player.isSprinting = true
