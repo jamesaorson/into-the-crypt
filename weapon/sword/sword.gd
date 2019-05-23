@@ -11,8 +11,22 @@ var direction = "right"
 
 onready var weapon
 
+###################
+# Godot Functions #
+###################
+
 func _ready():
 	self.weapon = Weapon.new(self.animationPlayer, 1, self.damage, self.numberOfAttacksInCombo)
+
+func _on_Area2D_body_entered(body):
+	self.weapon.make_contact(body)
+
+func _on_AnimationPlayer_animation_finished(animationName):
+	self.weapon.animation_finished(animationName, self.direction)
+
+####################
+# Helper Functions #
+####################
 
 func attack():
 	if self.canAttack:
@@ -26,9 +40,3 @@ func flip_h():
 	else:
 		self.direction = "right"
 	self.weapon.update_direction(direction)
-
-func _on_Area2D_body_entered(body):
-	self.weapon.make_contact(body)
-
-func _on_AnimationPlayer_animation_finished(animationName):
-	self.weapon.animation_finished(animationName, self.direction)

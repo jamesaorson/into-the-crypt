@@ -3,10 +3,9 @@
 [ext_resource path="res://assets/player/light.png" type="Texture" id=1]
 [ext_resource path="res://player/player_light/player_light.gd" type="Script" id=2]
 
-[node name="PlayerLight2D" type="Light2D" groups=[
+[node name="PlayerLight" type="Light2D" groups=[
 "player_light",
 ]]
 texture = ExtResource( 1 )
 shadow_enabled = true
 script = ExtResource( 2 )
-

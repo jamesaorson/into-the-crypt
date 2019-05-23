@@ -3,15 +3,15 @@ extends KinematicBody2D
 onready var playerLightScene = load("res://player/player_light/player_light.tscn")
 onready var debugInfoScene = load("res://player/debug_info/debug_info.tscn")
 
-onready var weaponSocketNode = $WeaponNode2D
 var weapon = null
 
 var playerIndex = 0
 var player = player_globals.players[self.playerIndex]
-
-var PLAYER_SPRINT = "sprint_" + str(self.playerIndex)
-
-var PLAYER_PRIMARY_ATTACK = "primary_attack_" + str(self.playerIndex)
+var canEnterCrypt = false
+var canExitCrypt = false
+var canTalkWithVillager = false
+var villagerToTalkTo = null
+var isTalking = false
 
 const UP = player_globals.UP
 const DOWN = player_globals.DOWN
@@ -24,18 +24,42 @@ const RIGHT = player_globals.RIGHT
 
 func _physics_process(delta):
 	get_input()
-	move_and_slide(player.velocity * delta)
+	player.velocity = move_and_slide(player.velocity)
 
 func _process(delta):
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
 	if player.lightNode != null:
 		player.lightNode.update_size(delta)
+	$ActionPrompt.visible = self.canEnterCrypt or self.canExitCrypt or self.canTalkWithVillager
 
 func _ready():
 	set_physics_process(true)
 	create_light(self.playerIndex)
-	create_debug_info()
 	create_weapon("sword")
+	if OS.is_debug_build():
+		create_debug_info()
+
+func _on_EnterCrypt_area_entered(area):
+	self.canEnterCrypt = true
+
+func _on_EnterCrypt_area_exited(area):
+	self.canEnterCrypt = false
+
+func _on_ExitCrypt_area_entered(area):
+	self.canExitCrypt = true
+
+func _on_ExitCrypt_area_exited(area):
+	self.canExitCrypt = false
+
+func _on_TalkWithPlayer_area_entered(area):
+	self.canTalkWithVillager = true
+	self.villagerToTalkTo = area
+
+func _on_TalkWithPlayer_area_exited(area):
+	self.canTalkWithVillager = false
+	self.villagerToTalkTo = null
+	self.isTalking = false
+	$DialogBox.visible = false
 
 ####################
 # Helper Functions #
@@ -56,7 +80,6 @@ func create_light(playerIndex):
 		player_globals.players[playerIndex].lightNode = playerLight
 
 func create_weapon(weaponName):
-	print("sword")
 	if player_globals.players[playerIndex].weapon != null:
 		player_globals.players[playerIndex].weapon.queue_free()
 		player_globals.players[playerIndex].weapon = null
@@ -69,7 +92,7 @@ func create_weapon(weaponName):
 		return
 	self.weapon = weaponScene.instance()
 	player_globals.players[playerIndex].weapon = self.weapon
-	self.weaponSocketNode.add_child(self.weapon)
+	$Weapon.add_child(self.weapon)
 
 func destroy():
 	if player_globals.players[playerIndex].weapon != null:
@@ -77,41 +100,60 @@ func destroy():
 		player_globals.players[playerIndex].weapon = null
 	queue_free()
 
+func flip_weapon(shouldBeFlipped):
+	$AnimatedSprite.set_flip_h(shouldBeFlipped)
+	self.weapon.flip_h()
+	$Weapon.position.x = -$Weapon.position.x
+
 func get_input():
-	if Input.is_action_just_pressed(PLAYER_SPRINT):
+	if Input.is_action_just_pressed(input_globals.UI_ACCEPT):
+		if self.canEnterCrypt:
+			self.canEnterCrypt = false
+			var villageNodes = get_tree().get_nodes_in_group("village")
+			if villageNodes != null and villageNodes[0] != null:
+				villageNodes[0].enter_crypt()
+		elif self.canExitCrypt:
+			var cryptNodes = get_tree().get_nodes_in_group("crypt")
+			if cryptNodes != null and cryptNodes[0] != null:
+				cryptNodes[0].exit_crypt()
+		elif self.canTalkWithVillager and not self.isTalking:
+			self.isTalking = true
+			$DialogBox.talk(self, self.villagerToTalkTo)
+	
+	var movementMade = false
+	if Input.is_action_just_pressed(input_globals.SPRINT):
 		player.isSprinting = true
-	if Input.is_action_just_released(PLAYER_SPRINT):
+	elif Input.is_action_just_released(input_globals.SPRINT):
 		player.isSprinting = false
 	var speed = player.sprintingSpeed if player.isSprinting else player.walkingSpeed
 	
-	if Input.is_action_just_pressed(PLAYER_PRIMARY_ATTACK) and player_globals.players[playerIndex].weapon != null:
+	if Input.is_action_just_pressed(input_globals.PRIMARY_ATTACK) and player_globals.players[playerIndex].weapon != null:
 		player_globals.players[playerIndex].weapon.attack()
-	
-	var movementMade = false
-	if Input.is_action_pressed(UP.inputName):
+
+	if Input.is_action_pressed(input_globals.UP):
 		movementMade = true
-		player.velocity += UP.vector * Input.get_action_strength(UP.inputName) * speed
-	if Input.is_action_pressed(DOWN.inputName):
+		player.velocity += UP * Input.get_action_strength(input_globals.UP) * speed
+	if Input.is_action_pressed(input_globals.DOWN):
 		movementMade = true
-		player.velocity += DOWN.vector * Input.get_action_strength(DOWN.inputName) * speed
-	if Input.is_action_pressed(LEFT.inputName):
+		player.velocity += DOWN * Input.get_action_strength(input_globals.DOWN) * speed
+	if Input.is_action_pressed(input_globals.LEFT):
 		movementMade = true
-		player.velocity += LEFT.vector * Input.get_action_strength(LEFT.inputName) * speed
+		player.velocity += LEFT * Input.get_action_strength(input_globals.LEFT) * speed
 		if $AnimatedSprite.flip_h:
-			$AnimatedSprite.set_flip_h(false)
-			self.weapon.flip_h()
-			$WeaponNode2D.position.x = -$WeaponNode2D.position.x
-	if Input.is_action_pressed(RIGHT.inputName):
+			flip_weapon(false)
+	if Input.is_action_pressed(input_globals.RIGHT):
 		movementMade = true
-		player.velocity += RIGHT.vector * Input.get_action_strength(RIGHT.inputName) * speed
+		player.velocity += RIGHT * Input.get_action_strength(input_globals.RIGHT) * speed
 		if not $AnimatedSprite.flip_h:
-			$AnimatedSprite.set_flip_h(true)
-			self.weapon.flip_h()
-			$WeaponNode2D.position.x = -$WeaponNode2D.position.x
+			flip_weapon(true)
 
 	player.velocity = player.velocity.clamped(player.maxVelocity * speed)
 	if not movementMade:
 		player.velocity *= player_globals.friction
+
+func set_camera_zoom(zoomLevel):
+	if zoomLevel != null:
+		$Camera2D.zoom = zoomLevel
 
 func set_player_index(newPlayerIndex):
 	var tempTimeStart = player.timeStart
@@ -123,7 +165,6 @@ func set_player_index(newPlayerIndex):
 
 	self.playerIndex = newPlayerIndex
 	player = player_globals.players[newPlayerIndex]
-	PLAYER_SPRINT = "sprint_" + str(newPlayerIndex)
 	player.timeStart = tempTimeStart
 	player.lightNode = tempLightNode
 	player.debugInfo = tempDebugInfo

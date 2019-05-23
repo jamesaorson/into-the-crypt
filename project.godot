@@ -42,6 +42,7 @@ crypt_globals="*res://crypt/crypt_globals.gd"
 player_globals="*res://player/player_globals.gd"
 player_light_globals="*res://player/player_light/player_light_globals.gd"
 crypt_generator_globals="*res://crypt/crypt_generator/crypt_generator_globals.gd"
+input_globals="*res://input_globals.gd"
 
 [display]
 
@@ -139,6 +140,13 @@ primary_attack_1={
 2d_physics/layer_1="player"
 2d_physics/layer_2="player_weapon"
 2d_physics/layer_3="enemy"
+2d_physics/layer_4="villager"
+2d_physics/layer_8="player_enter_crypt"
+2d_physics/layer_9="player_exit_crypt"
+2d_physics/layer_11="talk_with_player"
+2d_physics/layer_14="talk_to_villager"
+2d_physics/layer_18="enter_crypt"
+2d_physics/layer_19="exit_crypt"
 2d_physics/layer_20="wall"
 
 [rendering]
