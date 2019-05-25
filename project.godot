@@ -144,6 +144,7 @@ primary_attack_1={
 2d_physics/layer_8="player_enter_crypt"
 2d_physics/layer_9="player_exit_crypt"
 2d_physics/layer_11="talk_with_player"
+2d_physics/layer_13="enemy_vision"
 2d_physics/layer_14="talk_to_villager"
 2d_physics/layer_18="enter_crypt"
 2d_physics/layer_19="exit_crypt"

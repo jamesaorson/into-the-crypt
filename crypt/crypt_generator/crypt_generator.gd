@@ -34,6 +34,7 @@ func create_enemy(position):
 	var enemyPosition = map_to_world(Vector2(position.x, position.y))
 	enemy.position.x = enemyPosition.x
 	enemy.position.y = enemyPosition.y
+	enemy.scale = Vector2(0.75, 0.75)
 	
 	var enemyModel = Enemy.new(enemy, position, 2, 3)
 	enemyModel.maxHealth = 2
