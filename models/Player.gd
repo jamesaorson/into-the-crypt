@@ -2,38 +2,35 @@ extends Actor
 
 class_name Player
 
-var playerIndex
-var maxHealth
-var health
-var timeStart
-var timeElapsed
-var lightNode
-var debugInfo
-var weapon
+var maxHealth : float
+var health : float
+var timeStart : int
+var timeElapsed : int
+var lightNode : Light2D
+var debugInfo : CanvasLayer
+var weapon : Area2D
 
 ###################
 # Godot Functions #
 ###################
 
-func _init(instance = null,
-		   position = Vector2(), 
-		   width = 0, 
-		   height = 0, 
-		   velocity = Vector2(), 
-		   maxVelocity = 0, 
-		   walkingSpeed = 0, 
-		   sprintingSpeed = 0, 
-		   isSprinting = false, 
-		   playerIndex = -1,
-		   maxHealth = 1,
-		   health = 1,
-		   timeStart = null,
-		   timeElapsed = null,
-		   lightNode = null,
-		   debugInfo = null,
-		   weapon = null):
+func _init(instance : Node2D = null,
+		   position : Vector2 = Vector2(), 
+		   width : float = 0.0,
+		   height : float = 0.0, 
+		   velocity : Vector2 = Vector2(), 
+		   maxVelocity : float = 0.0,
+		   walkingSpeed : float = 0.0,
+		   sprintingSpeed : float = 0.0,
+		   isSprinting : bool = false,
+		   maxHealth : float = 1.0,
+		   health : float = 1.0,
+		   timeStart : int = -1,
+		   timeElapsed : int = -1,
+		   lightNode : Light2D = null,
+		   debugInfo : CanvasLayer = null,
+		   weapon : Area2D = null) -> void:
 	._init(instance, position, width, height, velocity, maxVelocity, walkingSpeed, sprintingSpeed, isSprinting)
-	self.playerIndex = playerIndex
 	self.maxHealth = maxHealth
 	self.health = health
 	self.timeStart = timeStart
@@ -41,3 +38,25 @@ func _init(instance = null,
 	self.lightNode = lightNode
 	self.debugInfo = debugInfo
 	self.weapon = weapon
+
+####################
+# Helper Functions #
+####################
+
+func damage(amountToDamage : float) -> void:
+	if self.health > 0:
+		self.health -= amountToDamage
+
+func die() -> bool:
+	if self.instance != null:
+		self.instance.die()
+		return true
+	return false
+
+func try_die() -> bool:
+	if self.health <= 0:
+		return self.die()
+	return false
+
+func update() -> void:
+	try_die()
