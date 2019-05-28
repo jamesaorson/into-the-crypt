@@ -6,6 +6,8 @@ var remainingVelocity = Vector2.ZERO
 var direction = Vector2.ZERO
 var speed = Vector2.ZERO
 
+export(int) var attackTime = 1
+
 ###################
 # Godot Functions #
 ###################
@@ -20,13 +22,8 @@ func _physics_process(delta):
 		self.direction = self.enemyModel.behave(delta, is_on_wall(), self.remainingVelocity)
 		self.speed = self.enemyModel.speed if self.enemyModel.playerBody == null else self.enemyModel.huntingSpeed
 
-func _on_Area2D_body_entered(body):
-	if self.enemyModel != null:
-		self.enemyModel.playerBody = body
-
-func _on_Area2D_body_exited(body):
-	if self.enemyModel != null:
-		self.enemyModel.playerBody = null
+func _ready():
+	$AttackRange/AttackTimer.wait_time = attackTime
 
 ####################
 # Helper Functions #
@@ -38,3 +35,24 @@ func damage(amountToDamage):
 
 func destroy():
 	queue_free()
+
+###################
+# Signal Handlers #
+###################
+
+func _on_AttackRange_body_entered():
+	pass # Replace with function body.
+
+func _on_AttackRange_body_exited():
+	pass # Replace with function body.
+
+func _on_HuntingRange_body_entered(body):
+	if self.enemyModel != null:
+		self.enemyModel.playerBody = body
+
+func _on_HuntingRange_body_exited(body):
+	if self.enemyModel != null:
+		self.enemyModel.playerBody = null
+
+func _on_AttackTimer_timeout():
+	pass # Replace with function body.

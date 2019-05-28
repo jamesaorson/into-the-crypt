@@ -22,8 +22,11 @@ const RIGHT = player_globals.RIGHT
 # Godot Functions #
 ###################
 
+func _input(event):
+	handle_unpolled_input(event)
+
 func _physics_process(delta):
-	get_input()
+	handle_polled_input()
 	player.velocity = move_and_slide(player.velocity)
 
 func _process(delta):
@@ -34,32 +37,11 @@ func _process(delta):
 
 func _ready():
 	set_physics_process(true)
+	set_process_input(true)
 	create_light(self.playerIndex)
 	create_weapon("sword")
 	if OS.is_debug_build():
 		create_debug_info()
-
-func _on_EnterCrypt_area_entered(area):
-	self.canEnterCrypt = true
-
-func _on_EnterCrypt_area_exited(area):
-	self.canEnterCrypt = false
-
-func _on_ExitCrypt_area_entered(area):
-	self.canExitCrypt = true
-
-func _on_ExitCrypt_area_exited(area):
-	self.canExitCrypt = false
-
-func _on_TalkWithPlayer_area_entered(area):
-	self.canTalkWithVillager = true
-	self.villagerToTalkTo = area
-
-func _on_TalkWithPlayer_area_exited(area):
-	self.canTalkWithVillager = false
-	self.villagerToTalkTo = null
-	self.isTalking = false
-	$DialogBox.visible = false
 
 ####################
 # Helper Functions #
@@ -105,21 +87,7 @@ func flip_weapon(shouldBeFlipped):
 	self.weapon.flip_h()
 	$Weapon.position.x = -$Weapon.position.x
 
-func get_input():
-	if Input.is_action_just_pressed(input_globals.UI_ACCEPT):
-		if self.canEnterCrypt:
-			self.canEnterCrypt = false
-			var villageNodes = get_tree().get_nodes_in_group("village")
-			if villageNodes != null and villageNodes[0] != null:
-				villageNodes[0].enter_crypt()
-		elif self.canExitCrypt:
-			var cryptNodes = get_tree().get_nodes_in_group("crypt")
-			if cryptNodes != null and cryptNodes[0] != null:
-				cryptNodes[0].exit_crypt()
-		elif self.canTalkWithVillager and not self.isTalking:
-			self.isTalking = true
-			$DialogBox.talk(self, self.villagerToTalkTo)
-	
+func handle_polled_input():	
 	var movementMade = false
 	if Input.is_action_just_pressed(input_globals.SPRINT):
 		player.isSprinting = true
@@ -151,6 +119,21 @@ func get_input():
 	if not movementMade:
 		player.velocity *= player_globals.friction
 
+func handle_unpolled_input(event):
+	if Input.is_action_just_pressed(input_globals.UI_ACCEPT):
+		if self.canEnterCrypt:
+			self.canEnterCrypt = false
+			var villageNodes = get_tree().get_nodes_in_group("village")
+			if villageNodes != null and villageNodes[0] != null:
+				villageNodes[0].enter_crypt()
+		elif self.canExitCrypt:
+			var cryptNodes = get_tree().get_nodes_in_group("crypt")
+			if cryptNodes != null and cryptNodes[0] != null:
+				cryptNodes[0].exit_crypt()
+		elif self.canTalkWithVillager and not self.isTalking:
+			self.isTalking = true
+			$DialogBox.talk(self, self.villagerToTalkTo)
+
 func set_camera_zoom(zoomLevel):
 	if zoomLevel != null:
 		$Camera2D.zoom = zoomLevel
@@ -169,3 +152,29 @@ func set_player_index(newPlayerIndex):
 	player.lightNode = tempLightNode
 	player.debugInfo = tempDebugInfo
 	player.instance = tempInstance
+
+###################
+# Signal Handlers #
+###################
+
+func _on_EnterCrypt_area_entered(area):
+	self.canEnterCrypt = true
+
+func _on_EnterCrypt_area_exited(area):
+	self.canEnterCrypt = false
+
+func _on_ExitCrypt_area_entered(area):
+	self.canExitCrypt = true
+
+func _on_ExitCrypt_area_exited(area):
+	self.canExitCrypt = false
+
+func _on_TalkWithPlayer_area_entered(area):
+	self.canTalkWithVillager = true
+	self.villagerToTalkTo = area
+
+func _on_TalkWithPlayer_area_exited(area):
+	self.canTalkWithVillager = false
+	self.villagerToTalkTo = null
+	self.isTalking = false
+	$DialogBox.visible = false

@@ -5,8 +5,8 @@ var Weapon = load("res://models/Weapon.gd")
 onready var animationPlayer = $AnimationPlayer
 export var canAttack = false
 
-var damage = 1
-var numberOfAttacksInCombo = 2
+export(float) var damage = 1
+export(int) var numberOfAttacksInCombo = 2
 var direction = "right"
 
 onready var weapon
@@ -17,12 +17,6 @@ onready var weapon
 
 func _ready():
 	self.weapon = Weapon.new(self.animationPlayer, 1, self.damage, self.numberOfAttacksInCombo)
-
-func _on_Area2D_body_entered(body):
-	self.weapon.make_contact(body)
-
-func _on_AnimationPlayer_animation_finished(animationName):
-	self.weapon.animation_finished(animationName, self.direction)
 
 ####################
 # Helper Functions #
@@ -40,3 +34,13 @@ func flip_h():
 	else:
 		self.direction = "right"
 	self.weapon.update_direction(direction)
+
+###################
+# Signal Handlers #
+###################
+
+func _on_Area2D_body_entered(body):
+	self.weapon.make_contact(body)
+
+func _on_AnimationPlayer_animation_finished(animationName):
+	self.weapon.animation_finished(animationName, self.direction)

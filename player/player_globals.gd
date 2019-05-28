@@ -7,7 +7,7 @@ const DOWN = -UP
 const LEFT = Vector2(-1, 0)
 const RIGHT = -LEFT
 
-var friction = 0.85
+export(float) var friction = 0.85
 
 var numberOfPlayers = 1
 

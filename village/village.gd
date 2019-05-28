@@ -2,7 +2,7 @@ extends Node
 
 onready var playerScene = load("res://player/player.tscn")
 
-const ZOOM = Vector2(0.4, 0.4)
+export(Vector2) var ZOOM = Vector2(0.4, 0.4)
 
 ###################
 # Godot Functions #

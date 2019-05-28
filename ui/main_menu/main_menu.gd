@@ -1,18 +1,5 @@
 extends Control
 
-###################
-# Signal handlers #
-###################
-
-func _on_QuitButton_pressed():
-	quit_game()
-
-func _on_StartButton_pressed():
-	start_game()
-
-func _on_StartInCryptButton_pressed():
-	start_game_in_crypt()
-
 ####################
 # Helper Functions #
 ####################
@@ -33,3 +20,16 @@ func start_game_in_crypt():
 
 func start_game():
 	get_tree().change_scene("res://village/village.tscn")
+
+###################
+# Signal handlers #
+###################
+
+func _on_QuitButton_pressed():
+	quit_game()
+
+func _on_StartButton_pressed():
+	start_game()
+
+func _on_StartInCryptButton_pressed():
+	start_game_in_crypt()
