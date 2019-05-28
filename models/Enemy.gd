@@ -8,6 +8,17 @@ var timeStart
 var timeElapsed
 var lightNode
 var debugInfo
+var direction
+var huntingDirection
+var playerBody
+
+var speed = 100
+var huntingSpeed = 300
+
+const UP = Vector2(0, -1)
+const DOWN = -UP
+const LEFT = Vector2(-1, 0)
+const RIGHT = -LEFT
 
 ###################
 # Godot Functions #
@@ -35,10 +46,42 @@ func _init(instance = null,
 	self.maxHealth = maxHealth
 	self.health = health
 	self.debugInfo = debugInfo
+	self.direction = Vector2.LEFT
+	self.huntingDirection = Vector2.ZERO
+	self.playerBody = null
 
 ####################
 # Helper Functions #
 ####################
+
+func behave(delta, isOnWall, remainingVelocity):
+	if self.playerBody != null:
+		self.huntingDirection = (self.playerBody.get_transform().origin - self.instance.get_transform().origin).normalized()
+		if isOnWall:
+			var dir = [1, -1]
+			if abs(self.huntingDirection.x) > abs(self.huntingDirection.y):
+				if self.huntingDirection.y > 0:
+					self.huntingDirection.y += 0.05
+				else:
+					self.huntingDirection.y -= 0.05
+			else:
+				if self.huntingDirection.x > 0:
+					self.huntingDirection.x += 0.05
+				else:
+					self.huntingDirection.x -= 0.05
+		return self.huntingDirection
+	elif isOnWall:
+		self.huntingDirection = Vector2.ZERO
+		match self.direction:
+			UP:
+				self.direction = RIGHT
+			RIGHT:
+				self.direction = DOWN
+			DOWN:
+				self.direction = LEFT
+			LEFT:
+				self.direction = UP
+	return self.direction
 
 func damage(amountToDamage):
 	self.health -= amountToDamage 
