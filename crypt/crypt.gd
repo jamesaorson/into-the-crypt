@@ -8,7 +8,7 @@ onready var cryptGenerator = load("res://crypt/crypt_generator/crypt_generator.t
 
 var shouldGenerate = false
 
-func _process(delta):
+func _input(event):
 	if Input.is_action_pressed(input_globals.PAUSE):
 		quit_to_main_menu()
 	if OS.is_debug_build() and Input.is_action_pressed(input_globals.RESET):
@@ -16,6 +16,7 @@ func _process(delta):
 
 func _ready():
 	set_process(true)
+	set_process_input(true)
 	create_crypt()
 	change_music()
 
