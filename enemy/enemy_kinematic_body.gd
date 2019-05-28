@@ -5,6 +5,8 @@ var enemyModel = null
 var remainingVelocity = Vector2.ZERO
 var direction = Vector2.ZERO
 var speed = Vector2.ZERO
+var canAttack = true
+var inRangeToAttack = false
 
 export(int) var attackTime = 1
 
@@ -40,11 +42,11 @@ func destroy():
 # Signal Handlers #
 ###################
 
-func _on_AttackRange_body_entered():
-	pass # Replace with function body.
+func _on_AttackRange_body_entered(body):
+	self.inRangeToAttack = true
 
-func _on_AttackRange_body_exited():
-	pass # Replace with function body.
+func _on_AttackRange_body_exited(body):
+	self.inRangeToAttack = false
 
 func _on_HuntingRange_body_entered(body):
 	if self.enemyModel != null:
@@ -55,4 +57,4 @@ func _on_HuntingRange_body_exited(body):
 		self.enemyModel.playerBody = null
 
 func _on_AttackTimer_timeout():
-	pass # Replace with function body.
+	self.canAttack = true
