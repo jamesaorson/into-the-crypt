@@ -14,6 +14,7 @@ var playerBody
 
 var speed = 100
 var huntingSpeed = 300
+var attackDamage = 1
 
 const UP = Vector2(0, -1)
 const DOWN = -UP
@@ -27,9 +28,9 @@ const RIGHT = -LEFT
 func _init(instance = null,
 		   position = Vector2(), 
 		   width = 0, 
-		   height = 0, 
-		   velocity = Vector2(), 
-		   maxVelocity = 0, 
+		   height = 0,
+		   velocity = Vector2(),
+		   maxVelocity = 0,
 		   walkingSpeed = 0, 
 		   sprintingSpeed = 0, 
 		   isSprinting = false,
@@ -38,8 +39,9 @@ func _init(instance = null,
 		   timeStart = null,
 		   timeElapsed = null,
 		   lightNode = null,
-		   debugInfo = null):
-	._init(instance, position, width, height, velocity, walkingSpeed, sprintingSpeed, isSprinting)
+		   debugInfo = null,
+		   attackDamage = 1):
+	._init(instance, position, width, height, velocity, maxVelocity, walkingSpeed, sprintingSpeed, isSprinting)
 	self.timeStart = timeStart
 	self.timeElapsed = timeElapsed
 	self.lightNode = lightNode
@@ -49,6 +51,7 @@ func _init(instance = null,
 	self.direction = Vector2.LEFT
 	self.huntingDirection = Vector2.ZERO
 	self.playerBody = null
+	self.attackDamage = attackDamage
 
 ####################
 # Helper Functions #
@@ -83,20 +86,24 @@ func behave(delta, isOnWall, remainingVelocity):
 				self.direction = UP
 	return self.direction
 
+func calculate_attack():
+	return self.attackDamage
+
 func damage(amountToDamage):
-	self.health -= amountToDamage 
+	if self.health > 0:
+		self.health -= amountToDamage 
 
-func heal(amountToHeal):
-	self.health = min(self.maxHealth, self.health + amountToHeal)
-
-func kill():
+func die():
 	if self.instance != null and crypt_globals.enemies.has(get_instance_id()):
 		crypt_globals.enemies.erase(get_instance_id())
 		self.instance.queue_free()
 
-func try_kill():
+func heal(amountToHeal):
+	self.health = min(self.maxHealth, self.health + amountToHeal)
+
+func try_die():
 	if self.health <= 0:
-		self.kill()
+		self.die()
 
 func update():
-	self.try_kill()
+	self.try_die()

@@ -41,3 +41,22 @@ func _init(instance = null,
 	self.lightNode = lightNode
 	self.debugInfo = debugInfo
 	self.weapon = weapon
+
+####################
+# Helper Functions #
+####################
+
+func damage(amountToDamage):
+	if self.health > 0:
+		self.health -= amountToDamage
+
+func die():
+	if self.instance != null:
+		self.instance.die()
+
+func try_die():
+	if self.health <= 0:
+		self.die()
+
+func update():
+	try_die()

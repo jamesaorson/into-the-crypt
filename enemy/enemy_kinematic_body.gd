@@ -7,6 +7,7 @@ var direction = Vector2.ZERO
 var speed = Vector2.ZERO
 var canAttack = true
 var inRangeToAttack = false
+var playerToAttack = null
 
 export(int) var attackTime = 1
 
@@ -21,8 +22,10 @@ func _physics_process(delta):
 		self.speed = self.enemyModel.speed if self.enemyModel.playerBody == null else self.enemyModel.huntingSpeed
 
 func _process(delta):
-	if enemyModel != null:
-		enemyModel.update()
+	if self.enemyModel != null:
+		self.enemyModel.update()
+		if self.canAttack and self.inRangeToAttack and self.playerToAttack != null:
+			attack()
 
 func _ready():
 	$AttackRange/AttackTimer.wait_time = attackTime
@@ -31,9 +34,15 @@ func _ready():
 # Helper Functions #
 ####################
 
+func attack():
+	if self.playerToAttack != null and self.enemyModel != null:
+		$AttackRange/AttackTimer.start()
+		self.canAttack = false
+		self.playerToAttack.damage(self.enemyModel.calculate_attack())
+
 func damage(amountToDamage):
-	if enemyModel != null:
-		enemyModel.damage(amountToDamage)
+	if self.enemyModel != null:
+		self.enemyModel.damage(amountToDamage)
 
 func destroy():
 	queue_free()
@@ -44,9 +53,11 @@ func destroy():
 
 func _on_AttackRange_body_entered(body):
 	self.inRangeToAttack = true
+	self.playerToAttack = body
 
 func _on_AttackRange_body_exited(body):
 	self.inRangeToAttack = false
+	self.playerToAttack = null
 
 func _on_HuntingRange_body_entered(body):
 	if self.enemyModel != null:

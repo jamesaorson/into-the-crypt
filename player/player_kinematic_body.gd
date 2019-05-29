@@ -27,14 +27,18 @@ func _physics_process(delta):
 func _process(delta):
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
 	$ActionPrompt.visible = self.canEnterCrypt or self.canExitCrypt or self.canTalkWithVillager
+	if self.player != null:
+		self.player.update()
+		if self.player.debugInfo != null:
+			self.player.debugInfo.update()
 
 func _ready():
 	set_physics_process(true)
 	set_process_input(true)
 	create_light(self.playerIndex)
 	create_weapon("sword")
-	if OS.is_debug_build():
-		create_debug_info()
+	#if OS.is_debug_build():
+	create_debug_info()
 
 ####################
 # Helper Functions #
@@ -45,7 +49,9 @@ func create_debug_info():
 	if debugInfo == null:
 		debugInfo = debugInfoScene.instance()
 		add_child(debugInfo)
-		player_globals.players[0].debugInfo = debugInfo
+	player_globals.players[0].debugInfo = debugInfo
+	debugInfo.player = player_globals.players[0]
+	debugInfo.update()
 
 func create_light(playerIndex):
 	var playerLight = player_globals.players[playerIndex].lightNode
@@ -69,11 +75,24 @@ func create_weapon(weaponName):
 	player_globals.players[playerIndex].weapon = self.weapon
 	$Weapon.add_child(self.weapon)
 
+func damage(damageToTake):
+	if self.player != null:
+		self.player.damage(damageToTake)
+
 func destroy():
 	if player_globals.players[playerIndex].weapon != null:
 		player_globals.players[playerIndex].weapon.queue_free()
 		player_globals.players[playerIndex].weapon = null
 	queue_free()
+
+func die():
+	print("You died!")
+	exit_crypt()
+
+func exit_crypt():
+	var cryptNodes = get_tree().get_nodes_in_group("crypt")
+	if cryptNodes != null and len(cryptNodes) > 0:
+		cryptNodes[0].exit_crypt()
 
 func flip_weapon(shouldBeFlipped):
 	$AnimatedSprite.set_flip_h(shouldBeFlipped)
@@ -117,12 +136,10 @@ func handle_unpolled_input(event):
 		if self.canEnterCrypt:
 			self.canEnterCrypt = false
 			var villageNodes = get_tree().get_nodes_in_group("village")
-			if villageNodes != null and villageNodes[0] != null:
+			if villageNodes != null and len(villageNodes) > 0:
 				villageNodes[0].enter_crypt()
 		elif self.canExitCrypt:
-			var cryptNodes = get_tree().get_nodes_in_group("crypt")
-			if cryptNodes != null and cryptNodes[0] != null:
-				cryptNodes[0].exit_crypt()
+			exit_crypt()
 		elif self.canTalkWithVillager and not self.isTalking:
 			self.isTalking = true
 			$DialogBox.talk(self, self.villagerToTalkTo)

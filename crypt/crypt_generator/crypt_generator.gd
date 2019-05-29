@@ -1,7 +1,6 @@
 extends TileMap
 
 var Enemy = load("res://models/Enemy.gd")
-var Player = load("res://models/Player.gd")
 
 onready var playerScene = load("res://player/player.tscn")
 onready var enemyScene = load("res://enemy/enemy.tscn")
@@ -52,6 +51,8 @@ func create_player(playerIndex):
 			player_globals.players[playerIndex].instance = player
 			player.set_player_index(playerIndex)
 			add_child(player)
+		player_globals.players[playerIndex].health = 2
+		player_globals.players[playerIndex].maxHealth = 2
 		player.set_player_index(playerIndex)
 		var playerPosition = Vector2(player_globals.players[playerIndex].position.x, player_globals.players[playerIndex].position.y)
 		playerPosition.x += 2 * CRYPT_SECTION_SIZE
