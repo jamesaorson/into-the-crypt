@@ -14,15 +14,15 @@ export(int) var attackTime = 1
 # Godot Functions #
 ###################
 
-func _process(delta):
-	if enemyModel != null:
-		enemyModel.update()
-
 func _physics_process(delta):
 	if self.enemyModel != null:
 		self.remainingVelocity = move_and_slide(self.direction * self.speed)
 		self.direction = self.enemyModel.behave(delta, is_on_wall(), self.remainingVelocity)
 		self.speed = self.enemyModel.speed if self.enemyModel.playerBody == null else self.enemyModel.huntingSpeed
+
+func _process(delta):
+	if enemyModel != null:
+		enemyModel.update()
 
 func _ready():
 	$AttackRange/AttackTimer.wait_time = attackTime

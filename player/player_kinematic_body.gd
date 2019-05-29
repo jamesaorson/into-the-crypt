@@ -13,11 +13,6 @@ var canTalkWithVillager = false
 var villagerToTalkTo = null
 var isTalking = false
 
-const UP = player_globals.UP
-const DOWN = player_globals.DOWN
-const LEFT = player_globals.LEFT
-const RIGHT = player_globals.RIGHT
-
 ###################
 # Godot Functions #
 ###################
@@ -31,8 +26,6 @@ func _physics_process(delta):
 
 func _process(delta):
 	player.timeElapsed = OS.get_unix_time() - player.timeStart
-	if player.lightNode != null:
-		player.lightNode.update_size(delta)
 	$ActionPrompt.visible = self.canEnterCrypt or self.canExitCrypt or self.canTalkWithVillager
 
 func _ready():
@@ -87,31 +80,31 @@ func flip_weapon(shouldBeFlipped):
 	self.weapon.flip_h()
 	$Weapon.position.x = -$Weapon.position.x
 
-func handle_polled_input():	
+func handle_polled_input():
 	var movementMade = false
 	if Input.is_action_just_pressed(input_globals.SPRINT):
 		player.isSprinting = true
 	elif Input.is_action_just_released(input_globals.SPRINT):
 		player.isSprinting = false
 	var speed = player.sprintingSpeed if player.isSprinting else player.walkingSpeed
-	
+
 	if Input.is_action_just_pressed(input_globals.PRIMARY_ATTACK) and player_globals.players[playerIndex].weapon != null:
 		player_globals.players[playerIndex].weapon.attack()
 
 	if Input.is_action_pressed(input_globals.UP):
 		movementMade = true
-		player.velocity += UP * Input.get_action_strength(input_globals.UP) * speed
+		player.velocity += Vector2.UP * Input.get_action_strength(input_globals.UP) * speed
 	if Input.is_action_pressed(input_globals.DOWN):
 		movementMade = true
-		player.velocity += DOWN * Input.get_action_strength(input_globals.DOWN) * speed
+		player.velocity += Vector2.DOWN * Input.get_action_strength(input_globals.DOWN) * speed
 	if Input.is_action_pressed(input_globals.LEFT):
 		movementMade = true
-		player.velocity += LEFT * Input.get_action_strength(input_globals.LEFT) * speed
+		player.velocity += Vector2.LEFT * Input.get_action_strength(input_globals.LEFT) * speed
 		if $AnimatedSprite.flip_h:
 			flip_weapon(false)
 	if Input.is_action_pressed(input_globals.RIGHT):
 		movementMade = true
-		player.velocity += RIGHT * Input.get_action_strength(input_globals.RIGHT) * speed
+		player.velocity += Vector2.RIGHT * Input.get_action_strength(input_globals.RIGHT) * speed
 		if not $AnimatedSprite.flip_h:
 			flip_weapon(true)
 

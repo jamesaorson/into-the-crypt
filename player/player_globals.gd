@@ -2,12 +2,7 @@ extends Node
 
 var Player = load("res://models/Player.gd")
 
-const UP = Vector2(0, -1)
-const DOWN = -UP
-const LEFT = Vector2(-1, 0)
-const RIGHT = -LEFT
-
-export(float) var friction = 0.85
+export(float) var friction = 0.80
 
 var numberOfPlayers = 1
 

@@ -1,11 +1,15 @@
 extends Control
 
-####################
-# Helper Functions #
-####################
+###################
+# Godot Functions #
+###################
 
 func _ready():
 	$StartInCryptButton.visible = OS.is_debug_build()
+
+####################
+# Helper Functions #
+####################
 
 func quit_game():
 	get_tree().quit()
