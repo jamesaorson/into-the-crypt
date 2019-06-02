@@ -28,16 +28,15 @@ var VERTICAL_HALLWAYS : Array = crypt_generator_globals.VERTICAL_HALLWAYS
 # Helper Functions #
 ####################
 
-func create_enemy(position) -> void:
+func create_enemy(mapPosition : Vector2) -> void:
 	var enemy : EnemyNode = null
 	enemy = enemyScene.instance()
 	get_tree().root.add_child(enemy)
-	var enemyPosition : Vector2 = map_to_world(Vector2(position.x, position.y))
+	var enemyPosition : Vector2 = map_to_world(Vector2(mapPosition.x, mapPosition.y))
 	enemy.position.x = enemyPosition.x
 	enemy.position.y = enemyPosition.y
 	enemy.scale = Vector2(0.75, 0.75)
-	
-	var enemyModel : Enemy = Enemy.new(enemy, position, 2, 3)
+	var enemyModel : Enemy = Enemy.new(enemy, mapPosition, 2, 3)
 	enemyModel.maxHealth = 2.0
 	enemyModel.health = 2.0
 	crypt_globals.enemies[enemyModel.get_instance_id()] = enemyModel
@@ -57,6 +56,7 @@ func create_player() -> void:
 	var playerPosition : Vector2 = Vector2(player_globals.player.position.x, player_globals.player.position.y)
 	playerPosition.x += 2 * CRYPT_SECTION_SIZE
 	playerPosition.y += 2 * CRYPT_SECTION_SIZE
+	print("Player: ", playerPosition)
 	playerPosition = map_to_world(playerPosition)
 	player.position.x = playerPosition.x
 	player.position.y = playerPosition.y
@@ -114,11 +114,14 @@ func generate_crypt() -> void:
 			else:
 				cryptSection = VERTICAL_HALLWAYS[randi() % len(VERTICAL_HALLWAYS)]
 			set_crypt_section(Vector2(x, y), cryptSection)
-
 	draw_crypt()
 
 	create_player()
-	create_enemy(Vector2(3.5 * CRYPT_SECTION_SIZE, 2.5 * CRYPT_SECTION_SIZE))
+	var numberOfEnemies : int = rand_range(20, 50)	
+	for i in range(numberOfEnemies):
+		var position = Vector2((floor(rand_range(3, (CRYPT_WIDTH / CRYPT_SECTION_SIZE) - 4)) + 0.5) * CRYPT_SECTION_SIZE, 
+		                       (floor(rand_range(3, (CRYPT_HEIGHT / CRYPT_SECTION_SIZE) - 4)) + 0.5) * CRYPT_SECTION_SIZE)
+		create_enemy(position)
 
 func initalize_crypt_object() -> void:
 	crypt_globals.crypt = []

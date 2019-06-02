@@ -14,3 +14,10 @@ export var RIGHT : String = "right"
 export var PAUSE : String = "pause"
 export var RESET : String = "reset"
 export var SPRINT : String = "sprint"
+
+func get_input_display_names(input) -> Array:
+	var inputs : Array = []
+	var actionList = InputMap.get_action_list(input)
+	for action in actionList:
+		inputs.append(action.as_text())
+	return inputs
