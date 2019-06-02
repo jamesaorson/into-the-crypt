@@ -47,13 +47,16 @@ func damage(amountToDamage : float) -> void:
 	if self.health > 0:
 		self.health -= amountToDamage
 
-func die() -> void:
+func die() -> bool:
 	if self.instance != null:
 		self.instance.die()
+		return true
+	return false
 
-func try_die() -> void:
+func try_die() -> bool:
 	if self.health <= 0:
-		self.die()
+		return self.die()
+	return false
 
 func update() -> void:
 	try_die()

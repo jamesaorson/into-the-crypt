@@ -38,7 +38,6 @@ func _ready() -> void:
 	set_process_input(true)
 	create_light()
 	create_weapon("sword")
-	#if OS.is_debug_build():
 	create_debug_info()
 
 ####################

@@ -15,6 +15,6 @@ var player : Player = Player.new(
 	15,
 	50,
 	false,
-	2,
-	2
+	10,
+	10
 )

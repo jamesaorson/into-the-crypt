@@ -50,13 +50,12 @@ func create_player() -> void:
 		player = playerScene.instance()
 		player_globals.player.instance = player
 		add_child(player)
-	player_globals.player.health = 2.0
-	player_globals.player.maxHealth = 2.0
+	player_globals.player.health = 20.0
+	player_globals.player.maxHealth = 20.0
 	player.initialize_player()
 	var playerPosition : Vector2 = Vector2(player_globals.player.position.x, player_globals.player.position.y)
 	playerPosition.x += 2 * CRYPT_SECTION_SIZE
 	playerPosition.y += 2 * CRYPT_SECTION_SIZE
-	print("Player: ", playerPosition)
 	playerPosition = map_to_world(playerPosition)
 	player.position.x = playerPosition.x
 	player.position.y = playerPosition.y

@@ -90,17 +90,20 @@ func damage(amountToDamage) -> void:
 	if self.health > 0:
 		self.health -= amountToDamage 
 
-func die() -> void:
+func die() -> bool:
 	if self.instance != null and crypt_globals.enemies.has(get_instance_id()):
 		crypt_globals.enemies.erase(get_instance_id())
 		self.instance.queue_free()
+		return true
+	return false
 
 func heal(amountToHeal) -> void:
 	self.health = min(self.maxHealth, self.health + amountToHeal)
 
-func try_die() -> void:
+func try_die() -> bool:
 	if self.health <= 0:
-		self.die()
+		return self.die()
+	return true
 
 func update() -> void:
 	self.try_die()
