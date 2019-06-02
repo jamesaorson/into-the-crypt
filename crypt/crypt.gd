@@ -1,20 +1,20 @@
 extends Node
 
-onready var cryptGenerator = load("res://crypt/crypt_generator/crypt_generator.tscn")
+onready var cryptGenerator : Resource = load("res://crypt/crypt_generator/crypt_generator.tscn")
+
+var shouldGenerate : bool = false
 
 ###################
 # Godot Functions #
 ###################
 
-var shouldGenerate = false
-
-func _input(event):
+func _input(event : InputEvent) -> void:
 	if Input.is_action_pressed(input_globals.PAUSE):
 		quit_to_main_menu()
 	if OS.is_debug_build() and Input.is_action_pressed(input_globals.RESET):
 		create_crypt(true)
 
-func _ready():
+func _ready() -> void:
 	set_process(true)
 	set_process_input(true)
 	create_crypt()
@@ -24,34 +24,34 @@ func _ready():
 # Helper Functions #
 ####################
 
-func change_music(streamPath = null, volume = -20):
-	if streamPath == null:
+func change_music(streamPath : String = "", volume : float = -20) -> void:
+	if streamPath == null or streamPath.empty():
 		streamPath = "res://assets/audio/bgm/passive_crypt_" + str(randi() % 2) + ".ogg"
 	$AudioStreamPlayer.stream = load(streamPath)
 	$AudioStreamPlayer.volume_db = -20
 	$AudioStreamPlayer.play()
 
-func cleanup():
-	var cryptGeneratorNodes = get_tree().get_nodes_in_group("crypt_generator")
+func cleanup() -> void:
+	var cryptGeneratorNodes : Array = get_tree().get_nodes_in_group("crypt_generator")
 	for node in cryptGeneratorNodes:
 		node.destroy()
 
-func create_crypt(newRandomCrypt = false):
+func create_crypt(newRandomCrypt : bool = false) -> void:
 	if newRandomCrypt:
-		crypt_globals.cryptSeed = null
-	var cryptGeneratorNode = null
-	var cryptGeneratorNodes = get_tree().get_nodes_in_group("crypt_generator")
+		crypt_globals.cryptSeed = -1
+	var cryptGeneratorNode : CryptGeneratorNode = null
+	var cryptGeneratorNodes : Array = get_tree().get_nodes_in_group("crypt_generator")
 	for node in cryptGeneratorNodes:
 		node.destroy()
 	cryptGeneratorNode = cryptGenerator.instance()
 	add_child(cryptGeneratorNode)
 	cryptGeneratorNode.generate_crypt()
 
-func exit_crypt():
+func exit_crypt() -> void:
 	cleanup()
-	crypt_globals.cryptSeed = null
+	crypt_globals.cryptSeed = -1
 	get_tree().change_scene("res://village/village.tscn")
 
-func quit_to_main_menu():
+func quit_to_main_menu() -> void:
 	cleanup()
 	get_tree().change_scene("res://ui/main_menu/main_menu.tscn")

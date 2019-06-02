@@ -1,22 +1,25 @@
 extends CanvasLayer
 
-export(String) var cryptSeedLabelPrefix = "Crypt Seed: "
-export(String) var healthLabelPrefix = "Health: "
-var player = null
+class_name PlayerDebugInfo
+
+export(String) var cryptSeedLabelPrefix : String = "Crypt Seed: "
+export(String) var healthLabelPrefix : String = "Health: "
+
+var player : Player = null
 
 ###################
 # Godot Functions #
 ###################
 
-func _ready():
+func _ready() -> void:
 	self.update()
 
 ####################
 # Helper Functions #
 ####################
 
-func update():
-	if crypt_globals.cryptSeed != null:
+func update() -> void:
+	if crypt_globals.cryptSeed >= 0:
 		$CryptSeedLabel.text = self.cryptSeedLabelPrefix + str(crypt_globals.cryptSeed)
 		$CryptSeedLabel.update()
 	if self.player != null:

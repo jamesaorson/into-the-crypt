@@ -4,25 +4,25 @@ extends Control
 # Godot Functions #
 ###################
 
-func _ready():
+func _ready() -> void:
 	$StartInCryptButton.visible = OS.is_debug_build()
 
 ####################
 # Helper Functions #
 ####################
 
-func quit_game():
+func quit_game() -> void:
 	get_tree().quit()
 
-func start_game_in_crypt():
-	var levelSeedSpinBoxNode = $StartInCryptButton/CryptSeed
-	if levelSeedSpinBoxNode.value >= 0:
-		crypt_globals.cryptSeed = levelSeedSpinBoxNode.value
+func start_game_in_crypt() -> void:
+	var levelSeedSpinBox : SpinBox = $StartInCryptButton/CryptSeed
+	if levelSeedSpinBox.value >= 0:
+		crypt_globals.cryptSeed = levelSeedSpinBox.value
 	else:
-		crypt_globals.cryptSeed = null
+		crypt_globals.cryptSeed = -1
 	get_tree().change_scene("res://crypt/crypt.tscn")
 
-func start_game():
+func start_game() -> void:
 	get_tree().change_scene("res://village/village.tscn")
 
 ###################

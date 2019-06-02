@@ -1,4 +1,4 @@
 extends Area2D
 
-export(String) var villagerName = "[color=silver]Shady dude[/color]"
-export(String) var greeting = "Why are you talking to me?"
+export(String) var villagerName : String = "[color=silver]Shady dude[/color]"
+export(String) var greeting : String = "Why are you talking to me?"
