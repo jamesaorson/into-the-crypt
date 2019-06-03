@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "TileMap",
 "class": "CryptGeneratorNode",
 "language": "GDScript",
-"path": "res://crypt/crypt_generator/crypt_generator.gd"
+"path": "res://scenes/crypt/crypt_generator/crypt_generator.gd"
 }, {
 "base": "Actor",
 "class": "Enemy",
@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "EnemyNode",
 "language": "GDScript",
-"path": "res://enemy/enemy_kinematic_body.gd"
+"path": "res://scenes/enemy/enemy_kinematic_body.gd"
 }, {
 "base": "Actor",
 "class": "Player",
@@ -37,17 +37,17 @@ _global_script_classes=[ {
 "base": "CanvasLayer",
 "class": "PlayerDebugInfo",
 "language": "GDScript",
-"path": "res://player/debug_info/debug_info.gd"
+"path": "res://scenes/player/debug_info.gd"
 }, {
 "base": "Light2D",
 "class": "PlayerLight",
 "language": "GDScript",
-"path": "res://player/player_light/player_light.gd"
+"path": "res://scenes/player/player_light.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "PlayerNode",
 "language": "GDScript",
-"path": "res://player/player_kinematic_body.gd"
+"path": "res://scenes/player/player_kinematic_body.gd"
 }, {
 "base": "Object",
 "class": "Weapon",
@@ -69,18 +69,27 @@ _global_script_class_icons={
 [application]
 
 config/name="IntoTheCrypt"
-run/main_scene="res://ui/main_menu/main_menu.tscn"
+run/main_scene="res://scenes/main_menu/main_menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-crypt_globals="*res://crypt/crypt_globals.gd"
-player_globals="*res://player/player_globals.gd"
-crypt_generator_globals="*res://crypt/crypt_generator/crypt_generator_globals.gd"
-input_globals="*res://input_globals.gd"
+crypt_globals="*res://scenes/crypt/crypt_globals.gd"
+player_globals="*res://scenes/player/player_globals.gd"
+crypt_generator_globals="*res://scenes/crypt/crypt_generator/crypt_generator_globals.gd"
+input_globals="*res://autoload/input_globals.gd"
+weapon_globals="*res://autoload/weapon_globals.gd"
+events="*res://autoload/events.gd"
+utility="*res://autoload/utility.gd"
+
+[debug]
+
+settings/stdout/verbose_stdout=true
 
 [display]
 
+window/size/width=1920
+window/size/height=1080
 window/size/fullscreen=true
 
 [input]
@@ -139,6 +148,11 @@ primary_attack={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+toggle_debug={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777246,"unicode":0,"echo":false,"script":null)
  ]
 }
 
