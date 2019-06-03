@@ -2,30 +2,30 @@ extends Object
 
 class_name Actor
 
-var id
-var instance
-var position
-var width
-var height
-var velocity
-var maxVelocity
-var walkingSpeed
-var sprintingSpeed
-var isSprinting
+#warning-ignore-all:unused_class_variable
+var instance : Node2D
+var position : Vector2
+var width : float
+var height : float
+var velocity : Vector2
+var maxVelocity : float
+var walkingSpeed : float
+var sprintingSpeed : float
+var isSprinting : bool
 
 ###################
 # Godot Functions #
 ###################
 
-func _init(instance = null,
-		   position = Vector2(), 
-		   width = 0, 
-		   height = 0, 
-		   velocity = Vector2(), 
-		   maxVelocity = 0, 
-		   walkingSpeed = 0, 
-		   sprintingSpeed = 0, 
-		   isSprinting = false):
+func _init(instance : Node2D = null,
+		   position : Vector2 = Vector2(), 
+		   width : float = 0.0, 
+		   height : float = 0.0, 
+		   velocity : Vector2 = Vector2(), 
+		   maxVelocity : float = 0.0, 
+		   walkingSpeed : float = 0.0, 
+		   sprintingSpeed : float = 0.0, 
+		   isSprinting : bool = false) -> void:
 	self.instance = instance
 	self.position = position
 	self.width = width

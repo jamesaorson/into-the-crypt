@@ -1,12 +1,30 @@
 extends Light2D
 
-var initialScale = null
+class_name PlayerLight
 
-func _init():
+export(float) var timeScale : float = 0.01
+
+var initialScale : float = 1.0
+var isExtinguished : bool = false
+
+###################
+# Godot Functions #
+###################
+
+func _init() -> void:
 	self.initialScale = float(texture_scale)
 
-func update_size(delta):
-	if texture_scale > 0:
-		texture_scale -= (player_light_globals.timeScale * delta)
-		if texture_scale <= 0.1:
-			texture_scale = 0
+func _process(delta : float) -> void:
+	if self.texture_scale > 0:
+		self.isExtinguished = false
+		self.texture_scale -= (timeScale * delta)
+		if self.texture_scale <= 0.1:
+			extinguish()
+
+####################
+# Helper Functions #
+####################
+
+func extinguish() -> void:
+	self.texture_scale = 0.0
+	self.isExtinguished = true

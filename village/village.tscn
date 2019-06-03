@@ -213,8 +213,10 @@ collision_layer = 524288
 polygon = PoolVector2Array( 0, 0, 50, 0, 50, 50, 0, 50 )
 
 [node name="Villagers" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="Doctor" type="KinematicBody2D" parent="Villagers"]
+editor/display_folded = true
 position = Vector2( 125, 250 )
 collision_layer = 8
 collision_mask = 524289
@@ -235,6 +237,7 @@ script = ExtResource( 10 )
 shape = SubResource( 4 )
 
 [node name="ItemShopOwner" type="KinematicBody2D" parent="Villagers"]
+editor/display_folded = true
 position = Vector2( 350, 75 )
 collision_layer = 8
 collision_mask = 524289
@@ -255,6 +258,7 @@ script = ExtResource( 12 )
 shape = SubResource( 6 )
 
 [node name="ShadyDude" type="KinematicBody2D" parent="Villagers"]
+editor/display_folded = true
 position = Vector2( 175, 450 )
 collision_layer = 8
 collision_mask = 524289

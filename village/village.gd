@@ -1,17 +1,17 @@
 extends Node
 
-onready var playerScene = load("res://player/player.tscn")
+onready var playerScene : Resource = load("res://player/player.tscn")
 
-const ZOOM = Vector2(0.4, 0.4)
+export(Vector2) var ZOOM : Vector2 = Vector2(0.4, 0.4)
 
 ###################
 # Godot Functions #
 ###################
 
-func _ready():
-	create_player(0)
+func _ready() -> void:
+	create_player()
 
-func _process(delta):
+func _process(delta : float) -> void:
 	if Input.is_action_pressed(input_globals.PAUSE):
 		quit_to_main_menu()
 
@@ -19,43 +19,39 @@ func _process(delta):
 # Helper Functions #
 ####################
 
-func cleanup():
-	var villageNodes = get_tree().get_nodes_in_group("village")
+func cleanup() -> void:
+	var villageNodes : Array = get_tree().get_nodes_in_group("village")
 	for node in villageNodes:
 		node.destroy()
 
-func create_player(playerIndex):
-	if playerIndex != null:
-		var player = null
-		if player_globals.players[playerIndex].instance != null:
-			player = player_globals.players[playerIndex].instance
-		else:
-			player = playerScene.instance()
-			player_globals.players[playerIndex].instance = player
-			player.set_player_index(playerIndex)
-			add_child(player)
-		player.position.x = 250
-		player.position.y = 100
-		player.set_player_index(playerIndex)
-		player.set_camera_zoom(ZOOM)
-		player_globals.players[playerIndex].timeStart = OS.get_unix_time()
+func create_player() -> void:
+	var player : PlayerNode = null
+	if player_globals.player.instance != null:
+		player = player_globals.player.instance
+	else:
+		player = playerScene.instance()
+		player_globals.player.instance = player
+		add_child(player)
+	player.position.x = 250
+	player.position.y = 100
+	player.initialize_player()
+	player.set_camera_zoom(ZOOM)
 
-func destroy():
-	var playerNodes = get_tree().get_nodes_in_group("player")
+func destroy() -> void:
+	var playerNodes : Array = get_tree().get_nodes_in_group("player")
 	for node in playerNodes:
 		node.destroy()
-	for player in player_globals.players:
-		player.instance = null
-		player.debugInfo = null
-		player.lightNode = null
+	player_globals.player.instance = null
+	player_globals.player.debugInfo = null
+	player_globals.player.lightNode = null
 
 	queue_free()
 
-func enter_crypt():
+func enter_crypt() -> void:
 	cleanup()
-	crypt_globals.cryptSeed = null
+	crypt_globals.cryptSeed = -1
 	get_tree().change_scene("res://crypt/crypt.tscn")
 
-func quit_to_main_menu():
+func quit_to_main_menu() -> void:
 	cleanup()
 	get_tree().change_scene("res://ui/main_menu/main_menu.tscn")

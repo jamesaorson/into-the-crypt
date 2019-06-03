@@ -1,15 +1,15 @@
 extends Polygon2D
 
-var player = null
+var player : PlayerNode = null
 
 ###################
 # Godot Functions #
 ###################
 
-func _ready():
+func _ready() -> void:
 	set_process_input(true)
 
-func _input(event):
+func _input(event : InputEvent) -> void:
 	if self.visible and self.player != null and self.player.isTalking:
 		if Input.is_action_just_pressed(input_globals.UI_ACCEPT) or Input.is_action_pressed(input_globals.UI_CANCEL):
 			self.player.isTalking = false
@@ -20,7 +20,7 @@ func _input(event):
 # Helper Functions #
 ####################
 
-func talk(player, villagerToTalkTo):
+func talk(player : PlayerNode, villagerToTalkTo : Area2D):
 	self.visible = true
 	self.player = player
 	self.player.canTalkWithVillager = false
