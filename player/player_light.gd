@@ -12,7 +12,7 @@ var isExtinguished : bool = false
 ###################
 
 func _init() -> void:
-	self.initialScale = float(texture_scale)
+	reset()
 
 func _process(delta : float) -> void:
 	if self.texture_scale > 0:
@@ -28,3 +28,6 @@ func _process(delta : float) -> void:
 func extinguish() -> void:
 	self.texture_scale = 0.0
 	self.isExtinguished = true
+
+func reset() -> void:
+	self.initialScale = float(texture_scale)

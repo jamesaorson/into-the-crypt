@@ -42,8 +42,6 @@ func destroy() -> void:
 	for node in playerNodes:
 		node.destroy()
 	player_globals.player.instance = null
-	player_globals.player.debugInfo = null
-	player_globals.player.lightNode = null
 
 	queue_free()
 

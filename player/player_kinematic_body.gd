@@ -2,9 +2,6 @@ extends KinematicBody2D
 
 class_name PlayerNode
 
-onready var playerLightScene : Resource = load("res://player/player_light/player_light.tscn")
-onready var debugInfoScene : Resource = load("res://player/debug_info/debug_info.tscn")
-
 var weapon : Area2D = null
 
 var playerModel : Player = player_globals.player
@@ -30,35 +27,16 @@ func _process(delta : float) -> void:
 	$ActionPrompt.visible = self.canEnterCrypt or self.canExitCrypt or self.canTalkWithVillager
 	if self.playerModel != null:
 		self.playerModel.update()
-		if self.playerModel.debugInfo != null:
-			self.playerModel.debugInfo.update()
+	$UI/DebugInfo.update()
 
 func _ready() -> void:
 	set_physics_process(true)
 	set_process_input(true)
-	create_light()
 	create_weapon("sword")
-	create_debug_info()
 
 ####################
 # Helper Functions #
 ####################
-
-func create_debug_info() -> void:
-	var debugInfo : PlayerDebugInfo = self.playerModel.debugInfo
-	if debugInfo == null:
-		debugInfo = debugInfoScene.instance()
-		add_child(debugInfo)
-	self.playerModel.debugInfo = debugInfo
-	debugInfo.player = self.playerModel
-	debugInfo.update()
-
-func create_light() -> void:
-	var playerLight : PlayerLight = self.playerModel.lightNode
-	if playerLight == null:
-		playerLight = playerLightScene.instance()
-		add_child(playerLight)
-		self.playerModel.lightNode = playerLight
 
 func create_weapon(weaponName : String) -> void:
 	if self.playerModel.weapon != null:
@@ -141,7 +119,7 @@ func handle_unpolled_input(event : InputEvent) -> void:
 			exit_crypt()
 		elif self.canTalkWithVillager and not self.isTalking:
 			self.isTalking = true
-			$DialogBox.talk(self, self.villagerToTalkTo)
+			$UI/DialogBox.talk(self, self.villagerToTalkTo)
 
 func set_camera_zoom(zoomLevel : Vector2) -> void:
 	if zoomLevel != null:
@@ -175,4 +153,4 @@ func _on_TalkWithPlayer_area_exited(area : Area2D):
 	self.canTalkWithVillager = false
 	self.villagerToTalkTo = null
 	self.isTalking = false
-	$DialogBox.visible = false
+	$UI/DialogBox.visible = false

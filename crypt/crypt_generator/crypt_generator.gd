@@ -71,8 +71,6 @@ func destroy() -> void:
 	for node in playerNodes:
 		node.destroy()
 	player_globals.player.instance = null
-	player_globals.player.debugInfo = null
-	player_globals.player.lightNode = null
 
 	var enemyNodes : Array = get_tree().get_nodes_in_group("enemy")
 	for node in enemyNodes:

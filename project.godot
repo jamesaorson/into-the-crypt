@@ -37,12 +37,12 @@ _global_script_classes=[ {
 "base": "CanvasLayer",
 "class": "PlayerDebugInfo",
 "language": "GDScript",
-"path": "res://player/debug_info/debug_info.gd"
+"path": "res://player/debug_info.gd"
 }, {
 "base": "Light2D",
 "class": "PlayerLight",
 "language": "GDScript",
-"path": "res://player/player_light/player_light.gd"
+"path": "res://player/player_light.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "PlayerNode",

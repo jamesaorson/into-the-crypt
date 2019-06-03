@@ -5,7 +5,7 @@ class_name PlayerDebugInfo
 export(String) var cryptSeedLabelPrefix : String = "Crypt Seed: "
 export(String) var healthLabelPrefix : String = "Health: "
 
-var player : Player = null
+var player : Player = player_globals.player
 
 ###################
 # Godot Functions #
@@ -20,11 +20,11 @@ func _ready() -> void:
 
 func update() -> void:
 	if crypt_globals.cryptSeed >= 0:
-		$CryptSeedLabel.text = self.cryptSeedLabelPrefix + str(crypt_globals.cryptSeed)
-		$CryptSeedLabel.update()
+		$CryptSeed.text = self.cryptSeedLabelPrefix + str(crypt_globals.cryptSeed)
+		$CryptSeed.update()
 	if self.player != null:
 		if self.player.health <= 0:
-			$HealthLabel.text = "You are dead"
+			$Health.text = "You are dead"
 		else:
-			$HealthLabel.text = self.healthLabelPrefix + str(self.player.health) + "/" + str(self.player.maxHealth)
-		$HealthLabel.update()
+			$Health.text = self.healthLabelPrefix + str(self.player.health) + "/" + str(self.player.maxHealth)
+		$Health.update()
