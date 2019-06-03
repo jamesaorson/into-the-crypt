@@ -104,8 +104,8 @@ func generate_crypt() -> void:
 	initalize_crypt_object()
 	for y in range(CRYPT_SECTION_SIZE * 2, CRYPT_HEIGHT - (2 * CRYPT_SECTION_SIZE), CRYPT_SECTION_SIZE):
 		for x in range(CRYPT_SECTION_SIZE * 2, CRYPT_WIDTH - ( 2 * CRYPT_SECTION_SIZE), CRYPT_SECTION_SIZE):
-			var cryptSection = null
-			var choice = rand_range(1, 10)
+			var cryptSection : Array
+			var choice : float = rand_range(1, 10)
 			if choice > 6:
 				cryptSection = HORIZONTAL_HALLWAYS[randi() % len(HORIZONTAL_HALLWAYS)]
 			else:
@@ -116,8 +116,8 @@ func generate_crypt() -> void:
 	create_player()
 	var numberOfEnemies : int = rand_range(20, 50)	
 	for i in range(numberOfEnemies):
-		var position = Vector2((floor(rand_range(3, (CRYPT_WIDTH / CRYPT_SECTION_SIZE) - 4)) + 0.5) * CRYPT_SECTION_SIZE, 
-		                       (floor(rand_range(3, (CRYPT_HEIGHT / CRYPT_SECTION_SIZE) - 4)) + 0.5) * CRYPT_SECTION_SIZE)
+		var position : Vector2 = Vector2((floor(rand_range(3, (CRYPT_WIDTH / CRYPT_SECTION_SIZE) - 4)) + 0.5) * CRYPT_SECTION_SIZE, 
+										 (floor(rand_range(3, (CRYPT_HEIGHT / CRYPT_SECTION_SIZE) - 4)) + 0.5) * CRYPT_SECTION_SIZE)
 		create_enemy(position)
 
 func initalize_crypt_object() -> void:
@@ -130,9 +130,9 @@ func initalize_crypt_object() -> void:
 
 func set_crypt_section(originPosition : Vector2, cryptSection : Array) -> void:
 	for y in range(len(cryptSection)):
-		var cryptRow = cryptSection[y]
+		var cryptRow : Array = cryptSection[y]
 		for x in range(len(cryptRow)):
-			var tile = cryptRow[x]
+			var tile : int = cryptRow[x]
 			if cryptRow[x] == crypt_generator_globals.FLOOR:
 				tile = FLOOR_TILES[randi() % len(FLOOR_TILES)]
 			elif cryptRow[x] == crypt_generator_globals.WALL:

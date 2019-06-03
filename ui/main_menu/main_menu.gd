@@ -17,7 +17,7 @@ func quit_game() -> void:
 func start_game_in_crypt() -> void:
 	var levelSeedSpinBox : SpinBox = $StartInCryptButton/CryptSeed
 	if levelSeedSpinBox.value >= 0:
-		crypt_globals.cryptSeed = levelSeedSpinBox.value
+		crypt_globals.cryptSeed = int(levelSeedSpinBox.value)
 	else:
 		crypt_globals.cryptSeed = -1
 	get_tree().change_scene("res://crypt/crypt.tscn")

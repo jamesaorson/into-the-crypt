@@ -126,7 +126,7 @@ func set_camera_zoom(zoomLevel : Vector2) -> void:
 		$Camera2D.zoom = zoomLevel
 
 func initialize_player() -> void:
-	if self.playerModel.timeStart == null:
+	if self.playerModel.timeStart < 0:
 		self.playerModel.timeStart = OS.get_unix_time()
 
 ###################
