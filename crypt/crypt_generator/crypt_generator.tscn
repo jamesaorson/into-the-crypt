@@ -6,6 +6,7 @@
 [node name="CryptTileMap" type="TileMap" groups=[
 "crypt_generator",
 ]]
+editor/display_folded = true
 z_index = -1
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 50, 50 )

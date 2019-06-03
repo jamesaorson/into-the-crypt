@@ -26,7 +26,8 @@ func _ready() -> void:
 
 func change_music(streamPath : String = "", volume : float = -20) -> void:
 	if streamPath == null or streamPath.empty():
-		streamPath = "res://assets/audio/bgm/passive_crypt_" + str(randi() % 2) + ".ogg"
+		var track : int = int(rand_seed(OS.get_ticks_msec())[0]) % 2
+		streamPath = "res://assets/audio/bgm/passive_crypt_" + str(track) + ".ogg"
 	$AudioStreamPlayer.stream = load(streamPath)
 	$AudioStreamPlayer.volume_db = -20
 	$AudioStreamPlayer.play()
