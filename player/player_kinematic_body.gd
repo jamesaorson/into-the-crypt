@@ -121,13 +121,13 @@ func handle_unpolled_input(event : InputEvent) -> void:
 			self.isTalking = true
 			$UI/DialogBox.talk(self, self.villagerToTalkTo)
 
-func set_camera_zoom(zoomLevel : Vector2) -> void:
-	if zoomLevel != null:
-		$Camera2D.zoom = zoomLevel
-
 func initialize_player() -> void:
 	if self.playerModel.timeStart < 0:
 		self.playerModel.timeStart = OS.get_unix_time()
+
+func set_camera_zoom(zoomLevel : Vector2) -> void:
+	if zoomLevel != null:
+		$Camera2D.zoom = zoomLevel
 
 ###################
 # Signal Handlers #

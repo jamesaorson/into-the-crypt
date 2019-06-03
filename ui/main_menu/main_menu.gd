@@ -14,6 +14,9 @@ func _ready() -> void:
 func quit_game() -> void:
 	get_tree().quit()
 
+func start_game() -> void:
+	get_tree().change_scene("res://village/village.tscn")
+
 func start_game_in_crypt() -> void:
 	var levelSeedSpinBox : SpinBox = $StartInCryptButton/CryptSeed
 	if levelSeedSpinBox.value >= 0:
@@ -21,9 +24,6 @@ func start_game_in_crypt() -> void:
 	else:
 		crypt_globals.cryptSeed = -1
 	get_tree().change_scene("res://crypt/crypt.tscn")
-
-func start_game() -> void:
-	get_tree().change_scene("res://village/village.tscn")
 
 ###################
 # Signal handlers #

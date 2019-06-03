@@ -39,8 +39,8 @@ func flip_h() -> void:
 # Signal Handlers #
 ###################
 
-func _on_Area2D_body_entered(body : KinematicBody2D) -> void:
-	self.weapon.make_contact(body)
-
 func _on_AnimationPlayer_animation_finished(animationName : String) -> void:
 	self.weapon.animation_finished(animationName, self.direction)
+
+func _on_Area2D_body_entered(body : KinematicBody2D) -> void:
+	self.weapon.make_contact(body)
