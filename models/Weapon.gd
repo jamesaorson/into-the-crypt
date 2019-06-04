@@ -40,7 +40,7 @@ func attack(direction : String) -> void:
 		self.currentAttack = (self.currentAttack + 1) % (numberOfAttacksInCombo + 1)
 
 func make_contact(body : KinematicBody2D) -> void:
-	body.damage(damage)
+	body.damage(self.damage)
 
 func update_direction(direction : String) -> void:
 	if self.currentAnimation == "_idle":

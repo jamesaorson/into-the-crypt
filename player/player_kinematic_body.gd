@@ -32,7 +32,7 @@ func _process(delta : float) -> void:
 func _ready() -> void:
 	set_physics_process(true)
 	set_process_input(true)
-	create_weapon("sword")
+	create_weapon(weapon_globals.AXE_NAME)
 
 ####################
 # Helper Functions #
@@ -44,8 +44,10 @@ func create_weapon(weaponName : String) -> void:
 		self.playerModel.weapon = null
 	var weaponScene : Resource = null
 	match weaponName:
-	    "sword":
-	        weaponScene = preload("res://weapon/sword/sword.tscn")
+		weapon_globals.AXE_NAME:
+			weaponScene = preload("res://weapon/axe/axe.tscn")
+		weapon_globals.SWORD_NAME:
+			weaponScene = preload("res://weapon/sword/sword.tscn")
 	if weaponScene == null:
 		print("Something went wrong when making the weapon: ", weaponName)
 		return
