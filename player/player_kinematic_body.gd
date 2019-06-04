@@ -120,6 +120,11 @@ func handle_unpolled_input(event : InputEvent) -> void:
 		elif self.canTalkWithVillager and not self.isTalking:
 			self.isTalking = true
 			$UI/DialogBox.talk(self, self.villagerToTalkTo)
+	if OS.is_debug_build() and Input.is_action_just_pressed(input_globals.TOGGLE_DEBUG):
+		var debugNodes : Array = get_tree().get_nodes_in_group("debug_info")
+		for debugNode in debugNodes:
+			if debugNode.visible != null:
+				debugNode.visible = not debugNode.visible
 
 func initialize_player() -> void:
 	if self.playerModel.timeStart < 0:

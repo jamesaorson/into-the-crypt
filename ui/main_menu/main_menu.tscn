@@ -37,7 +37,7 @@ margin_top = -2.0
 margin_right = 194.0
 margin_bottom = 22.0
 min_value = -1.0
-max_value = 2.14748e+09
+max_value = 2.14748e+009
 value = -1.0
 
 [node name="CryptSeedLabel" type="Label" parent="StartInCryptButton/CryptSeed"]

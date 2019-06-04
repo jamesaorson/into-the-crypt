@@ -71,7 +71,6 @@ collision_mask = 8192
 shape = SubResource( 1 )
 
 [node name="UI" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="DialogBox" type="Polygon2D" parent="UI"]
 editor/display_folded = true
@@ -107,14 +106,18 @@ margin_bottom = 94.0
 text = "Press \"Enter\""
 
 [node name="DebugInfo" type="CanvasLayer" parent="UI"]
-editor/display_folded = true
 script = ExtResource( 4 )
 
-[node name="CryptSeed" type="Label" parent="UI/DebugInfo"]
+[node name="CryptSeed" type="Label" parent="UI/DebugInfo" groups=[
+"debug_info",
+]]
+visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 
-[node name="Health" type="Label" parent="UI/DebugInfo"]
+[node name="Health" type="Label" parent="UI/DebugInfo" groups=[
+"debug_info",
+]]
 margin_top = 20.0
 margin_right = 40.0
 margin_bottom = 34.0
