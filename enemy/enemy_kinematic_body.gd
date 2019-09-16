@@ -46,9 +46,6 @@ func damage(amountToDamage : float) -> void:
 	if self.enemyModel != null:
 		self.enemyModel.damage(amountToDamage)
 
-func destroy() -> void:
-	queue_free()
-
 ###################
 # Signal Handlers #
 ###################

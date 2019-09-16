@@ -39,17 +39,15 @@ func _ready() -> void:
 ####################
 
 func create_weapon(weaponName : String) -> void:
-	if self.playerModel.weapon != null:
-		self.playerModel.weapon.queue_free()
-		self.playerModel.weapon = null
+	self.playerModel.weapon = null
 	var weaponScene : Resource = null
 	match weaponName:
 		weapon_globals.AXE_NAME:
-			weaponScene = preload("res://weapon/axe/axe.tscn")
+			weaponScene = preload('res://weapon/axe/axe.tscn')
 		weapon_globals.SWORD_NAME:
-			weaponScene = preload("res://weapon/sword/sword.tscn")
+			weaponScene = preload('res://weapon/sword/sword.tscn')
 	if weaponScene == null:
-		print("Something went wrong when making the weapon: ", weaponName)
+		print('Something went wrong when making the weapon: ', weaponName)
 		return
 	self.weapon = weaponScene.instance()
 	self.playerModel.weapon = self.weapon
@@ -59,17 +57,11 @@ func damage(damageToTake : float) -> void:
 	if self.playerModel != null:
 		self.playerModel.damage(damageToTake)
 
-func destroy() -> void:
-	if self.playerModel.weapon != null:
-		self.playerModel.weapon.queue_free()
-		self.playerModel.weapon = null
-	queue_free()
-
 func die() -> void:
 	exit_crypt()
 
 func exit_crypt() -> void:
-	var cryptNodes : Array = get_tree().get_nodes_in_group("crypt")
+	var cryptNodes : Array = get_tree().get_nodes_in_group('crypt')
 	if cryptNodes != null and len(cryptNodes) > 0:
 		cryptNodes[0].exit_crypt()
 
@@ -114,7 +106,7 @@ func handle_unpolled_input(event : InputEvent) -> void:
 	if Input.is_action_just_pressed(input_globals.UI_ACCEPT):
 		if self.canEnterCrypt:
 			self.canEnterCrypt = false
-			var villageNodes : Array = get_tree().get_nodes_in_group("village")
+			var villageNodes : Array = get_tree().get_nodes_in_group('village')
 			if villageNodes != null and len(villageNodes) > 0:
 				villageNodes[0].enter_crypt()
 		elif self.canExitCrypt:
@@ -123,7 +115,7 @@ func handle_unpolled_input(event : InputEvent) -> void:
 			self.isTalking = true
 			$UI/DialogBox.talk(self, self.villagerToTalkTo)
 	if OS.is_debug_build() and Input.is_action_just_pressed(input_globals.TOGGLE_DEBUG):
-		var debugNodes : Array = get_tree().get_nodes_in_group("debug_info")
+		var debugNodes : Array = get_tree().get_nodes_in_group('debug_info')
 		for debugNode in debugNodes:
 			if debugNode.visible != null:
 				debugNode.visible = not debugNode.visible

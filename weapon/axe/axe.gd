@@ -1,13 +1,13 @@
 extends Area2D
 
-var Weapon : Resource = load("res://models/Weapon.gd")
+var Weapon : Resource = load('res://models/Weapon.gd')
 
 onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 export var canAttack : bool = false
 
 export(float) var damage : float = 2
 export(int) var numberOfAttacksInCombo : int = 2
-var direction : String = "right"
+var direction : String = 'right'
 
 var weapon : Weapon
 
@@ -29,10 +29,10 @@ func attack() -> void:
 
 func flip_h() -> void:
 	$Sprite.set_flip_h($Sprite.flip_h)
-	if self.direction == "right":
-		self.direction = "left"
+	if self.direction == 'right':
+		self.direction = 'left'
 	else:
-		self.direction = "right"
+		self.direction = 'right'
 	self.weapon.update_direction(direction)
 
 ###################
