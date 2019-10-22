@@ -2,9 +2,6 @@ extends KinematicBody2D
 
 class_name PlayerNode
 
-onready var playerLightScene : Resource = load("res://player/player_light/player_light.tscn")
-onready var debugInfoScene : Resource = load("res://player/debug_info/debug_info.tscn")
-
 var weapon : Area2D = null
 
 var playerModel : Player = player_globals.player
@@ -30,46 +27,27 @@ func _process(delta : float) -> void:
 	$ActionPrompt.visible = self.canEnterCrypt or self.canExitCrypt or self.canTalkWithVillager
 	if self.playerModel != null:
 		self.playerModel.update()
-		if self.playerModel.debugInfo != null:
-			self.playerModel.debugInfo.update()
+	$UI/DebugInfo.update()
 
 func _ready() -> void:
 	set_physics_process(true)
 	set_process_input(true)
-	create_light()
-	create_weapon("sword")
-	create_debug_info()
+	create_weapon(weapon_globals.AXE_NAME)
 
 ####################
 # Helper Functions #
 ####################
 
-func create_debug_info() -> void:
-	var debugInfo : PlayerDebugInfo = self.playerModel.debugInfo
-	if debugInfo == null:
-		debugInfo = debugInfoScene.instance()
-		add_child(debugInfo)
-	self.playerModel.debugInfo = debugInfo
-	debugInfo.player = self.playerModel
-	debugInfo.update()
-
-func create_light() -> void:
-	var playerLight : PlayerLight = self.playerModel.lightNode
-	if playerLight == null:
-		playerLight = playerLightScene.instance()
-		add_child(playerLight)
-		self.playerModel.lightNode = playerLight
-
 func create_weapon(weaponName : String) -> void:
-	if self.playerModel.weapon != null:
-		self.playerModel.weapon.queue_free()
-		self.playerModel.weapon = null
+	self.playerModel.weapon = null
 	var weaponScene : Resource = null
 	match weaponName:
-	    "sword":
-	        weaponScene = preload("res://weapon/sword/sword.tscn")
+		weapon_globals.AXE_NAME:
+			weaponScene = preload('res://weapon/axe/axe.tscn')
+		weapon_globals.SWORD_NAME:
+			weaponScene = preload('res://weapon/sword/sword.tscn')
 	if weaponScene == null:
-		print("Something went wrong when making the weapon: ", weaponName)
+		print('Something went wrong when making the weapon: ', weaponName)
 		return
 	self.weapon = weaponScene.instance()
 	self.playerModel.weapon = self.weapon
@@ -79,17 +57,11 @@ func damage(damageToTake : float) -> void:
 	if self.playerModel != null:
 		self.playerModel.damage(damageToTake)
 
-func destroy() -> void:
-	if self.playerModel.weapon != null:
-		self.playerModel.weapon.queue_free()
-		self.playerModel.weapon = null
-	queue_free()
-
 func die() -> void:
 	exit_crypt()
 
 func exit_crypt() -> void:
-	var cryptNodes : Array = get_tree().get_nodes_in_group("crypt")
+	var cryptNodes : Array = get_tree().get_nodes_in_group('crypt')
 	if cryptNodes != null and len(cryptNodes) > 0:
 		cryptNodes[0].exit_crypt()
 
@@ -134,22 +106,27 @@ func handle_unpolled_input(event : InputEvent) -> void:
 	if Input.is_action_just_pressed(input_globals.UI_ACCEPT):
 		if self.canEnterCrypt:
 			self.canEnterCrypt = false
-			var villageNodes : Array = get_tree().get_nodes_in_group("village")
+			var villageNodes : Array = get_tree().get_nodes_in_group('village')
 			if villageNodes != null and len(villageNodes) > 0:
 				villageNodes[0].enter_crypt()
 		elif self.canExitCrypt:
 			exit_crypt()
 		elif self.canTalkWithVillager and not self.isTalking:
 			self.isTalking = true
-			$DialogBox.talk(self, self.villagerToTalkTo)
+			$UI/DialogBox.talk(self, self.villagerToTalkTo)
+	if OS.is_debug_build() and Input.is_action_just_pressed(input_globals.TOGGLE_DEBUG):
+		var debugNodes : Array = get_tree().get_nodes_in_group('debug_info')
+		for debugNode in debugNodes:
+			if debugNode.visible != null:
+				debugNode.visible = not debugNode.visible
+
+func initialize_player() -> void:
+	if self.playerModel.timeStart < 0:
+		self.playerModel.timeStart = OS.get_unix_time()
 
 func set_camera_zoom(zoomLevel : Vector2) -> void:
 	if zoomLevel != null:
 		$Camera2D.zoom = zoomLevel
-
-func initialize_player() -> void:
-	if self.playerModel.timeStart == null:
-		self.playerModel.timeStart = OS.get_unix_time()
 
 ###################
 # Signal Handlers #
@@ -175,4 +152,4 @@ func _on_TalkWithPlayer_area_exited(area : Area2D):
 	self.canTalkWithVillager = false
 	self.villagerToTalkTo = null
 	self.isTalking = false
-	$DialogBox.visible = false
+	$UI/DialogBox.visible = false

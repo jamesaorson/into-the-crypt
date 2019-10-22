@@ -88,6 +88,7 @@ func calculate_attack() -> float:
 
 func damage(amountToDamage) -> void:
 	if self.health > 0:
+		print(amountToDamage)
 		self.health -= amountToDamage 
 
 func die() -> bool:

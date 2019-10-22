@@ -6,8 +6,6 @@ var maxHealth : float
 var health : float
 var timeStart : int
 var timeElapsed : int
-var lightNode : Light2D
-var debugInfo : CanvasLayer
 var weapon : Area2D
 
 ###################
@@ -27,16 +25,12 @@ func _init(instance : Node2D = null,
 		   health : float = 1.0,
 		   timeStart : int = -1,
 		   timeElapsed : int = -1,
-		   lightNode : Light2D = null,
-		   debugInfo : CanvasLayer = null,
 		   weapon : Area2D = null) -> void:
 	._init(instance, position, width, height, velocity, maxVelocity, walkingSpeed, sprintingSpeed, isSprinting)
 	self.maxHealth = maxHealth
 	self.health = health
 	self.timeStart = timeStart
 	self.timeElapsed = timeElapsed
-	self.lightNode = lightNode
-	self.debugInfo = debugInfo
 	self.weapon = weapon
 
 ####################
