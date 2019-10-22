@@ -31,12 +31,13 @@ margin_bottom = 10.0
 text = "Start In Crypt"
 
 [node name="CryptSeed" type="SpinBox" parent="StartInCryptButton"]
+editor/display_folded = true
 margin_left = 120.0
 margin_top = -2.0
 margin_right = 194.0
 margin_bottom = 22.0
 min_value = -1.0
-max_value = 2.14748e+009
+max_value = 2.14748e+09
 value = -1.0
 
 [node name="CryptSeedLabel" type="Label" parent="StartInCryptButton/CryptSeed"]

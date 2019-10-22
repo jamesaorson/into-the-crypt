@@ -1,6 +1,7 @@
 extends Node
 
-var cryptSeed = null
-var crypt = []
+#warning-ignore-all:unused_class_variable
+var cryptSeed : int = -1
+var crypt : Array = []
 
-var enemies = {}
+var enemies : Dictionary = {}

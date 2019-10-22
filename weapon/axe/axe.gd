@@ -5,7 +5,7 @@ var Weapon : Resource = load('res://models/Weapon.gd')
 onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 export var canAttack : bool = false
 
-export(float) var damage : float = 1
+export(float) var damage : float = 2
 export(int) var numberOfAttacksInCombo : int = 2
 var direction : String = 'right'
 
