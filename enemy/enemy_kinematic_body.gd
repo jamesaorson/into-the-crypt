@@ -46,9 +46,6 @@ func damage(amountToDamage : float) -> void:
 	if self.enemyModel != null:
 		self.enemyModel.damage(amountToDamage)
 
-func destroy() -> void:
-	queue_free()
-
 ###################
 # Signal Handlers #
 ###################
@@ -61,6 +58,9 @@ func _on_AttackRange_body_exited(body : PlayerNode) -> void:
 	self.inRangeToAttack = false
 	self.playerToAttack = null
 
+func _on_AttackTimer_timeout() -> void:
+	self.canAttack = true
+
 func _on_HuntingRange_body_entered(body : PlayerNode) -> void:
 	if self.enemyModel != null:
 		self.enemyModel.player = body
@@ -68,6 +68,3 @@ func _on_HuntingRange_body_entered(body : PlayerNode) -> void:
 func _on_HuntingRange_body_exited(body : PlayerNode) -> void:
 	if self.enemyModel != null:
 		self.enemyModel.player = null
-
-func _on_AttackTimer_timeout() -> void:
-	self.canAttack = true

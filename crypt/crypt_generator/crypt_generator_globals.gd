@@ -33,7 +33,7 @@ func _init() -> void:
 		HORIZONTAL_HALLWAYS.append([])
 		HORIZONTAL_HALLWAYS[variation].resize(CRYPT_SECTION_SIZE)
 		
-		var binaryString : String = ""
+		var binaryString : String = ''
 		var binaryValue : int = variation
 		for digit in range(binaryLength):
 			binaryString = str(binaryValue % 2) + binaryString

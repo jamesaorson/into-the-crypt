@@ -1,7 +1,7 @@
 extends Node
 
 #warning-ignore-all:unused_class_variable
-var Player : Resource = load("res://models/Player.gd")
+var Player : Resource = load('res://models/Player.gd')
 
 export(float) var friction : float = 0.80
 
