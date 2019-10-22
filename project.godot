@@ -79,6 +79,7 @@ player_globals="*res://player/player_globals.gd"
 crypt_generator_globals="*res://crypt/crypt_generator/crypt_generator_globals.gd"
 input_globals="*res://input_globals.gd"
 weapon_globals="*res://weapon/weapon_globals.gd"
+events="*res://events.gd"
 
 [display]
 
