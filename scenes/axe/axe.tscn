@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/weapon/sword.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=1]
-resource_name = "left_attack_1"
+resource_name = "left_attack_0"
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -44,7 +44,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "left_attack_2"
+resource_name = "left_attack_1"
 length = 0.35
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -124,7 +124,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-resource_name = "right_attack_1"
+resource_name = "right_attack_0"
 length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -164,6 +164,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=5]
+resource_name = "right_attack_1"
 length = 0.35
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -260,11 +261,11 @@ disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "right_idle"
-anims/left_attack_1 = SubResource( 1 )
-anims/left_attack_2 = SubResource( 2 )
+anims/left_attack_0 = SubResource( 1 )
+anims/left_attack_1 = SubResource( 2 )
 anims/left_idle = SubResource( 3 )
-anims/right_attack_1 = SubResource( 4 )
-anims/right_attack_2 = SubResource( 5 )
+anims/right_attack_0 = SubResource( 4 )
+anims/right_attack_1 = SubResource( 5 )
 anims/right_idle = SubResource( 6 )
 [connection signal="body_entered" from="." to="." method="_on_Area2D_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

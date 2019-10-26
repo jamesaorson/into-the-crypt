@@ -23,7 +23,7 @@ func _physics_process(delta : float) -> void:
 		self.direction = self.enemyModel.behave(delta, is_on_wall(), self.remainingVelocity)
 		self.speed = self.enemyModel.speed if self.enemyModel.player == null else self.enemyModel.huntingSpeed
 
-func _process(delta : float) -> void:
+func _process(_delta : float) -> void:
 	if self.enemyModel != null:
 		self.enemyModel.update()
 		if self.canAttack and self.inRangeToAttack and self.playerToAttack != null:
@@ -54,7 +54,7 @@ func _on_AttackRange_body_entered(body : PlayerNode) -> void:
 	self.inRangeToAttack = true
 	self.playerToAttack = body
 
-func _on_AttackRange_body_exited(body : PlayerNode) -> void:
+func _on_AttackRange_body_exited(_body : PlayerNode) -> void:
 	self.inRangeToAttack = false
 	self.playerToAttack = null
 
@@ -65,6 +65,6 @@ func _on_HuntingRange_body_entered(body : PlayerNode) -> void:
 	if self.enemyModel != null:
 		self.enemyModel.player = body
 
-func _on_HuntingRange_body_exited(body : PlayerNode) -> void:
+func _on_HuntingRange_body_exited(_body : PlayerNode) -> void:
 	if self.enemyModel != null:
 		self.enemyModel.player = null

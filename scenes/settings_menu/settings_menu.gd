@@ -4,12 +4,15 @@ extends Control
 # Godot Functions #
 ###################
 
+func _ready() -> void:
+	$Menu/ReturnButton.grab_focus()
+
 ####################
 # Helper Functions #
 ####################
 
 func main_menu() -> void:
-	get_tree().change_scene(utility.construct_scene_path('main_menu'))
+	utility.error_handled_scene_change('main_menu')
 
 ###################
 # Signal handlers #

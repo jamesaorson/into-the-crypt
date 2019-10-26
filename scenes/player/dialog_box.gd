@@ -9,7 +9,7 @@ var player : PlayerNode = null
 func _ready() -> void:
 	set_process_input(true)
 
-func _input(event : InputEvent) -> void:
+func _input(_event : InputEvent) -> void:
 	if self.visible and self.player != null and self.player.isTalking:
 		if Input.is_action_just_pressed(input_globals.UI_ACCEPT) or Input.is_action_pressed(input_globals.UI_CANCEL):
 			self.player.isTalking = false

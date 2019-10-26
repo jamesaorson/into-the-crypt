@@ -17,15 +17,17 @@ var isSprinting : bool
 # Godot Functions #
 ###################
 
-func _init(instance : Node2D = null,
-		   position : Vector2 = Vector2(), 
-		   width : float = 0.0, 
-		   height : float = 0.0, 
-		   velocity : Vector2 = Vector2(), 
-		   maxVelocity : float = 0.0, 
-		   walkingSpeed : float = 0.0, 
-		   sprintingSpeed : float = 0.0, 
-		   isSprinting : bool = false) -> void:
+func _init(
+	instance : Node2D = null,
+	position : Vector2 = Vector2(), 
+	width : float = 0.0, 
+	height : float = 0.0, 
+	velocity : Vector2 = Vector2(), 
+	maxVelocity : float = 0.0, 
+	walkingSpeed : float = 0.0, 
+	sprintingSpeed : float = 0.0, 
+	isSprinting : bool = false
+) -> void:
 	self.instance = instance
 	self.position = position
 	self.width = width
