@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/load_game_menu/load_game_menu.gd" type="Script" id=1]
 
-[node name="SettingsMenuControl" type="Control"]
+[node name="LoadGameMenuControl" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
@@ -20,13 +20,35 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -20.0
-margin_right = 27.0
-margin_bottom = 20.0
+margin_left = -75.0
+margin_top = -160.0
+margin_right = 75.0
+margin_bottom = 160.0
+grow_vertical = 2
+custom_constants/separation = 100
+
+[node name="SaveFiles" type="ScrollContainer" parent="Menu"]
+margin_right = 150.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 150, 200 )
+
+[node name="SaveFilePanel" type="PanelContainer" parent="Menu/SaveFiles"]
+margin_right = 150.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SaveFileList" type="VBoxContainer" parent="Menu/SaveFiles/SaveFilePanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 143.0
+margin_bottom = 193.0
+rect_min_size = Vector2( 0, 100 )
+custom_constants/separation = 0
 
 [node name="ReturnButton" type="Button" parent="Menu"]
-margin_right = 54.0
-margin_bottom = 20.0
+margin_top = 300.0
+margin_right = 150.0
+margin_bottom = 320.0
 text = "Return"
 [connection signal="pressed" from="Menu/ReturnButton" to="." method="_on_ReturnButton_pressed"]

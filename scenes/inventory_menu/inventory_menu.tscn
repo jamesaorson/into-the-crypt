@@ -1,0 +1,169 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/inventory_menu/inventory_menu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/inventory_menu/consumable_tree.gd" type="Script" id=2]
+[ext_resource path="res://scenes/inventory_menu/equipment_tree.gd" type="Script" id=3]
+[ext_resource path="res://scenes/inventory_menu/material_tree.gd" type="Script" id=4]
+
+[node name="InventoryMenu" type="CanvasLayer" groups=[
+"inventory_menu",
+]]
+script = ExtResource( 1 )
+
+[node name="Control" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Panel" type="PanelContainer" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -225.0
+margin_right = 400.0
+margin_bottom = 225.0
+
+[node name="Tabs" type="TabContainer" parent="Control/Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 793.0
+margin_bottom = 443.0
+tab_align = 0
+
+[node name="Consumables" type="Tabs" parent="Control/Panel/Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="TreeContainer" type="HBoxContainer" parent="Control/Panel/Tabs/Consumables"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Tree" type="Tree" parent="Control/Panel/Tabs/Consumables/TreeContainer" groups=[
+"consumable_tree",
+]]
+margin_right = 387.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+allow_rmb_select = true
+script = ExtResource( 2 )
+
+[node name="ItemInfo" type="PanelContainer" parent="Control/Panel/Tabs/Consumables/TreeContainer"]
+editor/display_folded = true
+margin_left = 391.0
+margin_right = 778.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel/Tabs/Consumables/TreeContainer/ItemInfo"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 380.0
+margin_bottom = 393.0
+
+[node name="ContextMenu" type="PopupMenu" parent="Control/Panel/Tabs/Consumables/TreeContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_right = 92.0
+margin_bottom = -36.0
+
+[node name="Equipment" type="Tabs" parent="Control/Panel/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="TreeContainer" type="HBoxContainer" parent="Control/Panel/Tabs/Equipment"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Tree" type="Tree" parent="Control/Panel/Tabs/Equipment/TreeContainer" groups=[
+"equipment_tree",
+]]
+margin_right = 778.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+allow_rmb_select = true
+script = ExtResource( 3 )
+
+[node name="ItemInfo" type="PanelContainer" parent="Control/Panel/Tabs/Equipment/TreeContainer"]
+editor/display_folded = true
+margin_left = 5.0
+margin_right = 19.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel/Tabs/Equipment/TreeContainer/ItemInfo"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ContextMenu" type="PopupMenu" parent="Control/Panel/Tabs/Equipment/TreeContainer"]
+margin_left = 100.0
+margin_right = 120.0
+margin_bottom = 20.0
+
+[node name="Materials" type="Tabs" parent="Control/Panel/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="TreeContainer" type="HBoxContainer" parent="Control/Panel/Tabs/Materials"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Tree" type="Tree" parent="Control/Panel/Tabs/Materials/TreeContainer" groups=[
+"materials_tree",
+]]
+margin_right = 778.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+allow_rmb_select = true
+script = ExtResource( 4 )
+
+[node name="ItemInfo" type="PanelContainer" parent="Control/Panel/Tabs/Materials/TreeContainer"]
+editor/display_folded = true
+margin_left = 5.0
+margin_right = 19.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel/Tabs/Materials/TreeContainer/ItemInfo"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ContextMenu" type="PopupMenu" parent="Control/Panel/Tabs/Materials/TreeContainer"]
+margin_left = 100.0
+margin_right = 120.0
+margin_bottom = 20.0
+[connection signal="cell_selected" from="Control/Panel/Tabs/Consumables/TreeContainer/Tree" to="Control/Panel/Tabs/Consumables/TreeContainer/Tree" method="_on_Tree_cell_selected"]
+[connection signal="item_rmb_selected" from="Control/Panel/Tabs/Consumables/TreeContainer/Tree" to="Control/Panel/Tabs/Consumables/TreeContainer/Tree" method="_on_Tree_item_rmb_selected"]
+[connection signal="id_pressed" from="Control/Panel/Tabs/Consumables/TreeContainer/ContextMenu" to="Control/Panel/Tabs/Consumables/TreeContainer/Tree" method="_on_ContextMenu_id_pressed"]
+[connection signal="cell_selected" from="Control/Panel/Tabs/Equipment/TreeContainer/Tree" to="Control/Panel/Tabs/Equipment/TreeContainer/Tree" method="_on_Tree_cell_selected"]
+[connection signal="item_rmb_selected" from="Control/Panel/Tabs/Equipment/TreeContainer/Tree" to="Control/Panel/Tabs/Equipment/TreeContainer/Tree" method="_on_Tree_item_rmb_selected"]
+[connection signal="id_pressed" from="Control/Panel/Tabs/Equipment/TreeContainer/ContextMenu" to="Control/Panel/Tabs/Equipment/TreeContainer/Tree" method="_on_ContextMenu_id_pressed"]
+[connection signal="cell_selected" from="Control/Panel/Tabs/Materials/TreeContainer/Tree" to="Control/Panel/Tabs/Materials/TreeContainer/Tree" method="_on_Tree_cell_selected"]
+[connection signal="item_rmb_selected" from="Control/Panel/Tabs/Materials/TreeContainer/Tree" to="Control/Panel/Tabs/Materials/TreeContainer/Tree" method="_on_Tree_item_rmb_selected"]

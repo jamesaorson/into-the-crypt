@@ -14,10 +14,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://models/Actor.gd"
 }, {
+"base": "EquipmentItem",
+"class": "ArmorEquipmentItem",
+"language": "GDScript",
+"path": "res://models/ArmorEquipmentItem.gd"
+}, {
+"base": "ConsumableItem",
+"class": "BuffConsumableItem",
+"language": "GDScript",
+"path": "res://models/BuffConsumableItem.gd"
+}, {
+"base": "InventoryMenuItem",
+"class": "ConsumableItem",
+"language": "GDScript",
+"path": "res://models/ConsumableItem.gd"
+}, {
 "base": "TileMap",
 "class": "CryptGeneratorNode",
 "language": "GDScript",
-"path": "res://scenes/crypt/crypt_generator/crypt_generator.gd"
+"path": "res://scenes/crypt/crypt.gd"
 }, {
 "base": "Actor",
 "class": "Enemy",
@@ -28,6 +43,36 @@ _global_script_classes=[ {
 "class": "EnemyNode",
 "language": "GDScript",
 "path": "res://scenes/enemy/enemy_kinematic_body.gd"
+}, {
+"base": "InventoryMenuItem",
+"class": "EquipmentItem",
+"language": "GDScript",
+"path": "res://models/EquipmentItem.gd"
+}, {
+"base": "CanvasLayer",
+"class": "InventoryMenu",
+"language": "GDScript",
+"path": "res://scenes/inventory_menu/inventory_menu.gd"
+}, {
+"base": "Object",
+"class": "InventoryMenuItem",
+"language": "GDScript",
+"path": "res://models/InventoryMenuItem.gd"
+}, {
+"base": "Tree",
+"class": "InventoryTree",
+"language": "GDScript",
+"path": "res://scenes/inventory_tree/Inventory_tree.gd"
+}, {
+"base": "InventoryMenuItem",
+"class": "MaterialItem",
+"language": "GDScript",
+"path": "res://models/MaterialItem.gd"
+}, {
+"base": "MaterialItem",
+"class": "MedicalMaterialItem",
+"language": "GDScript",
+"path": "res://models/MedicalMaterialItem.gd"
 }, {
 "base": "Actor",
 "class": "Player",
@@ -49,21 +94,66 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/player/player_kinematic_body.gd"
 }, {
-"base": "Object",
-"class": "Weapon",
+"base": "ConsumableItem",
+"class": "ReplenishingConsumableItem",
 "language": "GDScript",
-"path": "res://models/Weapon.gd"
+"path": "res://models/ReplenishingConsumableItem.gd"
+}, {
+"base": "Button",
+"class": "SaveFileButton",
+"language": "GDScript",
+"path": "res://scenes/save_file_button/save_file_button.gd"
+}, {
+"base": "MaterialItem",
+"class": "SmithingMaterialItem",
+"language": "GDScript",
+"path": "res://models/SmithingMaterialItem.gd"
+}, {
+"base": "ConsumableItem",
+"class": "ThrowableConsumableItem",
+"language": "GDScript",
+"path": "res://models/ThrowableConsumableItem.gd"
+}, {
+"base": "EquipmentItem",
+"class": "VanityEquipmentItem",
+"language": "GDScript",
+"path": "res://models/VanityEquipmentItem.gd"
+}, {
+"base": "MaterialItem",
+"class": "VanityMaterialItem",
+"language": "GDScript",
+"path": "res://models/VanityMaterialItem.gd"
+}, {
+"base": "EquipmentItem",
+"class": "WeaponEquipmentItem",
+"language": "GDScript",
+"path": "res://models/WeaponEquipmentItem.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
+"ArmorEquipmentItem": "",
+"BuffConsumableItem": "",
+"ConsumableItem": "",
 "CryptGeneratorNode": "",
 "Enemy": "",
 "EnemyNode": "",
+"EquipmentItem": "",
+"InventoryMenu": "",
+"InventoryMenuItem": "",
+"InventoryTree": "",
+"MaterialItem": "",
+"MedicalMaterialItem": "",
 "Player": "",
 "PlayerDebugInfo": "",
 "PlayerLight": "",
 "PlayerNode": "",
-"Weapon": ""
+"ReplenishingConsumableItem": "",
+"SaveFileButton": "",
+"SmithingMaterialItem": "",
+"ThrowableConsumableItem": "",
+"VanityEquipmentItem": "",
+"VanityMaterialItem": "",
+"WeaponEquipmentItem": ""
 }
 
 [application]
@@ -74,13 +164,12 @@ config/icon="res://icon.png"
 
 [autoload]
 
-crypt_globals="*res://scenes/crypt/crypt_globals.gd"
-player_globals="*res://scenes/player/player_globals.gd"
-crypt_generator_globals="*res://scenes/crypt/crypt_generator/crypt_generator_globals.gd"
+utility="*res://autoload/utility.gd"
+crypt_manager_globals="*res://scenes/crypt_manager/crypt_manager_globals.gd"
 input_globals="*res://autoload/input_globals.gd"
 weapon_globals="*res://autoload/weapon_globals.gd"
 events="*res://autoload/events.gd"
-utility="*res://autoload/utility.gd"
+inventory_globals="*res://autoload/inventory_globals.gd"
 
 [debug]
 
@@ -153,6 +242,12 @@ primary_attack={
 toggle_debug={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777246,"unicode":0,"echo":false,"script":null)
+ ]
+}
+inventory_toggle={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":73,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":10,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 

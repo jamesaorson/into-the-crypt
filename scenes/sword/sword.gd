@@ -1,7 +1,5 @@
 extends Area2D
 
-var Weapon : Resource = load('res://models/Weapon.gd')
-
 onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 export var canAttack : bool = false
 
@@ -9,14 +7,14 @@ export(float) var damage : float = 1
 export(int) var numberOfAttacksInCombo : int = 2
 var direction : String = 'right'
 
-var weapon : Weapon
+var weapon : WeaponEquipmentItem
 
 ###################
 # Godot Functions #
 ###################
 
 func _ready() -> void:
-	self.weapon = Weapon.new(weapon_globals.SWORD_NAME, self.animationPlayer, 1, self.damage, self.numberOfAttacksInCombo)
+	self.weapon.animationPlayer = self.animationPlayer
 
 ####################
 # Helper Functions #
@@ -34,6 +32,13 @@ func flip_h() -> void:
 	else:
 		self.direction = 'right'
 	self.weapon.update_direction(direction)
+
+func setup(weapon : WeaponEquipmentItem) -> void:
+	self.weapon = weapon
+	self.weapon.animationPlayer = self.animationPlayer
+	self.weapon.currentAttack = 0
+	self.weapon.damage = self.damage
+	self.weapon.numberOfAttacksInCombo = self.numberOfAttacksInCombo
 
 ###################
 # Signal Handlers #

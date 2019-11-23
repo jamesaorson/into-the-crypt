@@ -15,6 +15,7 @@ export var PAUSE : String = 'pause'
 export var RESET : String = 'reset'
 export var SPRINT : String = 'sprint'
 export var TOGGLE_DEBUG : String = 'toggle_debug'
+export var INVENTORY_TOGGLE : String = 'inventory_toggle'
 
 func get_input_display_names(input) -> Array:
 	var inputs : Array = []
