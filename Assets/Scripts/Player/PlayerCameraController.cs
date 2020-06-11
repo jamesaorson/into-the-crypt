@@ -55,6 +55,10 @@ public class PlayerCameraController : MonoBehaviour
     [Tooltip("Whether or not to invert our Y axis for mouse input to rotation.")]
     public bool InvertY = false;
 
+    [Tooltip("How far up and down the angle of the camera can go.")]
+    public float TopVerticalAngleLimit = 90;
+    public float BottomVerticalAngleLimit = 80;
+
     public float Yaw => _interpolatingCameraState.Yaw;
     public float Pitch => _interpolatingCameraState.Pitch;
     public float Roll => _interpolatingCameraState.Roll;
@@ -89,6 +93,8 @@ public class PlayerCameraController : MonoBehaviour
 
         _targetCameraState.Yaw += mouseMovement.x * mouseSensitivityFactor;
         _targetCameraState.Pitch += mouseMovement.y * mouseSensitivityFactor;
+
+        _targetCameraState.Pitch = Mathf.Clamp(_targetCameraState.Pitch, -TopVerticalAngleLimit, BottomVerticalAngleLimit);
 
         // Framerate-independent interpolation
         // Calculate the lerp amount, such that we get 99% of the way to our target in the specified time
