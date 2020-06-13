@@ -200,7 +200,6 @@ GameObject:
   - component: {fileID: 2725359533447605219}
   - component: {fileID: 2725359533447605150}
   - component: {fileID: 2725359533447605217}
-  - component: {fileID: 2725359533447605216}
   m_Layer: 0
   m_Name: Pommel
   m_TagString: Untagged
@@ -270,19 +269,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2725359533447605216
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2725359533447605218}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2725359533842632978
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +280,6 @@ GameObject:
   - component: {fileID: 2725359533842632979}
   - component: {fileID: 2725359533842632974}
   - component: {fileID: 2725359533842632977}
-  - component: {fileID: 2725359533842632976}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -363,17 +348,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &2725359533842632976
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2725359533842632978}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
