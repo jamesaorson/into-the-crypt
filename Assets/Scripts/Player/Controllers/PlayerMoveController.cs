@@ -20,10 +20,6 @@ namespace IntoTheCrypt.Player.Controllers
 
         [Tooltip("Base movement velocity.")]
         public float BaseVelocity = 10.0f;
-
-        [Tooltip("Gravity acceleration.")]
-        public Vector3 Gravity = new Vector3(0f, -9.8f, 0f);
-
         public Vector3 Velocity => Character.velocity;
         #endregion
 
@@ -52,8 +48,6 @@ namespace IntoTheCrypt.Player.Controllers
 
             // Only yaw is used, so that way the player does not move in whatever direction they face upwards or downwards.
             translation = Quaternion.Euler(0f, FirstPersonCamera.Yaw, 0f) * translation;
-
-            translation += Gravity * Time.deltaTime;
 
             Character.Move(translation);
         }

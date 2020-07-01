@@ -24,15 +24,11 @@ namespace IntoTheCrypt.Weapons.Sword.Controllers
 
         #region Private
 
-        #region Constants
-        private const string ENEMY_TAG = "Enemy";
-        #endregion
-
         #region Member Methods
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(ENEMY_TAG))
+            if (other.CompareTag(Constants.ENEMY_TAG))
             {
                 other.SendMessage("HandleDamage", new DamageEnemyMessage(Player.Stats, Stats));
             }

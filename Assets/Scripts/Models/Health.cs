@@ -1,5 +1,6 @@
 ﻿namespace IntoTheCrypt.Models
 {
+    [System.Serializable]
     public struct Health
     {
         #region Public
@@ -49,6 +50,7 @@
 
         #region Members
         private float _hp;
+        [UnityEngine.SerializeField]
         private float _maxHp;
         #endregion
 

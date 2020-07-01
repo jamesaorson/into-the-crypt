@@ -10,6 +10,8 @@ namespace IntoTheCrypt.Enemies.Controllers
         #region Public
 
         #region Members
+        [Tooltip("Character controller used for movement.")]
+        public CharacterController Character;
         [Tooltip("Text for health debugging")]
         public TextMesh HealthText;
         [Tooltip("Text for bleed debugging")]
@@ -18,7 +20,30 @@ namespace IntoTheCrypt.Enemies.Controllers
         public TextMesh ToxicText;
         public bool IsBleeding => Stats == null ? false : Stats.IsBleeding;
         public Stats Stats;
-
+        public float Speed => Stats == null ? 0f : Stats.Dexterity * Constants.DEXTERITY_TO_SPEED_FACTOR;
+        // Does not include the Y component of the direction to the player.
+        public Vector3 TowardsPlayer2D
+        {
+            get
+            {
+                var direction = TowardsPlayer3D;
+                direction.y = 0f;
+                return direction;
+            }
+        }
+        // Includes the Y component of the direction to the player.
+        public Vector3 TowardsPlayer3D
+        {
+            get
+            {
+                if (_player == null)
+                {
+                    return Vector3.zero;
+                }
+                var direction = _player.transform.position - transform.position;
+                return direction.normalized;
+            }
+        }
         #endregion
 
         #region Member Methods
@@ -31,6 +56,12 @@ namespace IntoTheCrypt.Enemies.Controllers
         {
             DamageHelper.HandleDamage(Stats, damage);
         }
+
+        public void Move(Vector3 normalizedDirection)
+        {
+            var translation = normalizedDirection * Speed * Time.deltaTime;
+            Character.Move(translation);
+        }
         #endregion
 
         #endregion
@@ -39,12 +70,16 @@ namespace IntoTheCrypt.Enemies.Controllers
 
         #region Members
         protected float _bleedTime = 0f;
+        protected GameObject _player;
         protected float _toxicTime = 0f;
         #endregion
 
         #region Member Methods
         protected virtual void Start()
         {
+            Stats.ArmorRating = Stats.MaxArmorRating;
+            Stats.HP = Stats.MaxHP;
+            _player = GameObject.FindGameObjectWithTag(Constants.PLAYER_TAG);
         }
 
         protected void TryDie()
@@ -110,7 +145,7 @@ namespace IntoTheCrypt.Enemies.Controllers
             uint toxicToRemove = 0;
             for (int i = 1; i <= _toxicTime; ++i)
             {
-                toxicToRemove += Stats.TOXIC_DROP_RATE;
+                toxicToRemove += Constants.TOXIC_DROP_RATE;
             }
             if (toxicToRemove > transientToxic)
             {

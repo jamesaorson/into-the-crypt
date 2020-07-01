@@ -6,6 +6,9 @@ TagManager:
   tags:
   - PlayerWeapon
   - Enemy
+  - Test Room 1
+  - Enemy Spawn
+  - Enemy Spawn Collection
   layers:
   - Default
   - TransparentFX

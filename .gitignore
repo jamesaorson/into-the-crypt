@@ -73,3 +73,5 @@ crashlytics-build.properties
 Dist
 
 .vscode/
+
+*.DS_Store

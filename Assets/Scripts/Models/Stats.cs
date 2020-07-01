@@ -142,15 +142,10 @@ namespace IntoTheCrypt.Models
                 }
             }
         }
-        public uint ToxicLevel => (uint)(Toxic / TOXIC_INCREASE_LEVEL);
-        public uint TransientToxic => (uint)Toxic % TOXIC_INCREASE_LEVEL;
+        public uint ToxicLevel => (uint)(Toxic / Constants.TOXIC_INCREASE_LEVEL);
+        public uint TransientToxic => (uint)Toxic % Constants.TOXIC_INCREASE_LEVEL;
         #endregion
 
-        #endregion
-
-        #region Constants
-        public const uint TOXIC_DROP_RATE = 4;
-        public const uint TOXIC_INCREASE_LEVEL = 15;
         #endregion
 
         #endregion

@@ -19,10 +19,8 @@ namespace IntoTheCrypt.Player.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         private void Start()
         {
-            Stats.MaxHP = 200;
-            Stats.HP = Stats.MaxHP;
-            Stats.MaxArmorRating = 1;
             Stats.ArmorRating = Stats.MaxArmorRating;
+            Stats.HP = Stats.MaxHP;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]

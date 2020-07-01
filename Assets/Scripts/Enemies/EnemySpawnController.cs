@@ -7,7 +7,7 @@ namespace IntoTheCrypt.Enemies
         #region Public
 
         #region Members
-        public GameObject TestEnemyPrefab;
+        public GameObject SquogPrefab;
         #endregion
 
         #endregion
@@ -18,13 +18,11 @@ namespace IntoTheCrypt.Enemies
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         protected void Start()
         {
-            for (float i = 2; i <= 5.0; ++i)
+            for (int i = 0; i < transform.childCount; i++)
             {
-                for (float j = 2; j <= 5.0; ++j)
-                {
-                    var enemy = Instantiate(TestEnemyPrefab, transform);
-                    enemy.transform.localPosition = new Vector3(i, 0.5f, j);
-                }
+                var child = transform.GetChild(i);
+                var enemy = Instantiate(SquogPrefab, child);
+                enemy.transform.localPosition = Vector3.zero;
             }
         }
 

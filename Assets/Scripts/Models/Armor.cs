@@ -1,5 +1,6 @@
 ﻿namespace IntoTheCrypt.Models
 {
+    [System.Serializable]
     public struct Armor
     {
         #region Public
@@ -48,6 +49,7 @@
         #region Private
 
         #region Members
+        [UnityEngine.SerializeField]
         private uint _maxRating;
         private uint _rating;
         #endregion
