@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 0.25}
+  m_SizeDelta: {x: 2, y: 0.25}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &4820365138940194094
 CanvasRenderer:
@@ -242,7 +242,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.25}
-  m_SizeDelta: {x: 1, y: 0.25}
+  m_SizeDelta: {x: 2, y: 0.25}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5222976630026580781
 CanvasRenderer:
@@ -558,6 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01d1830077d94850a7e1334d803114b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowDebugUI: 0
   Character: {fileID: 5632835467580065395}
   HealthText: {fileID: 5653290833522081085}
   BleedText: {fileID: 9048086206608395479}
@@ -573,8 +574,8 @@ MonoBehaviour:
     MinorStats:
       BleedResistance: 10
       ToxicResistance: 10
-  Sharpness: 5
-  Toxicity: 5
+  Sharpness: 0
+  Toxicity: 0
   _attackDelay: 1
   _attackRange: 1
   Player: {fileID: 0}
@@ -662,7 +663,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -0.25}
-  m_SizeDelta: {x: 1, y: 0.25}
+  m_SizeDelta: {x: 2, y: 0.25}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1390806952831667434
 CanvasRenderer:
