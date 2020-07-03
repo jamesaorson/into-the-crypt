@@ -578,6 +578,7 @@ MonoBehaviour:
   Toxicity: 0
   _attackDelay: 1
   _attackRange: 1
+  _trackingRange: 5
   Player: {fileID: 0}
 --- !u!143 &5632835467580065395
 CharacterController:
@@ -594,7 +595,7 @@ CharacterController:
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0.05, y: -0.05, z: 0}
 --- !u!54 &8309722155363100885

@@ -9,6 +9,7 @@ TagManager:
   - Test Room 1
   - Enemy Spawn
   - Enemy Spawn Collection
+  - Player Interactor
   layers:
   - Default
   - TransparentFX

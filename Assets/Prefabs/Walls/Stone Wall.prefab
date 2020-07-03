@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7115300140563684646}
   - component: {fileID: 7115300140563684647}
   m_Layer: 0
-  m_Name: Wall
+  m_Name: Stone Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c12374ff8e1dac4293c85fd60335b0b, type: 2}
+  - {fileID: 2100000, guid: 9de223a9b00a4421c8238b3017245db1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

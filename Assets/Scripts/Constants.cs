@@ -11,6 +11,7 @@ namespace IntoTheCrypt
         public const string ENEMY_SPAWN_TAG = "Enemy Spawn";
         public const string ENEMY_SPAWN_COLLECTION_TAG = "Enemy Spawn Collection";
         public const string PLAYER_TAG = "Player";
+        public const string PLAYER_INTERACTOR_TAG = "Player Interactor";
         public const string TEST_ROOM_1_TAG = "Test Room 1";
         #endregion
         

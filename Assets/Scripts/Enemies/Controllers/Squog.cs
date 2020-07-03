@@ -21,7 +21,10 @@ namespace IntoTheCrypt.Enemies.Controllers
             {
                 Attack();
             }
-            Move(TowardsPlayer2D);
+            if (IsInTrackingRangeOfPlayer)
+            {
+                Move(TowardsPlayer2D);
+            }
         }
         #endregion
 

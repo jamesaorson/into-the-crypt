@@ -47,6 +47,18 @@ namespace IntoTheCrypt.Enemies.Controllers
                 _attackRange = value;
             }
         }
+        public float TrackingRange
+        {
+            get => _trackingRange;
+            set
+            {
+                if (value < 0f)
+                {
+                    value = 0f;
+                }
+                _trackingRange = value;
+            }
+        }
         public bool IsAttacking { get; set; }
         public bool IsBleeding => Stats == null ? false : Stats.IsBleeding;
         public float Speed => Stats == null ? 0f : Stats.Dexterity * Constants.DEXTERITY_TO_SPEED_FACTOR;
@@ -56,6 +68,14 @@ namespace IntoTheCrypt.Enemies.Controllers
             {
                 var distance = Vector3.Distance(transform.position, _player.transform.position);
                 return distance <= AttackRange;
+            }
+        }
+        public bool IsInTrackingRangeOfPlayer
+        {
+            get
+            {
+                var distance = Vector3.Distance(transform.position, _player.transform.position);
+                return distance <= TrackingRange;
             }
         }
         // Does not include the Y component of the direction to the player.
@@ -115,6 +135,10 @@ namespace IntoTheCrypt.Enemies.Controllers
         [Min(0f)]
         [Tooltip("Range of enemy attacks")]
         protected float _attackRange = 0f;
+        [SerializeField]
+        [Min(0f)]
+        [Tooltip("Range of tracking")]
+        protected float _trackingRange = 0f;
         protected float _bleedElapsedTime = 0f;
         protected GameObject _player;
         protected float _toxicElapsedTime = 0f;
