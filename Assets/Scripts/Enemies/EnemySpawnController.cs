@@ -29,7 +29,6 @@ namespace IntoTheCrypt.Enemies
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         protected void Update()
         {
-
         }
         #endregion
 

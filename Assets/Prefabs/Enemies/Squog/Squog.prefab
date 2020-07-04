@@ -560,9 +560,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowDebugUI: 0
   Character: {fileID: 5632835467580065395}
+  Animator: {fileID: 7695328438645119209}
   HealthText: {fileID: 5653290833522081085}
   BleedText: {fileID: 9048086206608395479}
   ToxicText: {fileID: 8786582287968335397}
+  Player: {fileID: 0}
   Stats:
     Armor:
       _maxRating: 20
@@ -579,7 +581,6 @@ MonoBehaviour:
   _attackDelay: 1
   _attackRange: 1
   _trackingRange: 5
-  Player: {fileID: 0}
 --- !u!143 &5632835467580065395
 CharacterController:
   m_ObjectHideFlags: 0

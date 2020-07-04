@@ -14,12 +14,15 @@ namespace IntoTheCrypt.Enemies.Controllers
         public bool ShowDebugUI;
         [Tooltip("Character controller used for movement.")]
         public CharacterController Character;
+        [Tooltip("Enemy Animator")]
+        public Animator Animator;
         [Tooltip("Text for health debugging")]
         public TextMeshPro HealthText;
         [Tooltip("Text for bleed debugging")]
         public TextMeshPro BleedText;
         [Tooltip("Text for toxic debugging")]
         public TextMeshPro ToxicText;
+        public GameObject Player;
         public Stats Stats;
         public uint Sharpness = 0;
         public uint Toxicity = 0;
@@ -152,6 +155,7 @@ namespace IntoTheCrypt.Enemies.Controllers
                 return;
             }
             IsAttacking = true;
+            Animator.SetTrigger("Attack");
         }
 
         protected void PerformAttack()

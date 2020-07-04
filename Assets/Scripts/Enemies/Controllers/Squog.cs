@@ -1,17 +1,7 @@
-﻿using UnityEngine;
-
-namespace IntoTheCrypt.Enemies.Controllers
+﻿namespace IntoTheCrypt.Enemies.Controllers
 {
     public class Squog : EnemyController
     {
-        #region Public
-        
-        #region Members
-        public GameObject Player;
-        #endregion
-
-        #endregion
-
         #region Protected
 
         #region Member Methods

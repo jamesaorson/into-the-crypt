@@ -20,6 +20,24 @@ TextureImporter:
   - first:
       213: -9030066194177299498
     second: squog_2
+  - first:
+      213: -3978339656036465484
+    second: squog_0
+  - first:
+      213: -5107422720431760064
+    second: squog_1
+  - first:
+      213: -2402400979178207995
+    second: squog_2
+  - first:
+      213: -1331488619604510048
+    second: squog_3
+  - first:
+      213: -8736153621320279651
+    second: squog_4
+  - first:
+      213: -8369515453316667719
+    second: squog_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -145,6 +163,69 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b4c81639291ac8c0800000000000000
+      internalID: -3978339656036465484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: squog_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04dd7e6981ace19b0800000000000000
+      internalID: -5107422720431760064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: squog_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5054804b905f8aed0800000000000000
+      internalID: -2402400979178207995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: squog_3
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 32
         height: 32
@@ -155,14 +236,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a69bb90b88d4c3ef0800000000000000
-      internalID: -127141439999329942
+      spriteID: 0aa7ffda72a958de0800000000000000
+      internalID: -1331488619604510048
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: squog_1
+      name: squog_4
       rect:
         serializedVersion: 2
         x: 32
@@ -176,14 +257,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 412f2d393781d3b10800000000000000
-      internalID: 1962751897283785236
+      spriteID: d9956f94192f2c680800000000000000
+      internalID: -8736153621320279651
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: squog_2
+      name: squog_5
       rect:
         serializedVersion: 2
         x: 64
@@ -197,8 +278,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6db6cc5c3a2cea280800000000000000
-      internalID: -9030066194177299498
+      spriteID: 9b6eaeee90289db80800000000000000
+      internalID: -8369515453316667719
       vertices: []
       indices: 
       edges: []
