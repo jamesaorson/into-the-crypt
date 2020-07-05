@@ -6,10 +6,12 @@ TagManager:
   tags:
   - PlayerWeapon
   - Enemy
-  - Test Room 1
   - Enemy Spawn
   - Enemy Spawn Collection
   - Player Interactor
+  - Village Room
+  - Test Room 1
+  - Test Room 2
   layers:
   - Default
   - TransparentFX

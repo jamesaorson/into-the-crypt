@@ -75,3 +75,4 @@ Dist
 .vscode/
 
 *.DS_Store
+bin/
