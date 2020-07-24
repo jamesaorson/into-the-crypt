@@ -12,12 +12,8 @@ namespace IntoTheCrypt.Player.Controllers
         #region Public
 
         #region Members
-        [Tooltip("Health HUD text")]
-        public TextMeshProUGUI HealthHUDText;
-        [Tooltip("Health Bleed text")]
-        public TextMeshProUGUI BleedHUDText;
-        [Tooltip("Health Toxic text")]
-        public TextMeshProUGUI ToxicHUDText;
+        [Tooltip("Stat menu")]
+        public StatMenuController StatMenu;
         public Stats Stats;
         #endregion
 
@@ -38,9 +34,22 @@ namespace IntoTheCrypt.Player.Controllers
         #endregion
 
         #region Member Methods
+        private void HandleInput()
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                StatMenu.ToggleActive();
+            }
+        }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         private void Start()
         {
+            StatMenu.SetActive(false);
             Stats.ArmorRating = Stats.MaxArmorRating;
             Stats.HP = Stats.MaxHP;
         }
@@ -50,13 +59,9 @@ namespace IntoTheCrypt.Player.Controllers
         {
             UpdateBleed();
             UpdateToxic();
+            UpdateMenus();
 
-            UpdateHUD();
-
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
-            }
+            HandleInput();
         }
 
         private void UpdateBleed()
@@ -83,14 +88,14 @@ namespace IntoTheCrypt.Player.Controllers
             DamageHelper.Damage(Stats, accumulatedDamage);
         }
 
-        private void UpdateBleedHUD()
+        private void UpdateMenus()
         {
-            BleedHUDText.text = $"Bleed: {Stats.Bleed}";
+            UpdateStatMenu();
         }
 
-        private void UpdateHealthHUD()
+        private void UpdateStatMenu()
         {
-            HealthHUDText.text = $"HP: {Stats.HP}/{Stats.MaxHP}";
+            StatMenu.UpdateStats(Stats);
         }
 
         private void UpdateToxic()
@@ -116,18 +121,6 @@ namespace IntoTheCrypt.Player.Controllers
             Stats.Toxic -= toxicToRemove;
             // Remove excess seconds that have passed since last update
             _toxicElapsedTime %= 1f;
-        }
-
-        private void UpdateToxicHUD()
-        {
-            ToxicHUDText.text = $"Toxic: {Stats.Toxic}";
-        }
-
-        private void UpdateHUD()
-        {
-            UpdateBleedHUD();
-            UpdateHealthHUD();
-            UpdateToxicHUD();
         }
         #endregion
 

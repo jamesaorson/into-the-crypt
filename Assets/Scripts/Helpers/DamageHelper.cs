@@ -9,6 +9,10 @@ namespace IntoTheCrypt.Helpers
         #region Public
 
         #region Static Methods
+        public static float CalculateStrengthFactor(Stats stats)
+        {
+            return 1f;
+        }
         public static void Damage(Stats stats, uint damage)
         {
             stats.HP -= damage;

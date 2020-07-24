@@ -1,4 +1,5 @@
-﻿using IntoTheCrypt.Models;
+﻿using IntoTheCrypt.Helpers;
+using IntoTheCrypt.Models;
 using IntoTheCrypt.Weapons;
 
 namespace IntoTheCrypt.Messages
@@ -20,7 +21,7 @@ namespace IntoTheCrypt.Messages
         public Stats Player { get; private set; }
 
         public override uint Bluntness => Weapon.Bluntness;
-        public override uint Damage => Weapon.BaseDamage;
+        public override uint Damage => (uint)(Weapon.BaseDamage * DamageHelper.CalculateStrengthFactor(Player));
         public override uint Sharpness => Weapon.Sharpness;
         public override uint Toxicity => Weapon.Toxicity;
         #endregion
