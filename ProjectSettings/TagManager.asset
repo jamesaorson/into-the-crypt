@@ -12,6 +12,7 @@ TagManager:
   - Village Room
   - Test Room 1
   - Test Room 2
+  - Main Menu
   layers:
   - Default
   - TransparentFX

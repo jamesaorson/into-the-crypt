@@ -3,6 +3,7 @@ using IntoTheCrypt.Messages;
 using IntoTheCrypt.Models;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace IntoTheCrypt.Player.Controllers
 {
@@ -51,6 +52,11 @@ namespace IntoTheCrypt.Player.Controllers
             UpdateToxic();
 
             UpdateHUD();
+
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+            }
         }
 
         private void UpdateBleed()

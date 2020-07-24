@@ -70,24 +70,15 @@ namespace IntoTheCrypt.Player.Controllers
         {
             _targetCameraState.SetFromTransform(transform);
             _interpolatingCameraState.SetFromTransform(transform);
+
+            // Hide and lock cursor
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         private void Update()
         {
-            // Exit Sample  
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                Application.Quit();
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#endif
-            }
-
-            // Hide and lock cursor
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-
             // Rotation
             var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (InvertY ? 1 : -1));
 
