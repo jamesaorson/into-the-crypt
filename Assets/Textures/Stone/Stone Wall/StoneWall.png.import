@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dirt_floor.png-7c4415d4fb7b8de09c8ce670fa58b6b0.stex"
+path="res://.import/StoneWall.png-3a78730953e22a2506c6ab13e71bc2c5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/Dirt/Dirt Floor/dirt_floor.png"
-dest_files=[ "res://.import/dirt_floor.png-7c4415d4fb7b8de09c8ce670fa58b6b0.stex" ]
+source_file="res://Assets/Textures/Stone/Stone Wall/StoneWall.png"
+dest_files=[ "res://.import/StoneWall.png-3a78730953e22a2506c6ab13e71bc2c5.stex" ]
 
 [params]
 
@@ -18,7 +18,7 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=2
 flags/repeat=true
 flags/filter=false
 flags/mipmaps=true

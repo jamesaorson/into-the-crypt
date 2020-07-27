@@ -7,6 +7,7 @@
 [node name="Sprite" type="Sprite3D" parent="."]
 pixel_size = 0.0313
 billboard = 2
+shaded = true
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 32, 32 )

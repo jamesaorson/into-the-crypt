@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Godot;
 using IntoTheCrypt.Helpers;
 using IntoTheCrypt.Messages;
@@ -11,8 +12,12 @@ namespace IntoTheCrypt.Player.Controllers
 		#region Public
 
 		#region Members
+		[Export(PropertyHint.Range, "10,300")]
+		public float LanternInterval = 10f;
+		public Stopwatch Clock { get; private set; }
+		public OmniLight Lantern { get; private set; }
 		public StatMenuController StatMenu { get; private set; }
-		public Stats Stats;
+		public Stats Stats { get; private set; }
 		#endregion
 
 		#region Member Methods
@@ -49,12 +54,15 @@ namespace IntoTheCrypt.Player.Controllers
 			UpdateBleed(delta);
 			UpdateToxic(delta);
 			UpdateMenus(delta);
+			UpdateLantern(delta);
 		}
 		
 		public override void _Ready()
 		{
 			LoadScenes();
 			StatMenu = GetNode<StatMenuController>("StatMenuControl");
+			Lantern = GetNode<OmniLight>("Lantern");
+			_startingLanternRange = Lantern.OmniRange;
 
 			Stats = new Stats(
 				maxArmorRating: 1,
@@ -63,6 +71,8 @@ namespace IntoTheCrypt.Player.Controllers
 			StatMenu.SetActive(false);
 			Stats.ArmorRating = Stats.MaxArmorRating;
 			Stats.HP = Stats.MaxHP;
+			
+			Clock = Stopwatch.StartNew();
 		}
 		
 		public void HandleDamage(DamagePlayerMessage damage)
@@ -76,9 +86,11 @@ namespace IntoTheCrypt.Player.Controllers
 		#region Private
 
 		#region Members
-		protected float _bleedElapsedTime = 0f;
+		private float _bleedElapsedTime = 0f;
+		private float MILLISECONDS_TO_SECOND = 1000f;
 		private PackedScene _mainMenuScene;
-		protected float _toxicElapsedTime = 0f;
+		private float _startingLanternRange;
+		private float _toxicElapsedTime = 0f;
 		#endregion
 
 		#region Member Methods
@@ -113,6 +125,15 @@ namespace IntoTheCrypt.Player.Controllers
 			// Remove excess seconds that have passed since last update
 			_bleedElapsedTime %= 1f;
 			DamageHelper.Damage(Stats, accumulatedDamage);
+		}
+		
+		private void UpdateLantern(float delta)
+		{
+			Lantern.OmniRange = Mathf.Clamp(
+				_startingLanternRange - (Clock.ElapsedMilliseconds / (LanternInterval * MILLISECONDS_TO_SECOND)),
+				0f,
+				_startingLanternRange
+			);
 		}
 
 		private void UpdateMenus(float delta)

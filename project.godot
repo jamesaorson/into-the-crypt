@@ -19,10 +19,6 @@ config/name="IntoTheCrypt"
 run/main_scene="res://Scenes/UI/MainMenu/MainMenu.tscn"
 config/icon="res://icon.png"
 
-[debug]
-
-shapes/collision/shape_color=Color( 0, 0.854902, 1, 1 )
-
 [global]
 
 grav=false
