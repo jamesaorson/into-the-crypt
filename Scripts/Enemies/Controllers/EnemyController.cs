@@ -2,284 +2,298 @@ using IntoTheCrypt.Helpers;
 using IntoTheCrypt.Messages;
 using IntoTheCrypt.Models;
 using Godot;
+using IntoTheCrypt.Player.Controllers;
 
 namespace IntoTheCrypt.Enemies.Controllers
 {
-    public abstract class EnemyController : Spatial
-    {
-        #region Public
+	public abstract class EnemyController : KinematicBody
+	{
+		#region Public
 
-        #region Members
-        public bool ShowDebugUI;
-        //public CharacterController Character;
-        //public Animator Animator;
-        public Label HealthText;
-        public Label BleedText;
-        public Label ToxicText;
-        public Stats Stats;
-        public uint Sharpness = 0;
-        public uint Toxicity = 0;
-        public float AttackDelay
-        {
-            get => _attackDelay;
-            set
-            {
-                if (value < 0f)
-                {
-                    value = 0f;
-                }
-                _attackDelay = value;
-            }
-        }
-        public float AttackRange
-        {
-            get => _attackRange;
-            set
-            {
-                if (value < 0f)
-                {
-                    value = 0f;
-                }
-                _attackRange = value;
-            }
-        }
-        public float TrackingRange
-        {
-            get => _trackingRange;
-            set
-            {
-                if (value < 0f)
-                {
-                    value = 0f;
-                }
-                _trackingRange = value;
-            }
-        }
-        public bool IsAttacking { get; set; }
-        public bool IsBleeding => Stats == null ? false : Stats.IsBleeding;
-        public float Speed => Stats == null ? 0f : Stats.Dexterity * Constants.DEXTERITY_TO_SPEED_FACTOR;
-        public bool IsInAttackRangeOfPlayer
-        {
-            get
-            {
-                var distance =  Translation.DistanceTo(_player.Translation);
-                return distance <= AttackRange;
-            }
-        }
-        public bool IsInTrackingRangeOfPlayer
-        {
-            get
-            {
-                var distance = Translation.DistanceTo(_player.Translation);
-                return distance <= TrackingRange;
-            }
-        }
-        // Does not include the Y component of the direction to the player.
-        public Vector3 TowardsPlayer2D
-        {
-            get
-            {
-                var direction = TowardsPlayer3D;
-                direction.y = 0f;
-                return direction;
-            }
-        }
-        // Includes the Y component of the direction to the player.
-        public Vector3 TowardsPlayer3D
-        {
-            get
-            {
-                if (_player == null)
-                {
-                    return Vector3.Zero;
-                }
-                var direction = _player.Translation - Translation;
-                return direction.Normalized();
-            }
-        }
-        #endregion
+		#region Members
+		public bool ShowDebugUI;
+		public Label HealthText;
+		public Label BleedText;
+		public Label ToxicText;
+		public CSGMesh DebugInfo;
+		public Stats Stats { get; protected set; }
+		public uint Sharpness { get; protected set; }
+		public uint Toxicity { get; protected set; }
+		public float AttackDelay
+		{
+			get => _attackDelay;
+			set
+			{
+				if (value < 0f)
+				{
+					value = 0f;
+				}
+				_attackDelay = value;
+			}
+		}
+		public float AttackRange
+		{
+			get => _attackRange;
+			set
+			{
+				if (value < 0f)
+				{
+					value = 0f;
+				}
+				_attackRange = value;
+			}
+		}
+		public float TrackingRange
+		{
+			get => _trackingRange;
+			set
+			{
+				if (value < 0f)
+				{
+					value = 0f;
+				}
+				_trackingRange = value;
+			}
+		}
+		public bool IsAttacking { get; set; }
+		public bool IsBleeding => Stats == null ? false : Stats.IsBleeding;
+		public float Speed => Stats == null ? 0f : Stats.Dexterity * Constants.DEXTERITY_TO_SPEED_FACTOR;
+		public bool IsInAttackRangeOfPlayer
+		{
+			get
+			{
+				var distance =  GlobalTransform.origin.DistanceTo(_player.GlobalTransform.origin);
+				return distance <= AttackRange;
+			}
+		}
+		public bool IsInTrackingRangeOfPlayer
+		{
+			get
+			{
+				var distance = GlobalTransform.origin.DistanceTo(_player.GlobalTransform.origin);
+				return distance <= TrackingRange;
+			}
+		}
 
-        #region Member Methods
-        public void Die()
-        {
-            //Destroy(gameObject);
-        }
+		public Vector3 TowardsPlayer2D
+		{
+			get
+			{
+				var direction = TowardsPlayer3D;
+				direction.y = 0f;
+				return direction.Normalized();
+			}
+		}
 
-        public void HandleDamage(DamageEnemyMessage damage)
-        {
-            DamageHelper.HandleDamage(Stats, damage);
-        }
+		public Vector3 TowardsPlayer3D
+		{
+			get
+			{
+				if (_player == null)
+				{
+					return Vector3.Zero;
+				}
+				var direction = _player.GlobalTransform.origin - GlobalTransform.origin;
+				return direction.Normalized();
+			}
+		}
+		#endregion
 
-        public void Move(Vector3 normalizedDirection, float delta)
-        {
-            var translation = normalizedDirection * Speed * delta;
-            //Character.Move(translation);
-        }
-        #endregion
+		#region Signals
+		[Signal]
+		public delegate void EnemyDeath(ulong instanceId);
+		#endregion
 
-        #endregion
+		#region Member Methods
+		public void Die()
+		{
+			EmitSignal(nameof(EnemyDeath), GetInstanceId());
+			QueueFree();
+		}
 
-        #region Protected
+		public void HandleDamage(DamageEnemyMessage damage)
+		{
+			GD.Print("Damaged...");
+			DamageHelper.HandleDamage(Stats, damage);
+		}
 
-        #region Members
-        // [SerializeField]
-        // [Min(0f)]
-        // [Tooltip("Delay in seconds between starting an attack and the actual attack checking for a hit")]
-        protected float _attackDelay = 0f;
-        protected float _attackElapsedTime = 0f;
-        // [SerializeField]
-        // [Min(0f)]
-        // [Tooltip("Range of enemy attacks")]
-        protected float _attackRange = 0f;
-        // [SerializeField]
-        // [Min(0f)]
-        // [Tooltip("Range of tracking")]
-        protected float _trackingRange = 0f;
-        protected float _bleedElapsedTime = 0f;
-        protected Spatial _player;
-        protected float _toxicElapsedTime = 0f;
-        #endregion
+		public void Move(Vector3 normalizedDirection, float delta)
+		{
+			var translation = normalizedDirection * Speed;
+			MoveAndSlide(translation);
+		}
+		#endregion
 
-        #region Member Methods
-        protected void Attack()
-        {
-            if (IsAttacking)
-            {
-                return;
-            }
-            IsAttacking = true;
-            //Animator.SetTrigger("Attack");
-        }
+		#endregion
 
-        protected void PerformAttack()
-        {
-            if (!IsInAttackRangeOfPlayer)
-            {
-                return;
-            }
-            //_player.SendMessage("HandleDamage", new DamagePlayerMessage(Stats, Sharpness, Toxicity));
-        }
+		#region Protected
 
-        public override void _Ready()
-        {
-            Stats.ArmorRating = Stats.MaxArmorRating;
-            Stats.HP = Stats.MaxHP;
-            //_player = GameObject.FindGameObjectWithTag(Constants.PLAYER_TAG);
-        }
+		#region Members
+		// [SerializeField]
+		// [Min(0f)]
+		// [Tooltip("Delay in seconds between starting an attack and the actual attack checking for a hit")]
+		protected float _attackDelay = 0f;
+		protected float _attackElapsedTime = 0f;
+		// [SerializeField]
+		// [Min(0f)]
+		// [Tooltip("Range of enemy attacks")]
+		protected float _attackRange = 0f;
+		// [SerializeField]
+		// [Min(0f)]
+		// [Tooltip("Range of tracking")]
+		protected float _trackingRange = 0f;
+		protected float _bleedElapsedTime = 0f;
+		protected PlayerMoveController _player;
+		protected float _toxicElapsedTime = 0f;
+		#endregion
 
-        protected void TryDie()
-        {
-            if (Stats.HP <= 0f)
-            {
-                Die();
-            }
-        }
+		#region Member Methods
+		protected void Attack()
+		{
+			if (IsAttacking)
+			{
+				return;
+			}
+			IsAttacking = true;
+			//Animator.SetTrigger("Attack");
+		}
 
-        public override void _Process(float delta)
-        {
-            /*if (Input.GetKeyDown(KeyCode.F1))
-            {
-                ShowDebugUI = !ShowDebugUI;
-            }*/
+		protected void PerformAttack()
+		{
+			if (!IsInAttackRangeOfPlayer)
+			{
+				return;
+			}
+			//_player.SendMessage("HandleDamage", new DamagePlayerMessage(Stats, Sharpness, Toxicity));
+		}
 
-            UpdateAttack(delta);
-            UpdateBleed(delta);
-            UpdateToxic(delta);
-            TryDie();
+		public override void _Ready()
+		{
+			DebugInfo = GetNode<CSGMesh>("DebugInfo");
+			DebugInfo.Visible = false;
+			HealthText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/HealthLabel");
+			BleedText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/BleedLabel");
+			ToxicText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/ToxicLabel");
+			Stats.ArmorRating = Stats.MaxArmorRating;
+			Stats.HP = Stats.MaxHP;
+			var players = GetTree().GetNodesInGroup("player");
+			if (players.Count == 0)
+			{
+				GD.PrintErr("Failed to find any players");
+				GetTree().Quit();
+			}
+			_player = players[0] as PlayerMoveController;
+		}
 
-            AIUpdate(delta);
+		protected void TryDie()
+		{
+			if (Stats.HP <= 0f)
+			{
+				Die();
+			}
+		}
 
-#if UNITY_EDITOR
-            UpdateDebugText();
-#endif
-        }
+		public override void _Process(float delta)
+		{
+			if (Input.IsActionJustPressed("toggle_debug"))
+			{
+				DebugInfo.Visible = !DebugInfo.Visible;
+			}
 
-        protected void UpdateAttack(float delta)
-        {
-            if (!IsAttacking)
-            {
-                _attackElapsedTime = 0f;
-                return;
-            }
-            _attackElapsedTime += delta;
+			UpdateAttack(delta);
+			UpdateBleed(delta);
+			UpdateToxic(delta);
+			TryDie();
 
-            if (_attackElapsedTime >= AttackDelay)
-            {
-                _attackElapsedTime = 0f;
-                IsAttacking = false;
+			AiUpdate(delta);
+			UpdateDebugText();
+		}
 
-                PerformAttack();
-            }
-        }
+		public override void _PhysicsProcess(float delta)
+		{
+			AiPhysicsUpdate(delta);
+		}
 
-        protected void UpdateBleed(float delta)
-        {
-            if (Stats.Bleed == 0f)
-            {
-                _bleedElapsedTime = 0f;
-                return;
-            }
-            _bleedElapsedTime += delta;
-            // Accumulate bleed damage
-            uint accumulatedDamage = 0;
-            for (int i = 1; i <= _bleedElapsedTime; ++i)
-            {
-                accumulatedDamage += DamageHelper.DamageFromBleed(Stats);
-                Stats.Bleed *= Stats.BleedReductionRatio;
-            }
-            if (Stats.Bleed <= 1f)
-            {
-                Stats.Bleed = 0f;
-            }
-            // Remove excess seconds that have passed since last update
-            _bleedElapsedTime %= 1f;
-            DamageHelper.Damage(Stats, accumulatedDamage);
-        }
+		protected void UpdateAttack(float delta)
+		{
+			if (!IsAttacking)
+			{
+				_attackElapsedTime = 0f;
+				return;
+			}
+			_attackElapsedTime += delta;
 
-        protected void UpdateDebugText()
-        {
-            if (!ShowDebugUI)
-            {
-                HealthText.Text = "";
-                BleedText.Text = "";
-                ToxicText.Text = "";
-                return;
-            }
-            HealthText.Text = $"HP: {Stats.HP}/{Stats.MaxHP}";
-            BleedText.Text = $"Bleed: {Stats.Bleed}";
-            ToxicText.Text = $"Toxic: {Stats.Toxic}";
-        }
+			if (_attackElapsedTime >= AttackDelay)
+			{
+				_attackElapsedTime = 0f;
+				IsAttacking = false;
 
-        protected void UpdateToxic(float delta)
-        {
-            var transientToxic = Stats.TransientToxic;
-            if (transientToxic == 0f)
-            {
-                _toxicElapsedTime = 0f;
-                return;
-            }
-            _toxicElapsedTime += delta;
-            // Reduce toxic
-            uint toxicToRemove = 0;
-            for (int i = 1; i <= _toxicElapsedTime; ++i)
-            {
-                toxicToRemove += Constants.TOXIC_DROP_RATE;
-            }
-            if (toxicToRemove > transientToxic)
-            {
-                toxicToRemove = transientToxic;
-            }
-            // Remove the transient toxicity
-            Stats.Toxic -= toxicToRemove;
-            // Remove excess seconds that have passed since last update
-            _toxicElapsedTime %= 1f;
-        }
-        #endregion
+				PerformAttack();
+			}
+		}
 
-        #region Abstract Member Methods
-        protected abstract void AIUpdate(float delta);
-        #endregion
+		protected void UpdateBleed(float delta)
+		{
+			if (Stats.Bleed == 0f)
+			{
+				_bleedElapsedTime = 0f;
+				return;
+			}
+			_bleedElapsedTime += delta;
+			// Accumulate bleed damage
+			uint accumulatedDamage = 0;
+			for (int i = 1; i <= _bleedElapsedTime; ++i)
+			{
+				accumulatedDamage += DamageHelper.DamageFromBleed(Stats);
+				Stats.Bleed *= Stats.BleedReductionRatio;
+			}
+			if (Stats.Bleed <= 1f)
+			{
+				Stats.Bleed = 0f;
+			}
+			// Remove excess seconds that have passed since last update
+			_bleedElapsedTime %= 1f;
+			DamageHelper.Damage(Stats, accumulatedDamage);
+		}
 
-        #endregion
-    }
+		protected void UpdateDebugText()
+		{
+			HealthText.Text = $"{Stats.HP}/{Stats.MaxHP}";
+			BleedText.Text = $"{Stats.Bleed}";
+			ToxicText.Text = $"{Stats.Toxic}";
+		}
+
+		protected void UpdateToxic(float delta)
+		{
+			var transientToxic = Stats.TransientToxic;
+			if (transientToxic == 0f)
+			{
+				_toxicElapsedTime = 0f;
+				return;
+			}
+			_toxicElapsedTime += delta;
+			// Reduce toxic
+			uint toxicToRemove = 0;
+			for (int i = 1; i <= _toxicElapsedTime; ++i)
+			{
+				toxicToRemove += Constants.TOXIC_DROP_RATE;
+			}
+			if (toxicToRemove > transientToxic)
+			{
+				toxicToRemove = transientToxic;
+			}
+			// Remove the transient toxicity
+			Stats.Toxic -= toxicToRemove;
+			// Remove excess seconds that have passed since last update
+			_toxicElapsedTime %= 1f;
+		}
+		#endregion
+
+		#region Abstract Member Methods
+		protected abstract void AiUpdate(float delta);
+		protected abstract void AiPhysicsUpdate(float delta);
+		#endregion
+
+		#endregion
+	}
 }

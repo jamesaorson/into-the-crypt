@@ -5,6 +5,10 @@
 [node name="MainMenuScene" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 2.0
+margin_bottom = 1.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -24,36 +28,49 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NewGameButton" type="Button" parent="VBoxContainer"]
-margin_right = 84.0
+[node name="Title" type="RichTextLabel" parent="VBoxContainer"]
+margin_right = 100.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 100, 20 )
+bbcode_enabled = true
+bbcode_text = "[center]Into the Crypt[/center]"
+text = "Into the Crypt"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewGameButton" type="Button" parent="VBoxContainer"]
+margin_top = 30.0
+margin_right = 100.0
+margin_bottom = 50.0
 text = "New Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LoadGameButton" type="Button" parent="VBoxContainer"]
-margin_top = 30.0
-margin_right = 84.0
-margin_bottom = 50.0
+margin_top = 60.0
+margin_right = 100.0
+margin_bottom = 80.0
 text = "Load Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SettingsButton" type="Button" parent="VBoxContainer"]
-margin_top = 60.0
-margin_right = 84.0
-margin_bottom = 80.0
+margin_top = 90.0
+margin_right = 100.0
+margin_bottom = 110.0
 text = "Settings"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ExitGameButton" type="Button" parent="VBoxContainer"]
-margin_top = 90.0
-margin_right = 84.0
-margin_bottom = 110.0
+margin_top = 120.0
+margin_right = 100.0
+margin_bottom = 140.0
 text = "Exit Game"
 __meta__ = {
 "_edit_use_anchors_": false

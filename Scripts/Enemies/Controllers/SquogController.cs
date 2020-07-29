@@ -1,23 +1,53 @@
-﻿namespace IntoTheCrypt.Enemies.Controllers
+using IntoTheCrypt.Models;
+
+namespace IntoTheCrypt.Enemies.Controllers
 {
-    public class SquogController : EnemyController
-    {
-        #region Protected
+	public class SquogController : EnemyController
+	{
+		#region Public
 
-        #region Member Methods
-        protected override void AIUpdate(float delta)
-        {
-            if (IsInAttackRangeOfPlayer)
-            {
-                Attack();
-            }
-            if (IsInTrackingRangeOfPlayer)
-            {
-                Move(TowardsPlayer2D, delta);
-            }
-        }
-        #endregion
+		#region Member Methods
+		public override void _Ready()
+		{
+			Stats = new Stats(
+				maxHp: 100,
+				maxArmorRating: 5,
+				dexterity: 5,
+				strength: 1,
+				bleedResistance: 0,
+				toxicResistance: 0
+			);
+			Sharpness = 0;
+			Toxicity = 0;
+			AttackRange = 1f;
+			TrackingRange = 5f;
 
-        #endregion
-    }
+			base._Ready();
+		}
+		#endregion
+
+		#endregion
+
+		#region Protected
+
+		#region Member Methods
+		protected override void AiUpdate(float delta)
+		{
+			if (IsInAttackRangeOfPlayer)
+			{
+				//Attack();
+			}
+		}
+
+		protected override void AiPhysicsUpdate(float delta)
+		{
+			if (IsInTrackingRangeOfPlayer)
+			{
+				Move(TowardsPlayer2D, delta);
+			}
+		}
+		#endregion
+
+		#endregion
+	}
 }

@@ -1,38 +1,63 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Player/Controllers/PlayerController.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/StatMenu/StatMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Player/Controllers/PlayerCameraController.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Player/Controllers/PlayerMoveController.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/Weapons/Sword.tscn" type="PackedScene" id=5]
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="Environment" id=1]
+background_energy = 0.0
+
+[sub_resource type="BoxShape" id=2]
+
+[sub_resource type="CapsuleShape" id=3]
 radius = 0.2
 height = 0.8
 
-[sub_resource type="Environment" id=2]
-
-[node name="Player" type="Spatial"]
-script = ExtResource( 1 )
-
-[node name="Player" type="KinematicBody"]
+[node name="Player" type="KinematicBody" groups=[
+"player",
+]]
 script = ExtResource( 4 )
 SprintFactor = 2.0
 GravityFactor = 4.0
 BaseVelocity = 70.0
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
-shape = SubResource( 1 )
+[node name="Controller" type="Spatial" parent="."]
+script = ExtResource( 1 )
 
-[node name="CameraContainer" type="Spatial" parent="."]
+[node name="CameraContainer" type="Spatial" parent="Controller"]
 script = ExtResource( 3 )
 Sensitivity = 0.05
+LockVertical = true
 
-[node name="Camera" type="Camera" parent="CameraContainer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )
-environment = SubResource( 2 )
+[node name="Camera" type="Camera" parent="Controller/CameraContainer"]
+transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.3, 0 )
+environment = SubResource( 1 )
 current = true
+near = 0.01
 
-[node name="OmniLight" type="OmniLight" parent="KinematicBody/CameraContainer/Camera"]
+[node name="Hand" type="Spatial" parent="Controller/CameraContainer/Camera"]
 
-[node name="StatMenuControl" parent="." instance=ExtResource( 2 )]
+[node name="Sword" parent="Controller/CameraContainer/Camera/Hand" instance=ExtResource( 5 )]
+transform = Transform( 0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0.05, -0.005, -0.05 )
+
+[node name="Area" type="Area" parent="Controller/CameraContainer/Camera/Hand"]
+transform = Transform( 0.25, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -0.25 )
+collision_layer = 2
+collision_mask = 4
+
+[node name="HitBox" type="CollisionShape" parent="Controller/CameraContainer/Camera/Hand/Area"]
+shape = SubResource( 2 )
+
+[node name="Lantern" type="OmniLight" parent="Controller"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )
+omni_attenuation = 2.0
+
+[node name="StatMenuControl" parent="Controller" instance=ExtResource( 2 )]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 3 )
+[connection signal="body_entered" from="Controller/CameraContainer/Camera/Hand/Area" to="Controller" method="OnHitBoxEnter"]
+[connection signal="body_exited" from="Controller/CameraContainer/Camera/Hand/Area" to="Controller" method="OnHitBoxExit"]

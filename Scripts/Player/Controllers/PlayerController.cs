@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Godot;
+using IntoTheCrypt.Enemies.Controllers;
 using IntoTheCrypt.Helpers;
 using IntoTheCrypt.Messages;
 using IntoTheCrypt.Models;
+using IntoTheCrypt.Weapons.Controllers;
 
 namespace IntoTheCrypt.Player.Controllers
 {
@@ -14,10 +17,12 @@ namespace IntoTheCrypt.Player.Controllers
 		#region Members
 		[Export(PropertyHint.Range, "10,300")]
 		public float LanternInterval = 10f;
+		public CollisionShape HitBox { get; private set; }
 		public Stopwatch Clock { get; private set; }
 		public OmniLight Lantern { get; private set; }
 		public StatMenuController StatMenu { get; private set; }
 		public Stats Stats { get; private set; }
+		public WeaponController Weapon { get; private set; }
 		#endregion
 
 		#region Member Methods
@@ -51,16 +56,20 @@ namespace IntoTheCrypt.Player.Controllers
 		
 		public override void _Process(float delta)
 		{
+			HandleInput(delta);
 			UpdateBleed(delta);
 			UpdateToxic(delta);
 			UpdateMenus(delta);
-			UpdateLantern(delta);
+			//UpdateLantern(delta);
 		}
 		
 		public override void _Ready()
 		{
 			LoadScenes();
+			_enemiesInRange = new Dictionary<ulong, EnemyController>();
 			StatMenu = GetNode<StatMenuController>("StatMenuControl");
+			HitBox = GetNode<CollisionShape>("CameraContainer/Camera/Hand/Area/HitBox");
+			Weapon = GetNode<Spatial>("CameraContainer/Camera/Hand").GetChildOrNull<WeaponController>(0);
 			Lantern = GetNode<OmniLight>("Lantern");
 			_startingLanternRange = Lantern.OmniRange;
 
@@ -91,9 +100,28 @@ namespace IntoTheCrypt.Player.Controllers
 		private PackedScene _mainMenuScene;
 		private float _startingLanternRange;
 		private float _toxicElapsedTime = 0f;
+		private IDictionary<ulong, EnemyController> _enemiesInRange;
 		#endregion
 
 		#region Member Methods
+		private void HandleEnemyDeath(ulong instanceId)
+		{
+			_enemiesInRange.Remove(instanceId);
+		}
+
+		private void HandleInput(float delta)
+		{
+			if (Input.IsActionJustPressed("attack"))
+			{
+				GD.Print("Attack...");
+				foreach (var item in _enemiesInRange)
+				{
+					var enemy = item.Value;
+					enemy?.HandleDamage(new DamageEnemyMessage(Stats, Weapon.Stats));
+				}
+			}
+		}
+
 		private void LoadScenes()
 		{
 			_mainMenuScene = GD.Load<PackedScene>("res://Scenes/UI/MainMenu/MainMenu.tscn");
@@ -101,6 +129,20 @@ namespace IntoTheCrypt.Player.Controllers
 			{
 				throw new Exception("MainMenu scene did not load correctly");
 			}
+		}
+
+		private void OnHitBoxEnter(EnemyController body)
+		{
+			GD.Print("Enter");
+			_enemiesInRange[body.GetInstanceId()] = body;
+			body.Connect(nameof(EnemyController.EnemyDeath), this, nameof(HandleEnemyDeath));
+		}
+
+		private void OnHitBoxExit(EnemyController body)
+		{
+			GD.Print("Exit");
+			_enemiesInRange.Remove(body.GetInstanceId());
+			body.Disconnect(nameof(EnemyController.EnemyDeath), this, nameof(HandleEnemyDeath));
 		}
 
 		private void UpdateBleed(float delta)

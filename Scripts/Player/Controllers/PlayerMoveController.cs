@@ -8,23 +8,17 @@ namespace IntoTheCrypt.Player.Controllers
 
 		#region Members
 		public PlayerCameraController FirstPersonCamera;
-
 		[Export(PropertyHint.Range, "1,5,or_greater")]
 		public float SprintFactor = 1f;
 		[Export]
 		public Vector3 Gravity = Vector3.Down;
 		[Export(PropertyHint.Range, "1,10,or_greater")]
 		public float GravityFactor = 1;
-
 		[Export(PropertyHint.Range, "10,100,or_greater")]
 		public float BaseVelocity = 10f;
 		public PlayerCameraController PlayerCamera { get; private set; }
 		#endregion
-
-		#endregion
-
-		#region Private
-
+		
 		#region Member Methods
 		public override void _PhysicsProcess(float delta)
 		{
@@ -33,10 +27,15 @@ namespace IntoTheCrypt.Player.Controllers
 
 		public override void _Ready()
 		{
-			PlayerCamera = GetNode<PlayerCameraController>("CameraContainer");
+			PlayerCamera = GetNode<PlayerCameraController>("Controller/CameraContainer");
 		}
 		#endregion
 
+		#endregion
+
+		#region Private
+
+		#region Member Methods
 		private void HandleInput(float delta)
 		{
 			var direction = Vector3.Zero;
@@ -81,6 +80,7 @@ namespace IntoTheCrypt.Player.Controllers
 				false
 			);
 		}
+		#endregion
 
 		#endregion
 	}

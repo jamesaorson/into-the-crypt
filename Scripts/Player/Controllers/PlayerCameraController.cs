@@ -14,6 +14,10 @@ namespace IntoTheCrypt.Player.Controllers
 		public float MaxAngle = 70f;
 		[Export]
 		public float MinAngle = -70;
+		[Export]
+		public bool LockVertical = false;
+		[Export]
+		public bool LockHorizontal = false;
 		#endregion
 
 		#region Member Methods
@@ -27,6 +31,14 @@ namespace IntoTheCrypt.Player.Controllers
 			{
 				case InputEventMouseMotion mouseMotion:
 					var movement = mouseMotion.Relative;
+					if (LockHorizontal)
+					{
+						movement.x = 0f;
+					}
+					if (LockVertical)
+					{
+						movement.y = 0f;
+					}
 					Rotation = new Vector3(Rotation.x, Rotation.y, 0f);
 					_camera.RotateX(Mathf.Deg2Rad(-movement.y * Sensitivity));
 					RotateY(Mathf.Deg2Rad(-movement.x * Sensitivity));

@@ -81,8 +81,8 @@
     <Compile Include="Scripts\Player\Controllers\PlayerMoveController.cs" />
     <Compile Include="Scripts\UI\MainMenu\MainMenuController.cs" />
     <Compile Include="Scripts\UI\StatMenu\StatMenuController.cs" />
-    <Compile Include="Scripts\Weapons\Sword\Controllers\SwordController.cs" />
-    <Compile Include="Scripts\Weapons\Sword\Controllers\SwordDamageController.cs" />
+    <Compile Include="Scripts\Weapons\Controllers\WeaponController.cs" />
+    <Compile Include="Scripts\Weapons\Controllers\SwordController.cs" />
     <Compile Include="Scripts\Weapons\MajorWeaponStats.cs" />
     <Compile Include="Scripts\Weapons\MinorWeaponStats.cs" />
     <Compile Include="Scripts\Weapons\WeaponStats.cs" />

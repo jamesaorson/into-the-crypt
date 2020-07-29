@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using IntoTheCrypt.Enemies.Controllers;
 
 namespace IntoTheCrypt.Enemies
 {
@@ -33,12 +34,12 @@ namespace IntoTheCrypt.Enemies
 		#endregion
 
 		#region Member Methods
-		private Spatial InstantiateEnemy(PackedScene enemyScene)
+		private EnemyController InstantiateEnemy(PackedScene enemyScene)
 		{
-			var enemy = enemyScene.Instance() as Spatial;
+			var enemy = enemyScene.Instance() as EnemyController;
 			if (enemy == null)
 			{
-				throw new Exception($"Expected enemy to be a Spatial node");
+				throw new Exception($"Expected enemy to be an EnemyController node");
 			}
 			return enemy;
 		}
