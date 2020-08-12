@@ -1,21 +1,23 @@
-﻿namespace IntoTheCrypt.Weapons
+﻿using IntoTheCrypt.Models;
+
+namespace IntoTheCrypt.Weapons
 {
     public struct MinorWeaponStats
     {
         #region Public
 
         #region Constructors
-        public MinorWeaponStats(uint bluntness, uint sharpness, uint toxicity)
+        public MinorWeaponStats(Quality quality, DamageClass weaponClass, uint toxicity)
         {
-            Bluntness = bluntness;
-            Sharpness = sharpness;
+            WeaponClass = weaponClass;
+            Quality = quality;
             Toxicity = toxicity;
         }
         #endregion
 
         #region Members
-        public uint Bluntness { get; set; }
-        public uint Sharpness { get; set; }
+        public Quality Quality { get; set; }
+        public DamageClass WeaponClass { get; set; }
         public uint Toxicity { get; set; }
         #endregion
 

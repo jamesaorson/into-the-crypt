@@ -1,3 +1,5 @@
+using IntoTheCrypt.Models;
+
 namespace IntoTheCrypt.Weapons.Controllers
 {
 	public class SwordController : WeaponController
@@ -6,10 +8,10 @@ namespace IntoTheCrypt.Weapons.Controllers
 
 		#region Members
 		public override WeaponStats Stats { get; protected set; } = new WeaponStats(
-			baseDamage: 5,
+			baseDamage: 1,
 			attackSpeed: 1f,
-			bluntness: 0,
-			sharpness: 10,
+			quality: Quality.E,
+			weaponClass: DamageClass.Sharp,
 			toxicity: 10
 		);
 		#endregion

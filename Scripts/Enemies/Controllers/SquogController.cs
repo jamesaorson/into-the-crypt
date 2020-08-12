@@ -14,7 +14,7 @@ namespace IntoTheCrypt.Enemies.Controllers
 				maxArmorRating: 5,
 				dexterity: 5,
 				strength: 1,
-				bleedResistance: 0,
+				coagulation: 0,
 				toxicResistance: 0
 			);
 			Sharpness = 0;

@@ -2,25 +2,26 @@
 
 namespace IntoTheCrypt.Messages
 {
-    public class DamagePlayerMessage : DamageMessage
+    public class DamagePlayerMessage : IDamageMessage
     {
         #region Public
 
         #region Constructors
-        public DamagePlayerMessage(Stats enemy, uint sharpness, uint toxicity)
+        public DamagePlayerMessage(Stats enemy, Quality quality, DamageClass damageClass, uint toxicity)
         {
             Enemy = enemy;
-            _sharpness = sharpness;
+            _damageClass = damageClass;
+            _quality = quality;
             _toxicity = toxicity;
         }
         #endregion
 
         #region Members
         public Stats Enemy { get; private set; }
-        public override uint Bluntness => 0;
-        public override uint Damage => Enemy.Strength;
-        public override uint Sharpness => _sharpness;
-        public override uint Toxicity => _toxicity;
+        public Quality Quality => _quality;
+        public uint Damage => Enemy.Strength;
+        public DamageClass DamageClass => _damageClass;
+        public uint Toxicity => _toxicity;
         #endregion
 
         #endregion
@@ -28,7 +29,8 @@ namespace IntoTheCrypt.Messages
         #region Private
 
         #region Members
-        private uint _sharpness { get; set; }
+        private DamageClass _damageClass { get; set; }
+        private Quality _quality { get; set; }
         private uint _toxicity { get; set; }
         #endregion
 

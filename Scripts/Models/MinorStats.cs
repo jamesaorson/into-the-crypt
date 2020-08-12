@@ -8,16 +8,16 @@ namespace IntoTheCrypt.Models
         #region Public
 
         #region Constructors
-        public MinorStats(uint bleedResistance, uint toxicResistance)
+        public MinorStats(uint coagulation, uint toxicResistance)
         {
-            BleedResistance = bleedResistance;
+            Coagulation = coagulation;
             ToxicResistance = toxicResistance;
         }
         #endregion
 
         #region Members
         [Export]
-        public uint BleedResistance;
+        public uint Coagulation;
         [Export]
         public uint ToxicResistance;
         #endregion

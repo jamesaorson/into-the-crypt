@@ -66,32 +66,47 @@ margin_bottom = 14.0
 rect_min_size = Vector2( 75, 14 )
 text = "0/0"
 
-[node name="BleedPrefixLabel" type="Label" parent="DebugInfo/DebugViewport/GridContainer"]
+[node name="ArmorPrefixLabel" type="Label" parent="DebugInfo/DebugViewport/GridContainer"]
 margin_top = 18.0
 margin_right = 75.0
 margin_bottom = 32.0
+rect_min_size = Vector2( 75, 14 )
+text = "Armor:"
+
+[node name="ArmorLabel" type="Label" parent="DebugInfo/DebugViewport/GridContainer"]
+margin_left = 79.0
+margin_top = 18.0
+margin_right = 154.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 75, 14 )
+text = "0/0"
+
+[node name="BleedPrefixLabel" type="Label" parent="DebugInfo/DebugViewport/GridContainer"]
+margin_top = 36.0
+margin_right = 75.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 75, 14 )
 text = "Bleed:"
 
 [node name="BleedLabel" type="Label" parent="DebugInfo/DebugViewport/GridContainer"]
 margin_left = 79.0
-margin_top = 18.0
+margin_top = 36.0
 margin_right = 154.0
-margin_bottom = 32.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 75, 14 )
 text = "0"
 
 [node name="ToxicPrefixLabel" type="Label" parent="DebugInfo/DebugViewport/GridContainer"]
-margin_top = 36.0
+margin_top = 54.0
 margin_right = 75.0
-margin_bottom = 50.0
+margin_bottom = 68.0
 rect_min_size = Vector2( 75, 14 )
 text = "Toxic:"
 
 [node name="ToxicLabel" type="Label" parent="DebugInfo/DebugViewport/GridContainer"]
 margin_left = 79.0
-margin_top = 36.0
+margin_top = 54.0
 margin_right = 154.0
-margin_bottom = 50.0
+margin_bottom = 68.0
 rect_min_size = Vector2( 75, 14 )
 text = "0"

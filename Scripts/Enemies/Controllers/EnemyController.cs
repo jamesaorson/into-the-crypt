@@ -13,6 +13,7 @@ namespace IntoTheCrypt.Enemies.Controllers
 		#region Members
 		public bool ShowDebugUI;
 		public Label HealthText;
+		public Label ArmorText;
 		public Label BleedText;
 		public Label ToxicText;
 		public CSGMesh DebugInfo;
@@ -172,6 +173,7 @@ namespace IntoTheCrypt.Enemies.Controllers
 			DebugInfo = GetNode<CSGMesh>("DebugInfo");
 			DebugInfo.Visible = false;
 			HealthText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/HealthLabel");
+			ArmorText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/ArmorLabel");
 			BleedText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/BleedLabel");
 			ToxicText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/ToxicLabel");
 			Stats.ArmorRating = Stats.MaxArmorRating;
@@ -259,6 +261,7 @@ namespace IntoTheCrypt.Enemies.Controllers
 		protected void UpdateDebugText()
 		{
 			HealthText.Text = $"{Stats.HP}/{Stats.MaxHP}";
+			ArmorText.Text = $"{Stats.ArmorRating}/{Stats.MaxArmorRating}";
 			BleedText.Text = $"{Stats.Bleed}";
 			ToxicText.Text = $"{Stats.Toxic}";
 		}

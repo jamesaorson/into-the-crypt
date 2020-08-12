@@ -70,7 +70,7 @@
     <Compile Include="Scripts\Helpers\Controllers\BillboardController.cs" />
     <Compile Include="Scripts\Messages\DamageEnemyMessage.cs" />
     <Compile Include="Scripts\Messages\DamagePlayerMessage.cs" />
-    <Compile Include="Scripts\Messages\DamageMessage.cs" />
+    <Compile Include="Scripts\Messages\IDamageMessage.cs" />
     <Compile Include="Scripts\Models\Armor.cs" />
     <Compile Include="Scripts\Models\Health.cs" />
     <Compile Include="Scripts\Models\MajorStats.cs" />
@@ -85,8 +85,10 @@
     <Compile Include="Scripts\Weapons\Controllers\SwordController.cs" />
     <Compile Include="Scripts\Weapons\MajorWeaponStats.cs" />
     <Compile Include="Scripts\Weapons\MinorWeaponStats.cs" />
+    <Compile Include="Scripts\Models\Quality.cs" />
     <Compile Include="Scripts\Weapons\WeaponStats.cs" />
     <Compile Include="Scripts\Constants.cs" />
+    <Compile Include="Scripts\Models\DamageClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

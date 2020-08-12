@@ -1,10 +1,9 @@
-﻿using IntoTheCrypt.Helpers;
-using IntoTheCrypt.Models;
+﻿using IntoTheCrypt.Models;
 using IntoTheCrypt.Weapons;
 
 namespace IntoTheCrypt.Messages
 {
-    public class DamageEnemyMessage : DamageMessage
+    public class DamageEnemyMessage : IDamageMessage
     {
         #region Public
 
@@ -20,10 +19,10 @@ namespace IntoTheCrypt.Messages
         public WeaponStats Weapon { get; private set; }
         public Stats Player { get; private set; }
 
-        public override uint Bluntness => Weapon.Bluntness;
-        public override uint Damage => (uint)(Weapon.BaseDamage * DamageHelper.CalculateStrengthFactor(Player));
-        public override uint Sharpness => Weapon.Sharpness;
-        public override uint Toxicity => Weapon.Toxicity;
+        public uint Damage => Weapon.BaseDamage;
+        public Quality Quality => Weapon.Quality;
+        public uint Toxicity => Weapon.Toxicity;
+        public DamageClass DamageClass => Weapon.WeaponClass;
         #endregion
 
         #endregion

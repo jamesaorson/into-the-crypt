@@ -12,13 +12,13 @@ namespace IntoTheCrypt.Models
             uint maxArmorRating = 0,
             uint dexterity = 0,
             uint strength = 0,
-            uint bleedResistance = 0,
+            uint coagulation = 0,
             uint toxicResistance = 0)
             : this(
                 new Armor(maxArmorRating),
                 new Health(maxHp),
                 new MajorStats(dexterity: dexterity, strength: strength),
-                new MinorStats(bleedResistance: bleedResistance, toxicResistance: toxicResistance)
+                new MinorStats(coagulation: coagulation, toxicResistance: toxicResistance)
             )
         {
         }
@@ -81,10 +81,10 @@ namespace IntoTheCrypt.Models
         #endregion
 
         #region Minor Stats
-        public uint BleedResistance
+        public uint Coagulation
         {
-            get => MinorStats.BleedResistance;
-            set => MinorStats.BleedResistance = value;
+            get => MinorStats.Coagulation;
+            set => MinorStats.Coagulation = value;
         }
         public uint ToxicResistance
         {
@@ -113,9 +113,9 @@ namespace IntoTheCrypt.Models
         {
             get
             {
-                if (BleedResistance > Bleed)
+                if (Coagulation > Bleed)
                 {
-                    return Bleed / BleedResistance;
+                    return Bleed / Coagulation;
                 }
                 return 0.9f;
             }

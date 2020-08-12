@@ -1,14 +1,16 @@
-﻿namespace IntoTheCrypt.Weapons
+﻿using IntoTheCrypt.Models;
+
+namespace IntoTheCrypt.Weapons
 {
     public class WeaponStats
     {
         #region Public
 
         #region Constructors
-        public WeaponStats(uint baseDamage, float attackSpeed, uint bluntness, uint sharpness, uint toxicity)
+        public WeaponStats(uint baseDamage, float attackSpeed, Quality quality, DamageClass weaponClass, uint toxicity)
             : this(
                 new MajorWeaponStats(baseDamage: baseDamage, attackSpeed: attackSpeed),
-                new MinorWeaponStats(bluntness: bluntness, sharpness: sharpness, toxicity: toxicity)
+                new MinorWeaponStats(quality: quality, weaponClass: weaponClass, toxicity: toxicity)
             )
         {
         }
@@ -21,28 +23,28 @@
         #endregion
 
         #region Members
+        public Quality Quality
+        {
+            get => _minorStats.Quality;
+            set
+            {
+                _minorStats.Quality = value;
+            }
+        }
+        public DamageClass WeaponClass
+        {
+            get => _minorStats.WeaponClass;
+            set
+            {
+                _minorStats.WeaponClass = value;
+            }
+        }
         public uint BaseDamage
         {
             get => _majorStats.BaseDamage;
             set
             {
                 _majorStats.BaseDamage = value;
-            }
-        }
-        public uint Bluntness
-        {
-            get => _minorStats.Bluntness;
-            set
-            {
-                _minorStats.Bluntness = value;
-            }
-        }
-        public uint Sharpness
-        {
-            get => _minorStats.Sharpness;
-            set
-            {
-                _minorStats.Sharpness = value;
             }
         }
         public uint Toxicity
