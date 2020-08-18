@@ -12,11 +12,12 @@ namespace IntoTheCrypt.Enemies.Controllers
 
 		#region Members
 		public bool ShowDebugUI;
-		public Label HealthText;
-		public Label ArmorText;
-		public Label BleedText;
-		public Label ToxicText;
-		public CSGMesh DebugInfo;
+		public Label HealthText { get; protected set; }
+		public Label ArmorText { get; protected set; }
+		public Label BleedText { get; protected set; }
+		public Label ToxicText { get; protected set; }
+		public CSGMesh DebugInfo { get; protected set; }
+		public MessageBus MessageBus { get; private set; }
 		public Stats Stats { get; protected set; }
 		public uint Sharpness { get; protected set; }
 		public uint Toxicity { get; protected set; }
@@ -100,15 +101,10 @@ namespace IntoTheCrypt.Enemies.Controllers
 		}
 		#endregion
 
-		#region Signals
-		[Signal]
-		public delegate void EnemyDeath(ulong instanceId);
-		#endregion
-
 		#region Member Methods
 		public void Die()
 		{
-			EmitSignal(nameof(EnemyDeath), GetInstanceId());
+			EmitSignal(nameof(MessageBus.EnemyDeath), GetInstanceId());
 			QueueFree();
 		}
 
@@ -156,7 +152,7 @@ namespace IntoTheCrypt.Enemies.Controllers
 				return;
 			}
 			IsAttacking = true;
-			//Animator.SetTrigger("Attack");
+			PerformAttack();
 		}
 
 		protected void PerformAttack()
@@ -165,13 +161,17 @@ namespace IntoTheCrypt.Enemies.Controllers
 			{
 				return;
 			}
-			//_player.SendMessage("HandleDamage", new DamagePlayerMessage(Stats, Sharpness, Toxicity));
+			MessageBus.EmitSignal(
+				nameof(MessageBus.EnemyAttack),
+				new DamagePlayerMessage(Stats, Quality.E, DamageClass.Blunt, 0)
+			);
 		}
 
 		public override void _Ready()
 		{
 			DebugInfo = GetNode<CSGMesh>("DebugInfo");
 			DebugInfo.Visible = false;
+			MessageBus = GetNode<MessageBus>("/root/MessageBus");
 			HealthText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/HealthLabel");
 			ArmorText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/ArmorLabel");
 			BleedText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/BleedLabel");

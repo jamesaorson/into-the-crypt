@@ -71,6 +71,7 @@
     <Compile Include="Scripts\Messages\DamageEnemyMessage.cs" />
     <Compile Include="Scripts\Messages\DamagePlayerMessage.cs" />
     <Compile Include="Scripts\Messages\IDamageMessage.cs" />
+    <Compile Include="Scripts\Messages\MessageBus.cs" />
     <Compile Include="Scripts\Models\Armor.cs" />
     <Compile Include="Scripts\Models\Health.cs" />
     <Compile Include="Scripts\Models\MajorStats.cs" />

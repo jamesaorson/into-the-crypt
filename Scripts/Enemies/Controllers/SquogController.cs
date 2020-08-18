@@ -35,7 +35,7 @@ namespace IntoTheCrypt.Enemies.Controllers
 		{
 			if (IsInAttackRangeOfPlayer)
 			{
-				//Attack();
+				Attack();
 			}
 		}
 

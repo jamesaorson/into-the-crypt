@@ -3,7 +3,7 @@ using IntoTheCrypt.Weapons;
 
 namespace IntoTheCrypt.Messages
 {
-    public class DamageEnemyMessage : IDamageMessage
+    public class DamageEnemyMessage : Godot.Object, IDamageMessage
     {
         #region Public
 

@@ -2,7 +2,7 @@
 
 namespace IntoTheCrypt.Messages
 {
-    public class DamagePlayerMessage : IDamageMessage
+    public class DamagePlayerMessage : Godot.Object, IDamageMessage
     {
         #region Public
 

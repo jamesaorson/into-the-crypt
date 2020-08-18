@@ -20,6 +20,7 @@ namespace IntoTheCrypt.Player.Controllers
 		public CollisionShape HitBox { get; private set; }
 		public Stopwatch Clock { get; private set; }
 		public OmniLight Lantern { get; private set; }
+		public MessageBus MessageBus { get; private set; }
 		public StatMenuController StatMenu { get; private set; }
 		public Stats Stats { get; private set; }
 		public WeaponController Weapon { get; private set; }
@@ -67,6 +68,7 @@ namespace IntoTheCrypt.Player.Controllers
 		{
 			LoadScenes();
 			_enemiesInRange = new Dictionary<ulong, EnemyController>();
+			MessageBus = GetNode<MessageBus>("/root/MessageBus");
 			StatMenu = GetNode<StatMenuController>("StatMenuControl");
 			HitBox = GetNode<CollisionShape>("CameraContainer/Camera/Hand/Area/HitBox");
 			Weapon = GetNode<Spatial>("CameraContainer/Camera/Hand").GetChildOrNull<WeaponController>(0);
@@ -82,6 +84,8 @@ namespace IntoTheCrypt.Player.Controllers
 			Stats.HP = Stats.MaxHP;
 			
 			Clock = Stopwatch.StartNew();
+
+			ConnectSignals();
 		}
 		
 		public void HandleDamage(DamagePlayerMessage damage)
@@ -104,6 +108,13 @@ namespace IntoTheCrypt.Player.Controllers
 		#endregion
 
 		#region Member Methods
+		private void HandleEnemyAttack(DamagePlayerMessage damage)
+		{
+			DamageHelper.HandleDamage(Stats, damage);
+			GD.Print("Handled damage");
+			GD.Print(damage.Damage);
+		}
+
 		private void HandleEnemyDeath(ulong instanceId)
 		{
 			_enemiesInRange.Remove(instanceId);
@@ -122,6 +133,12 @@ namespace IntoTheCrypt.Player.Controllers
 			}
 		}
 
+		private void ConnectSignals()
+		{
+			MessageBus.Connect(nameof(MessageBus.EnemyDeath), this, nameof(HandleEnemyDeath));
+			MessageBus.Connect(nameof(MessageBus.EnemyAttack), this, nameof(HandleEnemyAttack));
+		}
+
 		private void LoadScenes()
 		{
 			_mainMenuScene = GD.Load<PackedScene>("res://Scenes/UI/MainMenu/MainMenu.tscn");
@@ -135,14 +152,12 @@ namespace IntoTheCrypt.Player.Controllers
 		{
 			GD.Print("Enter");
 			_enemiesInRange[body.GetInstanceId()] = body;
-			body.Connect(nameof(EnemyController.EnemyDeath), this, nameof(HandleEnemyDeath));
 		}
 
 		private void OnHitBoxExit(EnemyController body)
 		{
 			GD.Print("Exit");
 			_enemiesInRange.Remove(body.GetInstanceId());
-			body.Disconnect(nameof(EnemyController.EnemyDeath), this, nameof(HandleEnemyDeath));
 		}
 
 		private void UpdateBleed(float delta)

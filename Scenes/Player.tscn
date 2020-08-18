@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Player/Controllers/PlayerController.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/StatMenu/StatMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Player/Controllers/PlayerCameraController.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/Player/Controllers/PlayerMoveController.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Weapons/Sword.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/Messages/MessageBus.cs" type="Script" id=6]
 
 [sub_resource type="Environment" id=1]
 background_energy = 0.0
@@ -25,6 +26,9 @@ BaseVelocity = 70.0
 
 [node name="Controller" type="Spatial" parent="."]
 script = ExtResource( 1 )
+
+[node name="MessageBus" type="Node" parent="Controller"]
+script = ExtResource( 6 )
 
 [node name="CameraContainer" type="Spatial" parent="Controller"]
 script = ExtResource( 3 )
