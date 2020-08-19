@@ -1,3 +1,5 @@
+using System;
+using Godot;
 using IntoTheCrypt.Models;
 
 namespace IntoTheCrypt.Enemies.Controllers
@@ -9,18 +11,8 @@ namespace IntoTheCrypt.Enemies.Controllers
 		#region Member Methods
 		public override void _Ready()
 		{
-			Stats = new Stats(
-				maxHp: 100,
-				maxArmorRating: 5,
-				dexterity: 5,
-				strength: 1,
-				coagulation: 0,
-				toxicResistance: 0
-			);
 			Sharpness = 0;
 			Toxicity = 0;
-			AttackRange = 1f;
-			TrackingRange = 5f;
 
 			base._Ready();
 		}
@@ -37,6 +29,11 @@ namespace IntoTheCrypt.Enemies.Controllers
 			{
 				Attack();
 			}
+
+			if (IsAttacking)
+			{
+				HandleFrameChanged();
+			}
 		}
 
 		protected override void AiPhysicsUpdate(float delta)
@@ -44,6 +41,37 @@ namespace IntoTheCrypt.Enemies.Controllers
 			if (IsInTrackingRangeOfPlayer)
 			{
 				Move(TowardsPlayer2D, delta);
+			}
+		}
+
+		protected override void ConnectSignals()
+		{
+			Sprite.Connect("frame_changed", this, nameof(HandleFrameChanged));
+		}
+
+		protected override void HandleFrameChanged()
+		{
+			switch (Sprite.Animation)
+			{
+				case "attack":
+					if (StartedAttacking && Sprite.Frame != 0)
+					{
+						StartedAttacking = false;
+					}
+					if (!PerformedAttack && Sprite.Frame == 1)
+					{
+						PerformAttack();
+					}
+					if (!StartedAttacking && Sprite.Frame == 0)
+					{
+						Sprite.Animation = "idle";
+						IsAttacking = false;
+					}
+					break;
+				case "idle":
+					break;
+				default:
+					throw new Exception("Invalid animation");
 			}
 		}
 		#endregion

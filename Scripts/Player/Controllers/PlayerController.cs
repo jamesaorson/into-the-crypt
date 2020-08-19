@@ -111,8 +111,6 @@ namespace IntoTheCrypt.Player.Controllers
 		private void HandleEnemyAttack(DamagePlayerMessage damage)
 		{
 			DamageHelper.HandleDamage(Stats, damage);
-			GD.Print("Handled damage");
-			GD.Print(damage.Damage);
 		}
 
 		private void HandleEnemyDeath(ulong instanceId)
@@ -124,7 +122,6 @@ namespace IntoTheCrypt.Player.Controllers
 		{
 			if (Input.IsActionJustPressed("attack"))
 			{
-				GD.Print("Attack...");
 				foreach (var item in _enemiesInRange)
 				{
 					var enemy = item.Value;
@@ -150,13 +147,11 @@ namespace IntoTheCrypt.Player.Controllers
 
 		private void OnHitBoxEnter(EnemyController body)
 		{
-			GD.Print("Enter");
 			_enemiesInRange[body.GetInstanceId()] = body;
 		}
 
 		private void OnHitBoxExit(EnemyController body)
 		{
-			GD.Print("Exit");
 			_enemiesInRange.Remove(body.GetInstanceId());
 		}
 

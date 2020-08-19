@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Models/Stats.cs" type="Script" id=1]
+
+[resource]
+resource_local_to_scene = true
+resource_name = "SquogStats"
+script = ExtResource( 1 )
+ArmorRating = 0
+MaxArmorRating = 0
+HP = 0.0
+MaxHP = 0.0
+Dexterity = 0
+Strength = 0
+Coagulation = 0
+ToxicResistance = 0

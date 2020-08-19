@@ -6,7 +6,7 @@ using IntoTheCrypt.Player.Controllers;
 
 namespace IntoTheCrypt.Enemies.Controllers
 {
-	public abstract class EnemyController : KinematicBody
+    public abstract class EnemyController : KinematicBody
 	{
 		#region Public
 
@@ -16,23 +16,14 @@ namespace IntoTheCrypt.Enemies.Controllers
 		public Label ArmorText { get; protected set; }
 		public Label BleedText { get; protected set; }
 		public Label ToxicText { get; protected set; }
+		public AnimatedSprite3D Sprite { get; protected set; }
 		public CSGMesh DebugInfo { get; protected set; }
 		public MessageBus MessageBus { get; private set; }
+		[Export]
 		public Stats Stats { get; protected set; }
 		public uint Sharpness { get; protected set; }
 		public uint Toxicity { get; protected set; }
-		public float AttackDelay
-		{
-			get => _attackDelay;
-			set
-			{
-				if (value < 0f)
-				{
-					value = 0f;
-				}
-				_attackDelay = value;
-			}
-		}
+		[Export]
 		public float AttackRange
 		{
 			get => _attackRange;
@@ -45,6 +36,7 @@ namespace IntoTheCrypt.Enemies.Controllers
 				_attackRange = value;
 			}
 		}
+		[Export]
 		public float TrackingRange
 		{
 			get => _trackingRange;
@@ -58,6 +50,9 @@ namespace IntoTheCrypt.Enemies.Controllers
 			}
 		}
 		public bool IsAttacking { get; set; }
+		public bool StartedAttacking { get; set; }
+		public bool PerformedAttack { get; set; }
+		public bool SentDeathSignal { get; set; }
 		public bool IsBleeding => Stats == null ? false : Stats.IsBleeding;
 		public float Speed => Stats == null ? 0f : Stats.Dexterity * Constants.DEXTERITY_TO_SPEED_FACTOR;
 		public bool IsInAttackRangeOfPlayer
@@ -102,74 +97,30 @@ namespace IntoTheCrypt.Enemies.Controllers
 		#endregion
 
 		#region Member Methods
-		public void Die()
+		public override void _PhysicsProcess(float delta)
 		{
-			EmitSignal(nameof(MessageBus.EnemyDeath), GetInstanceId());
-			QueueFree();
+			AiPhysicsUpdate(delta);
 		}
 
-		public void HandleDamage(DamageEnemyMessage damage)
+		public override void _Process(float delta)
 		{
-			GD.Print("Damaged...");
-			DamageHelper.HandleDamage(Stats, damage);
-		}
-
-		public void Move(Vector3 normalizedDirection, float delta)
-		{
-			var translation = normalizedDirection * Speed;
-			MoveAndSlide(translation);
-		}
-		#endregion
-
-		#endregion
-
-		#region Protected
-
-		#region Members
-		// [SerializeField]
-		// [Min(0f)]
-		// [Tooltip("Delay in seconds between starting an attack and the actual attack checking for a hit")]
-		protected float _attackDelay = 0f;
-		protected float _attackElapsedTime = 0f;
-		// [SerializeField]
-		// [Min(0f)]
-		// [Tooltip("Range of enemy attacks")]
-		protected float _attackRange = 0f;
-		// [SerializeField]
-		// [Min(0f)]
-		// [Tooltip("Range of tracking")]
-		protected float _trackingRange = 0f;
-		protected float _bleedElapsedTime = 0f;
-		protected PlayerMoveController _player;
-		protected float _toxicElapsedTime = 0f;
-		#endregion
-
-		#region Member Methods
-		protected void Attack()
-		{
-			if (IsAttacking)
+			if (Input.IsActionJustPressed("toggle_debug"))
 			{
-				return;
+				DebugInfo.Visible = !DebugInfo.Visible;
 			}
-			IsAttacking = true;
-			PerformAttack();
-		}
 
-		protected void PerformAttack()
-		{
-			if (!IsInAttackRangeOfPlayer)
-			{
-				return;
-			}
-			MessageBus.EmitSignal(
-				nameof(MessageBus.EnemyAttack),
-				new DamagePlayerMessage(Stats, Quality.E, DamageClass.Blunt, 0)
-			);
+			UpdateBleed(delta);
+			UpdateToxic(delta);
+			TryDie();
+
+			AiUpdate(delta);
+			UpdateDebugText();
 		}
 
 		public override void _Ready()
 		{
 			DebugInfo = GetNode<CSGMesh>("DebugInfo");
+			Sprite = GetNode<AnimatedSprite3D>("Sprite");
 			DebugInfo.Visible = false;
 			MessageBus = GetNode<MessageBus>("/root/MessageBus");
 			HealthText = DebugInfo.GetNode<Label>("DebugViewport/GridContainer/HealthLabel");
@@ -185,6 +136,73 @@ namespace IntoTheCrypt.Enemies.Controllers
 				GetTree().Quit();
 			}
 			_player = players[0] as PlayerMoveController;
+
+			ConnectSignals();
+		}
+
+		public void Die()
+		{
+			if (SentDeathSignal)
+			{
+				return;
+			}
+		 	MessageBus.EmitSignal(nameof(MessageBus.EnemyDeath), GetInstanceId());
+			SentDeathSignal = true;
+			QueueFree();
+		}
+
+		public void HandleDamage(DamageEnemyMessage damage)
+		{
+			DamageHelper.HandleDamage(Stats, damage);
+		}
+
+		public void Move(Vector3 normalizedDirection, float delta)
+		{
+			var translation = normalizedDirection * Speed;
+			MoveAndSlide(translation);
+		}
+		#endregion
+
+		#endregion
+
+		#region Protected
+
+		#region Members
+		protected float _attackRange = 0f;
+		protected float _trackingRange = 0f;
+		protected float _bleedElapsedTime = 0f;
+		protected PlayerMoveController _player;
+		protected float _toxicElapsedTime = 0f;
+		#endregion
+
+		#region Member Methods
+		protected void Attack()
+		{
+			if (IsAttacking)
+			{
+				return;
+			}
+			IsAttacking = true;
+			StartedAttacking = true;
+			PerformedAttack = false;
+			Sprite.Animation = "attack";
+		}
+
+		protected abstract void ConnectSignals();
+
+		protected abstract void HandleFrameChanged();
+
+		protected void PerformAttack()
+		{
+			if (!IsInAttackRangeOfPlayer)
+			{
+				return;
+			}
+			MessageBus.EmitSignal(
+				nameof(MessageBus.EnemyAttack),
+				new DamagePlayerMessage(Stats, Quality.E, DamageClass.Blunt, 0)
+			);
+			PerformedAttack = true;
 		}
 
 		protected void TryDie()
@@ -192,45 +210,6 @@ namespace IntoTheCrypt.Enemies.Controllers
 			if (Stats.HP <= 0f)
 			{
 				Die();
-			}
-		}
-
-		public override void _Process(float delta)
-		{
-			if (Input.IsActionJustPressed("toggle_debug"))
-			{
-				DebugInfo.Visible = !DebugInfo.Visible;
-			}
-
-			UpdateAttack(delta);
-			UpdateBleed(delta);
-			UpdateToxic(delta);
-			TryDie();
-
-			AiUpdate(delta);
-			UpdateDebugText();
-		}
-
-		public override void _PhysicsProcess(float delta)
-		{
-			AiPhysicsUpdate(delta);
-		}
-
-		protected void UpdateAttack(float delta)
-		{
-			if (!IsAttacking)
-			{
-				_attackElapsedTime = 0f;
-				return;
-			}
-			_attackElapsedTime += delta;
-
-			if (_attackElapsedTime >= AttackDelay)
-			{
-				_attackElapsedTime = 0f;
-				IsAttacking = false;
-
-				PerformAttack();
 			}
 		}
 

@@ -2,11 +2,21 @@
 
 namespace IntoTheCrypt.Models
 {
-    public class Stats
+    public class Stats : Godot.Resource
     {
         #region Public
 
         #region Constructors
+        public Stats()
+            : this(
+                new Armor(),
+                new Health(),
+                new MajorStats(),
+                new MinorStats()
+            )
+        {
+        }
+
         public Stats(
             uint maxHp = 0,
             uint maxArmorRating = 0,
@@ -39,12 +49,14 @@ namespace IntoTheCrypt.Models
         public MinorStats MinorStats;
 
         #region Armor
+        [Export]
         public uint ArmorRating
         {
             get => Armor.Rating;
             set => Armor.Rating = value;
         }
 
+        [Export]
         public uint MaxArmorRating
         {
             get => Armor.MaxRating;
@@ -53,12 +65,14 @@ namespace IntoTheCrypt.Models
         #endregion
 
         #region Health
+        [Export]
         public float HP
         {
             get => Health.HP;
             set => Health.HP = value;
         }
-
+        
+        [Export]
         public float MaxHP
         {
             get => Health.MaxHP;
@@ -67,12 +81,14 @@ namespace IntoTheCrypt.Models
         #endregion
 
         #region Major Stats
+        [Export]
         public uint Dexterity
         {
             get => MajorStats.Dexterity;
             set => MajorStats.Dexterity = value;
         }
-
+        
+        [Export]
         public uint Strength
         {
             get => MajorStats.Strength;
@@ -81,11 +97,14 @@ namespace IntoTheCrypt.Models
         #endregion
 
         #region Minor Stats
+        [Export]
         public uint Coagulation
         {
             get => MinorStats.Coagulation;
             set => MinorStats.Coagulation = value;
         }
+        
+        [Export]
         public uint ToxicResistance
         {
             get => MinorStats.ToxicResistance;
@@ -109,6 +128,7 @@ namespace IntoTheCrypt.Models
                 }
             }
         }
+        
         public float BleedReductionRatio
         {
             get
