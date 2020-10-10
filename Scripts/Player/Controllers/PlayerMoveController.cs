@@ -8,14 +8,6 @@ namespace IntoTheCrypt.Player.Controllers
 
 		#region Members
 		public PlayerCameraController FirstPersonCamera;
-		[Export(PropertyHint.Range, "1,5,or_greater")]
-		public float SprintFactor = 1f;
-		[Export]
-		public Vector3 Gravity = Vector3.Down;
-		[Export(PropertyHint.Range, "1,10,or_greater")]
-		public float GravityFactor = 1;
-		[Export(PropertyHint.Range, "10,100,or_greater")]
-		public float BaseVelocity = 10f;
 		public PlayerCameraController PlayerCamera { get; private set; }
 		#endregion
 		
@@ -35,50 +27,52 @@ namespace IntoTheCrypt.Player.Controllers
 
 		#region Private
 
+		#region Members
+		private bool IsMoving { get; set; }
+		#endregion
+
 		#region Member Methods
 		private void HandleInput(float delta)
 		{
-			var direction = Vector3.Zero;
-			bool isSprinting = false;
+			HandleMoveInput(delta);
+		}
 
-			if (Input.IsActionPressed("forward"))
+		private void HandleMoveInput(float delta)
+		{
+			if (IsMoving)
+			{
+				return;
+			}
+			var direction = Vector3.Zero;
+			if (Input.IsActionJustPressed("forward"))
 			{
 				direction += Vector3.Forward;
 			}
-			if (Input.IsActionPressed("backward"))
+			else if (Input.IsActionJustPressed("backward"))
 			{
 				direction += Vector3.Back;
 			}
-			if (Input.IsActionPressed("left"))
+			else if (Input.IsActionJustPressed("left"))
 			{
 				direction += Vector3.Left;
 			}
-			if (Input.IsActionPressed("right"))
+			else if (Input.IsActionJustPressed("right"))
 			{
 				direction += Vector3.Right;
 			}
-			if (Input.IsActionPressed("sprint"))
+			if (direction == Vector3.Zero)
 			{
-				isSprinting = true;
+				IsMoving = false;
+				return;
 			}
-			direction = direction.Normalized();
+			IsMoving = true;
+			MakeMove(direction, delta);
+		}
 
-			var basis = PlayerCamera.GlobalTransform.basis;
-			//var movement = Gravity * GravityFactor;
-			var movement = Vector3.Zero;
-			movement += basis.x * direction.x;
-			movement += basis.z * direction.z;
-
-			MoveAndSlide(
-				(
-					movement
-					* BaseVelocity
-					* delta
-					* (isSprinting ? SprintFactor : 1f)
-				),
-				Vector3.Up,
-				false
-			);
+		private void MakeMove(Vector3 direction, float delta)
+		{
+			Translate(direction);
+			IsMoving = false;
 		}
 		#endregion
 
