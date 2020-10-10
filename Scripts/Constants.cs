@@ -82,6 +82,14 @@ namespace IntoTheCrypt
 		public static readonly List<string> RoomTags;
 		#endregion
 
+		#region Resource Paths
+		public const string ResourceGame = "res://Scenes/Game.tscn";
+		public const string ResourceMainMenuUI = "res://Scenes/UI/MainMenu/MainMenu.tscn";
+		public const string ResourceSquog = "res://Scenes/Enemies/Squog/Squog.tscn";
+		public const string ResourceTestRoom1 = "res://Scenes/Rooms/TestRoom1.tscn";
+		public const string ResourceTestRoom2 = "res://Scenes/Rooms/TestRoom2.tscn";
+		#endregion
+
 		#endregion
 
 		#endregion

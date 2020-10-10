@@ -46,7 +46,7 @@ namespace IntoTheCrypt.Enemies
 	
 		protected void LoadScenes()
 		{
-			_squogScene = GD.Load<PackedScene>("res://Scenes/Enemies/Squog/Squog.tscn");
+			_squogScene = GD.Load<PackedScene>(Constants.ResourceSquog);
 			if (_squogScene == null)
 			{
 				throw new Exception("Squog scene did not load correctly");

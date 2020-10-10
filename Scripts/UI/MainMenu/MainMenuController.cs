@@ -2,58 +2,61 @@ using System;
 using Godot;
 using static Godot.Input;
 
-public class MainMenuController : Control
+namespace IntoTheCrypt.UI.MainMenu
 {
-	#region Public
-
-	#region Member Methods
-	public override void _Ready()
+	public class MainMenuController : Control
 	{
-		LoadScenes();
-		Input.SetMouseMode(MouseMode.Visible);
-	}
-	#endregion
+		#region Public
 
-	#endregion
-
-	#region Private
-	
-	#region Members
-	private PackedScene _gameScene;
-	#endregion
-
-	#region Member Methods
-	private void LoadScenes()
-	{
-		_gameScene = GD.Load<PackedScene>("res://Scenes/Game.tscn");
-		if (_gameScene == null)
+		#region Member Methods
+		public override void _Ready()
 		{
-			throw new Exception("Game scene did not load correctly");
+			LoadScenes();
+			Input.SetMouseMode(MouseMode.Visible);
 		}
-	}
-	#endregion
+		#endregion
 
-	#region Signals
-	private void _on_ExitGameButton_pressed()
-	{
-		GetTree().Quit();
-	}
+		#endregion
 
-	private void _on_LoadGameButton_pressed()
-	{
-		GD.Print("Load game");
-	}
+		#region Private
+		
+		#region Members
+		private PackedScene _gameScene;
+		#endregion
 
-	private void _on_NewGameButton_pressed()
-	{
-		GetTree().ChangeSceneTo(_gameScene);
-	}
+		#region Member Methods
+		private void LoadScenes()
+		{
+			_gameScene = GD.Load<PackedScene>(Constants.ResourceGame);
+			if (_gameScene == null)
+			{
+				throw new Exception("Game scene did not load correctly");
+			}
+		}
+		#endregion
 
-	private void _on_SettingsButton_pressed()
-	{
-		GD.Print("Settings");
+		#region Signals
+		private void _on_ExitGameButton_pressed()
+		{
+			GetTree().Quit();
+		}
+
+		private void _on_LoadGameButton_pressed()
+		{
+			GD.Print("Load game");
+		}
+
+		private void _on_NewGameButton_pressed()
+		{
+			GetTree().ChangeSceneTo(_gameScene);
+		}
+
+		private void _on_SettingsButton_pressed()
+		{
+			GD.Print("Settings");
+		}
+		#endregion
+		
+		#endregion
 	}
-	#endregion
-	
-	#endregion
 }

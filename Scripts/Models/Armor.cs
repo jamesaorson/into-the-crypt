@@ -1,5 +1,3 @@
-using Godot;
-
 namespace IntoTheCrypt.Models
 {
 	public struct Armor

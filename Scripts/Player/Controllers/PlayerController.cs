@@ -6,6 +6,7 @@ using IntoTheCrypt.Enemies.Controllers;
 using IntoTheCrypt.Helpers;
 using IntoTheCrypt.Messages;
 using IntoTheCrypt.Models;
+using IntoTheCrypt.UI.StatMenu;
 using IntoTheCrypt.Weapons.Controllers;
 
 namespace IntoTheCrypt.Player.Controllers
@@ -138,7 +139,7 @@ namespace IntoTheCrypt.Player.Controllers
 
 		private void LoadScenes()
 		{
-			_mainMenuScene = GD.Load<PackedScene>("res://Scenes/UI/MainMenu/MainMenu.tscn");
+			_mainMenuScene = GD.Load<PackedScene>(Constants.ResourceMainMenuUI);
 			if (_mainMenuScene == null)
 			{
 				throw new Exception("MainMenu scene did not load correctly");

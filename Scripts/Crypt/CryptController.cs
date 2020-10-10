@@ -60,12 +60,12 @@ namespace IntoTheCrypt.Crypt
 
 		private void LoadScenes()
 		{
-			_testRoom1 = GD.Load<PackedScene>("res://Scenes/Rooms/TestRoom1.tscn");
+			_testRoom1 = GD.Load<PackedScene>(Constants.ResourceTestRoom1);
 			if (_testRoom1 == null)
 			{
 				throw new Exception("TestRoom1 scene did not load correctly");
 			}
-			_testRoom2 = GD.Load<PackedScene>("res://Scenes/Rooms/TestRoom2.tscn");
+			_testRoom2 = GD.Load<PackedScene>(Constants.ResourceTestRoom2);
 			if (_testRoom2 == null)
 			{
 				throw new Exception("TestRoom2 scene did not load correctly");
