@@ -6,7 +6,7 @@ using IntoTheCrypt.Player.Controllers;
 
 namespace IntoTheCrypt.Enemies.Controllers
 {
-    public abstract class EnemyController : KinematicBody
+	public abstract class EnemyController : KinematicBody
 	{
 		#region Public
 
